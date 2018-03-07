@@ -1,0 +1,45 @@
+package com.bing.funread.response;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
+
+/**
+ * Description:首页banner图信息
+ * Author: zhangfusheng
+ * Date: 2018/3/7 下午4:55
+ */
+@ApiModel(value = "首页banner图信息")
+public class HomeBannerVo implements Serializable {
+
+    @ApiModelProperty(value = "banner图地址", required = true)
+    private String bannerUrl;
+
+    @ApiModelProperty(value = "排序", required = true)
+    private Integer order;
+
+    public String getBannerUrl() {
+        return bannerUrl;
+    }
+
+    public void setBannerUrl(String bannerUrl) {
+        this.bannerUrl = bannerUrl;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
+
+    @Override
+    public String toString() {
+        return "HomeBannerVo{" +
+                "bannerUrl='" + bannerUrl + '\'' +
+                ", order=" + order +
+                '}';
+    }
+}

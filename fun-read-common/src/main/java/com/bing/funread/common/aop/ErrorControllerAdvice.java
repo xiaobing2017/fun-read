@@ -1,5 +1,6 @@
 package com.bing.funread.common.aop;
 
+import com.bing.funread.common.exception.ServiceException;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
@@ -64,11 +65,11 @@ public class ErrorControllerAdvice {
 		return HttpStatus.valueOf(statusCode);
 	}
 	
-//	@ExceptionHandler(ServiceException.class)
-//	@ResponseBody
-//	Result<String> handleServiceException(ServiceException e) {
-//		return new Result<>(e.getErrorCode(), e.getErrorMessage());
-//	}
+	@ExceptionHandler(ServiceException.class)
+	@ResponseBody
+	Result<String> handleServiceException(ServiceException e) {
+		return new Result<>(e.getErrorCode(), e.getErrorMessage());
+	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	@ResponseBody
