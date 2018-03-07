@@ -5,7 +5,7 @@ import com.bing.funread.response.CourseInfoVo;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
-import com.bing.funread.server.service.CourseService;
+import com.bing.funread.server.service.UserCourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -20,31 +20,33 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Description:课程接口
+ * Description:用户课程接口
  * Author: zhangfusheng
- * Date: 2018/3/7 下午5:15
+ * Date: 2018/3/7 下午7:44
  */
 @RestController
-@Api(value = "/api/course", description = "课程接口")
-@RequestMapping("/api/course")
+@Api(value = "/api/v1/course", description = "用户课程接口")
+@RequestMapping("/api/v1/course")
 @Validated
-public class CourseController {
+public class UserCourseController {
 
     @Autowired
-    private CourseService courseService;
+    private UserCourseService userCourseService;
 
-    @RequestMapping(value = "/getCourse", method = RequestMethod.GET)
-    @ApiOperation(value = "查询课程列表", httpMethod = "GET", notes = "查询首页课程信息列表")
-    public Result<List<CourseInfoVo>> getCourse() {
-        List<CourseInfoVo> result = courseService.getCourseInfo();
+    @RequestMapping(value = "/getUserCourse", method = RequestMethod.GET)
+    @ApiOperation(value = "查询用户课程列表", httpMethod = "GET", notes = "查询用户课程信息列表")
+    public Result<List<CourseInfoVo>> getUserCourse() {
+        Long userId = null;//TODO
+        List<CourseInfoVo> result = userCourseService.getUserCourseInfo(userId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 
-    @RequestMapping(value = "/getCourseDetail/{courseId}", method = RequestMethod.GET)
-    @ApiOperation(value = "查询课程说明", httpMethod = "GET", notes = "查询课程说明")
-    public Result<CourseDetailVo> getCourseDetail(@ApiParam(required = true, name = "courseId", value = "课程ID")
+    @RequestMapping(value = "/getUserCourse/{courseId}", method = RequestMethod.POST)
+    @ApiOperation(value = "查询用户课程情况", httpMethod = "POST", notes = "查询用户课程情况")
+    public Result<CourseDetailVo> getUserCourseDetail(@ApiParam(required = true, name = "courseId", value = "课程ID")
                                                       @NotBlank(message="课程ID不能为空") @PathVariable Long courseId) {
-        CourseDetailVo result = courseService.getCourseDetail(courseId);
+        Long userId = null;//TODO
+        CourseDetailVo result = userCourseService.getUserCourseDetail(userId, courseId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 }

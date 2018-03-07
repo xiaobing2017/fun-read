@@ -23,4 +23,11 @@ public interface CourseMapper {
      * @return
      */
     List<CourseInfoDto> selectAllCourseInfo();
+
+    /**
+     * 查询用户课程
+     * @param userId
+     * @return
+     */
+    List<CourseInfoDto> selectUserCourseInfo(Long userId);
 }

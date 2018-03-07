@@ -19,6 +19,8 @@ public class PoetryVo implements Serializable {
     @ApiModelProperty(value = "诗词介绍", required = true)
     private String describe;
 
+    @ApiModelProperty(value = "解锁状态 true:解锁 false:未解锁", required = true)
+    private boolean unlock;
 
     public String getName() {
         return name;
@@ -34,5 +36,13 @@ public class PoetryVo implements Serializable {
 
     public void setDescribe(String describe) {
         this.describe = describe;
+    }
+
+    public boolean isUnlock() {
+        return unlock;
+    }
+
+    public void setUnlock(boolean unlock) {
+        this.unlock = unlock;
     }
 }
