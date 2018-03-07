@@ -43,7 +43,7 @@ public class CourseController {
     @RequestMapping(value = "/getCourseDetail/{courseId}", method = RequestMethod.GET)
     @ApiOperation(value = "查询课程说明", httpMethod = "GET", notes = "查询课程说明")
     public Result<CourseDetailVo> getCourseDetail(@ApiParam(required = true, name = "courseId", value = "课程ID")
-                                                      @NotBlank(message="课程ID不能为空") @PathVariable Long courseId) {
+                                                  @NotBlank(message="课程ID不能为空") @PathVariable Long courseId) {
         CourseDetailVo result = courseService.getCourseDetail(courseId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }

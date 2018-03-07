@@ -16,7 +16,7 @@ public class HomeBannerVo implements Serializable {
     @ApiModelProperty(value = "banner图地址", required = true)
     private String bannerUrl;
 
-    @ApiModelProperty(value = "排序", required = true)
+    @ApiModelProperty(value = "顺序", required = true)
     private Integer order;
 
     public String getBannerUrl() {
