@@ -43,8 +43,8 @@ public class UserCourseController {
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 
-    @RequestMapping(value = "/getUserCourse/{courseId}", method = RequestMethod.POST)
-    @ApiOperation(value = "查询用户课程情况", httpMethod = "POST", notes = "查询用户课程情况")
+    @RequestMapping(value = "/getUserCourse/{courseId}", method = RequestMethod.GET)
+    @ApiOperation(value = "查询用户课程情况", httpMethod = "GET", notes = "查询用户课程情况")
     public Result<CourseDetailVo> getUserCourseDetail(@ApiParam(required = true, name = "courseId", value = "课程ID")
                                                       @NotBlank(message="课程ID不能为空") @PathVariable Long courseId) {
         Long userId = null;//TODO
@@ -52,16 +52,16 @@ public class UserCourseController {
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 
-    @RequestMapping(value = "/getUserStudyInfo", method = RequestMethod.POST)
-    @ApiOperation(value = "查询用户学习情况", httpMethod = "POST", notes = "查询学习课程情况")
+    @RequestMapping(value = "/getUserStudyInfo", method = RequestMethod.GET)
+    @ApiOperation(value = "查询用户学习情况", httpMethod = "GET", notes = "查询学习课程情况")
     public Result<UserStudyInfoVo> getUserStudyInfo() {
         Long userId = null;//TODO
         UserStudyInfoVo result = userCourseService.getUserStudyDetail(userId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 
-    @RequestMapping(value = "/getReadInfo/{courseId}/{poetryId}", method = RequestMethod.POST)
-    @ApiOperation(value = "查询用户课程诗词跟读信息", httpMethod = "POST", notes = "查询用户课程诗词跟读信息")
+    @RequestMapping(value = "/getReadInfo/{courseId}/{poetryId}", method = RequestMethod.GET)
+    @ApiOperation(value = "查询用户课程诗词跟读信息", httpMethod = "GET", notes = "查询用户课程诗词跟读信息")
     public Result<ReadInfoVo> getReadInfo(@ApiParam(required = true, name = "courseId", value = "课程ID")
                                                @NotBlank(message="课程ID不能为空") @PathVariable Long courseId,
                                                @ApiParam(required = true, name = "poetryId", value = "诗词ID")

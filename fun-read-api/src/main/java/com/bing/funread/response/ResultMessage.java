@@ -18,7 +18,12 @@ public class ResultMessage {
     /**
      * 验证参数异常
      */
-    public static final String REQUEST_PARAMETER_ERROR_MSG = "验证请求参数异常:";
+    public static final String REQUEST_PARAMETER_ERROR = "验证请求参数异常:";
+
+    /**
+     * 账号有误
+     */
+    public static final String USER_ID_ERROR = "账号有误";
 
     private ResultMessage() {
     	

@@ -14,4 +14,6 @@ public interface UserActivityMapper {
     int updateByPrimaryKeySelective(UserActivity record);
 
     int updateByPrimaryKey(UserActivity record);
+
+    UserActivity selectUserActivityInfo(Long userId, Long activityId);
 }

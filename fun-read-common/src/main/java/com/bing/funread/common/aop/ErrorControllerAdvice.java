@@ -32,8 +32,8 @@ public class ErrorControllerAdvice {
 		logger.error(ex.getMessage(), ex);
 		BindingResult bindingResult = ex.getBindingResult();
 		FieldError fieldError = bindingResult.getFieldError();
-		return new Result<>(ResultCode.REQUEST_PARAMETER_ERROR_CODE,
-				ResultMessage.REQUEST_PARAMETER_ERROR_MSG + fieldError.getDefaultMessage());
+		return new Result<>(ResultCode.REQUEST_PARAMETER_ERROR,
+				ResultMessage.REQUEST_PARAMETER_ERROR + fieldError.getDefaultMessage());
 	}
 	
 	@ExceptionHandler(value = {ConstraintViolationException.class})
@@ -45,8 +45,8 @@ public class ErrorControllerAdvice {
  	    	errorMessage = violation.getMessage();
  	    	break;
  	     }
-		return new Result<>(ResultCode.REQUEST_PARAMETER_ERROR_CODE, 
-				ResultMessage.REQUEST_PARAMETER_ERROR_MSG + errorMessage);
+		return new Result<>(ResultCode.REQUEST_PARAMETER_ERROR,
+				ResultMessage.REQUEST_PARAMETER_ERROR + errorMessage);
 	}
 	
 	@ExceptionHandler(RuntimeException.class)
@@ -80,13 +80,13 @@ public class ErrorControllerAdvice {
         } else {
             message = e.getLocalizedMessage();
         }
-		return new Result<>(ResultCode.REQUEST_PARAMETER_ERROR_CODE, message);
+		return new Result<>(ResultCode.REQUEST_PARAMETER_ERROR, message);
 	}
 	
 	@ExceptionHandler(MaxUploadSizeExceededException.class)
 	@ResponseBody
 	Result<String> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
 		logger.error(ex.getMessage(), ex);
-		return new Result<>(ResultCode.REQUEST_PARAMETER_ERROR_CODE, "文件大于" + ex.getMaxUploadSize() + "B");
+		return new Result<>(ResultCode.REQUEST_PARAMETER_ERROR, "文件大于" + ex.getMaxUploadSize() + "B");
 	}
 }

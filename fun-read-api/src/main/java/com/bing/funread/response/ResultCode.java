@@ -18,7 +18,12 @@ public class ResultCode {
 	/**
 	 * 验证参数异常
 	 */
-	public static final String REQUEST_PARAMETER_ERROR_CODE = "11111";
+	public static final String REQUEST_PARAMETER_ERROR = "11111";
+
+	/**
+	 * 账号有误
+	 */
+	public static final String USER_ID_ERROR = "10001";
 
 	private ResultCode() {
 
