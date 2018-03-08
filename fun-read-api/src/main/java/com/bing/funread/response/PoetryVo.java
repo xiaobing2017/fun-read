@@ -13,13 +13,13 @@ import java.io.Serializable;
 @ApiModel(value = "诗词信息")
 public class PoetryVo implements Serializable {
 
-    @ApiModelProperty(value = "诗名", required = true)
+    @ApiModelProperty(value = "诗名")
     private String name;
 
-    @ApiModelProperty(value = "诗词介绍", required = true)
+    @ApiModelProperty(value = "诗词介绍")
     private String describe;
 
-    @ApiModelProperty(value = "解锁状态 true:解锁 false:未解锁", required = true)
+    @ApiModelProperty(value = "解锁状态 true:解锁 false:未解锁")
     private boolean unlock;
 
     public String getName() {

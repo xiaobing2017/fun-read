@@ -13,19 +13,19 @@ import java.io.Serializable;
 @ApiModel(value = "诗句信息")
 public class PoetryInfoVo implements Serializable {
 
-    @ApiModelProperty(value = "诗句ID", required = true)
+    @ApiModelProperty(value = "诗句ID")
     private Long id;
 
-    @ApiModelProperty(value = "顺序", required = true)
+    @ApiModelProperty(value = "顺序")
     private Integer order;
 
-    @ApiModelProperty(value = "诗句内容", required = true)
+    @ApiModelProperty(value = "诗句内容")
     private String content;
 
-    @ApiModelProperty(value = "图片地址", required = true)
+    @ApiModelProperty(value = "图片地址")
     private String picUrl;
 
-    @ApiModelProperty(value = "音频地址", required = true)
+    @ApiModelProperty(value = "音频地址")
     private String audioUrl;
 
 

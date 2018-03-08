@@ -14,13 +14,13 @@ import java.util.List;
 @ApiModel(value = "课程详情")
 public class CourseDetailVo implements Serializable {
 
-    @ApiModelProperty(value = "课程名称", required = true)
+    @ApiModelProperty(value = "课程名称")
     private String name;
 
-    @ApiModelProperty(value = "课程介绍", required = true)
+    @ApiModelProperty(value = "课程介绍")
     private String describe;
 
-    @ApiModelProperty(value = "课程诗词信息", required = true)
+    @ApiModelProperty(value = "课程诗词信息")
     private List<PoetryVo> poetryList;
 
     public String getName() {

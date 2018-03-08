@@ -13,13 +13,13 @@ import java.io.Serializable;
 @ApiModel(value = "用户诗词跟读信息")
 public class ReadInfoVo implements Serializable {
 
-    @ApiModelProperty(value = "诗句ID", required = true)
+    @ApiModelProperty(value = "诗句ID")
     private Long poetryInfoId;
 
-    @ApiModelProperty(value = "顺序", required = true)
+    @ApiModelProperty(value = "顺序")
     private Integer order;
 
-    @ApiModelProperty(value = "跟读文件地址", required = true)
+    @ApiModelProperty(value = "跟读文件地址")
     private String audioUrl;
 
     public Long getPoetryInfoId() {

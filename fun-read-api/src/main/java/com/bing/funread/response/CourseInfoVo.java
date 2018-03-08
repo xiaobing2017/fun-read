@@ -13,22 +13,22 @@ import java.io.Serializable;
 @ApiModel(value = "课程信息")
 public class CourseInfoVo implements Serializable {
 
-    @ApiModelProperty(value = "课程ID", required = true)
+    @ApiModelProperty(value = "课程ID")
     private Long courseId;
 
-    @ApiModelProperty(value = "课时数量", required = true)
+    @ApiModelProperty(value = "课时数量")
     private Integer poetryCount;
 
-    @ApiModelProperty(value = "已购买数量", required = true)
+    @ApiModelProperty(value = "已购买数量")
     private Integer userCount;
 
-    @ApiModelProperty(value = "课程名称", required = true)
+    @ApiModelProperty(value = "课程名称")
     private String name;
 
-    @ApiModelProperty(value = "分类说明", required = true)
+    @ApiModelProperty(value = "分类说明")
     private String classify;
 
-    @ApiModelProperty(value = "图片地址", required = true)
+    @ApiModelProperty(value = "图片地址")
     private String picUrl;
 
     public Long getCourseId() {

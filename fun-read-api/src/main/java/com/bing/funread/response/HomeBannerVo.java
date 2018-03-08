@@ -13,10 +13,10 @@ import java.io.Serializable;
 @ApiModel(value = "首页banner图信息")
 public class HomeBannerVo implements Serializable {
 
-    @ApiModelProperty(value = "banner图地址", required = true)
+    @ApiModelProperty(value = "banner图地址")
     private String bannerUrl;
 
-    @ApiModelProperty(value = "顺序", required = true)
+    @ApiModelProperty(value = "顺序")
     private Integer order;
 
     public String getBannerUrl() {

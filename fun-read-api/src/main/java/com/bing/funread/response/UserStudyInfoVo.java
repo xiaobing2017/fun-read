@@ -11,10 +11,10 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "用户学习情况")
 public class UserStudyInfoVo {
 
-    @ApiModelProperty(value = "学习天数", required = true)
+    @ApiModelProperty(value = "学习天数")
     private Integer studyDays;
 
-    @ApiModelProperty(value = "学习多少首古诗", required = true)
+    @ApiModelProperty(value = "学习多少首古诗")
     private Integer studyPoetrys;
 
     public Integer getStudyDays() {
