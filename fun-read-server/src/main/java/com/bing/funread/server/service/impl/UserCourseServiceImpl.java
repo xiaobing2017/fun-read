@@ -5,6 +5,7 @@ import com.bing.funread.common.domain.Poetry;
 import com.bing.funread.common.domain.User;
 import com.bing.funread.common.domain.UserCourse;
 import com.bing.funread.common.dto.CourseInfoDto;
+import com.bing.funread.common.dto.ReadInfoDto;
 import com.bing.funread.common.mapper.CourseMapper;
 import com.bing.funread.common.mapper.PoetryMapper;
 import com.bing.funread.common.mapper.UserCourseMapper;
@@ -14,14 +15,12 @@ import com.bing.funread.common.utils.DateUtil;
 import com.bing.funread.response.CourseDetailVo;
 import com.bing.funread.response.CourseInfoVo;
 import com.bing.funread.response.PoetryVo;
+import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.UserStudyInfoVo;
 import com.bing.funread.server.service.UserCourseService;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -76,5 +75,11 @@ public class UserCourseServiceImpl implements UserCourseService {
         studyInfoVo.setStudyDays(DateUtil.getDiffDays(user.getCreateTime(), DateUtil.getCurrentTime()));
         studyInfoVo.setStudyPoetrys(studyPoetrys);
         return studyInfoVo;
+    }
+
+    @Override
+    public ReadInfoVo getReadInfo(Long userId, Long courseId, Long poetryId) {
+        ReadInfoDto readInfo = userCourseMapper.selectReadInfo(userId, courseId, poetryId);
+        return BeanUtil.copyBean(readInfo, ReadInfoVo.class);
     }
 }

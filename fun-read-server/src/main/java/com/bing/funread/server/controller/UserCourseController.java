@@ -2,6 +2,7 @@ package com.bing.funread.server.controller;
 
 import com.bing.funread.response.CourseDetailVo;
 import com.bing.funread.response.CourseInfoVo;
+import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
@@ -56,6 +57,17 @@ public class UserCourseController {
     public Result<UserStudyInfoVo> getUserStudyInfo() {
         Long userId = null;//TODO
         UserStudyInfoVo result = userCourseService.getUserStudyDetail(userId);
+        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
+    }
+
+    @RequestMapping(value = "/getReadInfo/{courseId}/{poetryId}", method = RequestMethod.POST)
+    @ApiOperation(value = "查询用户课程诗词跟读信息", httpMethod = "POST", notes = "查询用户课程诗词跟读信息")
+    public Result<ReadInfoVo> getReadInfo(@ApiParam(required = true, name = "courseId", value = "课程ID")
+                                               @NotBlank(message="课程ID不能为空") @PathVariable Long courseId,
+                                               @ApiParam(required = true, name = "poetryId", value = "诗词ID")
+                                               @NotBlank(message="诗词ID不能为空") @PathVariable Long poetryId) {
+        Long userId = null;//TODO
+        ReadInfoVo result = userCourseService.getReadInfo(userId, courseId, poetryId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 
