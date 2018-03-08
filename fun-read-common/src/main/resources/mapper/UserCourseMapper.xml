@@ -111,4 +111,9 @@
     where user_id = #{userId,jdbcType=BIGINT}
       and course_id = #{courseId,jdbcType=BIGINT}
   </select>
+  <select id="selectHasStudyPoetrys" resultType="java.lang.Integer" parameterType="java.lang.Long" >
+    select ifnull(sum(unlock_num), 0)
+    from user_course
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

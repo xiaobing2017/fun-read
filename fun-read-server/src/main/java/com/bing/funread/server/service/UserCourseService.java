@@ -2,6 +2,7 @@ package com.bing.funread.server.service;
 
 import com.bing.funread.response.CourseDetailVo;
 import com.bing.funread.response.CourseInfoVo;
+import com.bing.funread.response.UserStudyInfoVo;
 
 import java.util.List;
 
@@ -21,9 +22,16 @@ public interface UserCourseService {
 
     /**
      * 用户课程详情
-     * @param user
+     * @param userId
      * @param courseId
      * @return
      */
-    CourseDetailVo getUserCourseDetail(Long user, Long courseId);
+    CourseDetailVo getUserCourseDetail(Long userId, Long courseId);
+
+    /**
+     * 查询用户学习情况
+     * @param userId
+     * @return
+     */
+    UserStudyInfoVo getUserStudyDetail(Long userId);
 }

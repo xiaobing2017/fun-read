@@ -16,4 +16,6 @@ public interface UserCourseMapper {
     int updateByPrimaryKey(UserCourse record);
 
     UserCourse selectByUserAndCourse(Long userId, Long courseId);
+
+    int selectHasStudyPoetrys(Long userId);
 }

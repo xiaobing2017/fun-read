@@ -5,6 +5,7 @@ import com.bing.funread.response.CourseInfoVo;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
+import com.bing.funread.response.UserStudyInfoVo;
 import com.bing.funread.server.service.UserCourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -49,4 +50,14 @@ public class UserCourseController {
         CourseDetailVo result = userCourseService.getUserCourseDetail(userId, courseId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
+
+    @RequestMapping(value = "/getUserStudyInfo", method = RequestMethod.POST)
+    @ApiOperation(value = "查询用户学习情况", httpMethod = "POST", notes = "查询学习课程情况")
+    public Result<UserStudyInfoVo> getUserStudyInfo() {
+        Long userId = null;//TODO
+        UserStudyInfoVo result = userCourseService.getUserStudyDetail(userId);
+        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
+    }
+
+    //TODO 上次跟读音频文件接口
 }
