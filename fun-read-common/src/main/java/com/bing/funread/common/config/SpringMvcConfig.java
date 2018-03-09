@@ -1,0 +1,60 @@
+package com.bing.funread.common.config;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.ResourceHttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TimeZone;
+
+@Configuration
+public class SpringMvcConfig {
+
+    @Bean
+    public MappingJackson2HttpMessageConverter customJackson2HttpMessageConverter() {
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        converter.setObjectMapper(objectMapper);
+        return converter;
+    }
+
+    @Bean
+    public StringHttpMessageConverter customerStringHttpMessageConverter() {
+        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter(Charset.forName("UTF-8"));
+        List<MediaType> mediaTypes = new ArrayList<>();
+        mediaTypes.add(MediaType.TEXT_HTML);
+        stringHttpMessageConverter.setSupportedMediaTypes(mediaTypes);
+        return stringHttpMessageConverter;
+    }
+
+    @Bean
+    public ResourceHttpMessageConverter customerResourceHttpMessageConverter() {
+        return new ResourceHttpMessageConverter();
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+            		registry.addMapping("/api/**")
+                		    .allowedMethods(HttpMethod.GET.name(), HttpMethod.HEAD.name(),
+                		    				    HttpMethod.POST.name(), HttpMethod.PUT.name(),
+                		    				    HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name(),
+                		    				    HttpMethod.PATCH.name(), HttpMethod.TRACE.name());
+            }
+        };
+    }
+
+}

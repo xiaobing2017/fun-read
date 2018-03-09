@@ -26,6 +26,8 @@ public class TokenUtil {
 
     private static final String SECRET = "xiaobing-funread";
 
+    private static ThreadLocal<Claims> tokenInfo = new ThreadLocal<Claims>();
+
     public static String createToken(User user) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         Key signingKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(SECRET),
@@ -54,5 +56,17 @@ public class TokenUtil {
             logger.error("TokenUtil-parser Invalid token,原因：{}.", e);
             return null;
         }
+    }
+
+    /**
+     * 设置token信息
+     * @param claims
+     */
+    public static void initUserToken(Claims claims) {
+        tokenInfo.set(claims);
+    }
+
+    public static <T> T get(String key) {
+        return (T) tokenInfo.get().get(key);
     }
 }
