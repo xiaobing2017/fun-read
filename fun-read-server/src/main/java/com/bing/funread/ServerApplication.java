@@ -18,14 +18,14 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableRetry
 @EnableAsync
 @ComponentScan(value = {"com.bing.funread"})
-public class FunReadServerApplication implements DisposableBean {
+public class ServerApplication implements DisposableBean {
 
-	private static final Logger logger = LoggerFactory.getLogger(FunReadServerApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(ServerApplication.class);
 
 	private static ConfigurableApplicationContext ctx;
 
 	public static void main(String[] args) {
-		ctx = SpringApplication.run(FunReadServerApplication.class, args);
+		ctx = SpringApplication.run(ServerApplication.class, args);
 		logger.info("Boot Server started......");
 	}
 

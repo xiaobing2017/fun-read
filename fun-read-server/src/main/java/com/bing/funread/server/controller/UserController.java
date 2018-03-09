@@ -48,7 +48,7 @@ public class UserController {
 
     @RequestMapping(value = "/weChatReg", method = RequestMethod.POST)
     @ApiOperation(value = "注册", httpMethod = "POST", notes = "根据微信信息注册")
-    public Result<String> weChatRegister(@ApiParam(required = true, name = "loginUser", value = "用户微信信息")
+    public Result<String> weChatRegister(@ApiParam(required = true, name = "request", value = "用户微信信息")
                                              @Valid @RequestBody WeChatRegRequest request) {
         User user = userService.weChatRegister(request);
         String token = TokenUtil.createToken(user);
