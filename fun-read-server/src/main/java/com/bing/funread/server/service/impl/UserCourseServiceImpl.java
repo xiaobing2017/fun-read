@@ -150,7 +150,7 @@ public class UserCourseServiceImpl implements UserCourseService {
         int i = 0;
         for (MultipartFile file : files) {
             String saveDir = createFileDir(request, userId, CommonConstant.FILE_DIR_COURSE);
-            Long poetryInfoId = request.getPoetryInfoIdList().get(i);
+            Long poetryInfoId = request.getPoetryInfoIdList().get(i++);
             String audioUrl = fileService.upload(file, saveDir, poetryInfoId.toString());
 
             UserCourseAudio userCourseAudio = new UserCourseAudio();
