@@ -27,7 +27,7 @@ import javax.validation.Valid;
 @Api(value = "/api/v1/user", description = "用户信息接口")
 @RequestMapping("/api/v1/user")
 @Validated
-public class UserInfoController {
+public class UserInfoController extends BaseController {
 
     @Autowired
     private UserService userService;
@@ -35,7 +35,7 @@ public class UserInfoController {
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
     @ApiOperation(value = "查询用户资料", httpMethod = "GET", notes = "查询用户资料")
     public Result<UserInfoVo> getUserInfo() {
-        Long userId = null;//TODO
+        Long userId = getUserId();
         UserInfoVo result = userService.getUserInfo(userId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
@@ -44,7 +44,7 @@ public class UserInfoController {
     @ApiOperation(value = "查询用户资料", httpMethod = "POST", notes = "更新用户资料")
     public Result<String> updateUserInfo(@ApiParam(required = true, name = "userInfo", value = "用户资料")
                                              @Valid @RequestBody UserInfoRequest userInfo) {
-        Long userId = null;//TODO
+        Long userId = getUserId();
         userService.updateUserInfo(userId, userInfo);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS);
     }

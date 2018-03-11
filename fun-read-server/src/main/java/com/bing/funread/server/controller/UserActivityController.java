@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "/api/v1/activity", description = "用户活动接口")
 @RequestMapping("/api/v1/activity")
 @Validated
-public class UserActivityController {
+public class UserActivityController extends BaseController {
 
     @Autowired
     private UserActivityService userActivityService;
@@ -34,7 +34,7 @@ public class UserActivityController {
     @ApiOperation(value = "查询用户活动信息", httpMethod = "GET", notes = "查询用户活动信息")
     public Result<UserActivityInfoVo> getUserActivity(@ApiParam(required = true, name = "activityId", value = "活动ID")
                                                       @NotBlank(message="活动ID不能为空") @PathVariable Long activityId) {
-        Long userId = null;//TODO
+        Long userId = getUserId();
         UserActivityInfoVo result = userActivityService.getUserActivityInfo(userId, activityId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
