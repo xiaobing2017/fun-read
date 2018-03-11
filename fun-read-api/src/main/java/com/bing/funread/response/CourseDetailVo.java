@@ -14,6 +14,9 @@ import java.util.List;
 @ApiModel(value = "课程详情")
 public class CourseDetailVo implements Serializable {
 
+    @ApiModelProperty(value = "课程ID")
+    private Long courseId;
+
     @ApiModelProperty(value = "课程名称")
     private String name;
 
@@ -28,6 +31,14 @@ public class CourseDetailVo implements Serializable {
 
     @ApiModelProperty(value = "课程诗词信息")
     private List<PoetryVo> poetryList;
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
 
     public String getName() {
         return name;
@@ -72,6 +83,7 @@ public class CourseDetailVo implements Serializable {
     @Override
     public String toString() {
         return "CourseDetailVo{" +
+                "courseId='" + courseId + '\'' +
                 "name='" + name + '\'' +
                 ", describe='" + describe + '\'' +
                 ", poetryNum='" + poetryNum + '\'' +

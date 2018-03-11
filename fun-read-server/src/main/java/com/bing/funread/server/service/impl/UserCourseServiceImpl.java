@@ -56,6 +56,7 @@ public class UserCourseServiceImpl implements UserCourseService {
         List<Poetry> poetryList = poetryMapper.selectCoursePoetryInfo(courseId);
 
         CourseDetailVo detailVo = new CourseDetailVo();
+        detailVo.setCourseId(course.getId());
         detailVo.setName(course.getName());
         detailVo.setDescribe(course.getDescribe());
         detailVo.setPoetryNum(course.getPoetryNum());

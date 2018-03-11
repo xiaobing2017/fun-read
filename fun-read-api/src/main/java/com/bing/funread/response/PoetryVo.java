@@ -13,6 +13,9 @@ import java.io.Serializable;
 @ApiModel(value = "诗词信息")
 public class PoetryVo implements Serializable {
 
+    @ApiModelProperty(value = "诗词ID")
+    private Long id;
+
     @ApiModelProperty(value = "诗名")
     private String name;
 
@@ -24,6 +27,14 @@ public class PoetryVo implements Serializable {
 
     @ApiModelProperty(value = "是否当前正在学习的诗词 true:是 false:否")
     private boolean isCurrent;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

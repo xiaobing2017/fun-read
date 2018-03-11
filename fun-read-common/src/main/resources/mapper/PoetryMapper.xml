@@ -92,7 +92,7 @@
   </update>
 
   <select id="selectCoursePoetryInfo" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select `name`,`describe`
+    select p.id,`name`,`describe`
     from poetry p
     inner join course_poetry cp on cp.poetry_id = p.id
     where course_id = #{courseId,jdbcType=BIGINT}
