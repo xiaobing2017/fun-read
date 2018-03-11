@@ -103,4 +103,12 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByCourseAndPoetry" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from course_poetry
+    where course_id = #{courseId,jdbcType=BIGINT}
+      and poetry_id = #{poetryId,jdbcType=BIGINT}
+  </select>
 </mapper>

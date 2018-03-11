@@ -19,12 +19,6 @@ public interface CourseMapper {
     int updateByPrimaryKey(Course record);
 
     /**
-     * 查询课程列表
-     * @return
-     */
-    List<UserCourseInfoDto> selectAllCourseInfo();
-
-    /**
      * 查询用户课程
      * @param userId
      * @return

@@ -12,5 +12,18 @@ public class CommonConstant {
      */
     public static final String TOKEN_USER_ID = "userId";
 
+    /**
+     * 生成token参数：微信unionId
+     */
     public static final String TOKEN_UNION_ID = "unionId";
+
+    /**
+     * 用户课程音频文件保存路径
+     */
+    public static final String FILE_DIR_COURSE = "course";
+
+    /**
+     * 用户活动音频文件保存路径
+     */
+    public static final String FILE_DIR_ACTIVITY = "activity";
 }

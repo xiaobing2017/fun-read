@@ -1,9 +1,11 @@
 package com.bing.funread.server.service;
 
+import com.bing.funread.request.CoursePoetryRequest;
 import com.bing.funread.response.CourseDetailVo;
-import com.bing.funread.response.UserCourseInfoVo;
 import com.bing.funread.response.ReadInfoVo;
+import com.bing.funread.response.UserCourseInfoVo;
 import com.bing.funread.response.UserStudyInfoVo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -44,4 +46,12 @@ public interface UserCourseService {
      * @return
      */
     ReadInfoVo getReadInfo(Long userId, Long courseId, Long poetryId);
+
+    /**
+     * 保存跟读文件
+     * @param userId
+     * @param files
+     * @param request
+     */
+    void upload(Long userId, MultipartFile[] files, CoursePoetryRequest request);
 }

@@ -14,4 +14,6 @@ public interface CoursePoetryMapper {
     int updateByPrimaryKeySelective(CoursePoetry record);
 
     int updateByPrimaryKey(CoursePoetry record);
+
+    CoursePoetry selectByCourseAndPoetry(Long courseId, Long poetryId);
 }

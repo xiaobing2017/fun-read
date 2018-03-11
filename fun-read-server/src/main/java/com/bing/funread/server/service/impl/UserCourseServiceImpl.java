@@ -1,26 +1,40 @@
 package com.bing.funread.server.service.impl;
 
+import com.bing.funread.common.constants.CommonConstant;
 import com.bing.funread.common.domain.Course;
+import com.bing.funread.common.domain.CoursePoetry;
 import com.bing.funread.common.domain.Poetry;
+import com.bing.funread.common.domain.PoetryInfo;
 import com.bing.funread.common.domain.User;
 import com.bing.funread.common.domain.UserCourse;
-import com.bing.funread.common.dto.UserCourseInfoDto;
+import com.bing.funread.common.domain.UserCourseAudio;
 import com.bing.funread.common.dto.ReadInfoDto;
+import com.bing.funread.common.dto.UserCourseInfoDto;
+import com.bing.funread.common.exception.ServiceException;
 import com.bing.funread.common.mapper.CourseMapper;
+import com.bing.funread.common.mapper.CoursePoetryMapper;
+import com.bing.funread.common.mapper.PoetryInfoMapper;
 import com.bing.funread.common.mapper.PoetryMapper;
+import com.bing.funread.common.mapper.UserCourseAudioMapper;
 import com.bing.funread.common.mapper.UserCourseMapper;
 import com.bing.funread.common.mapper.UserMapper;
 import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.common.utils.DateUtil;
+import com.bing.funread.request.CoursePoetryRequest;
 import com.bing.funread.response.CourseDetailVo;
-import com.bing.funread.response.UserCourseInfoVo;
 import com.bing.funread.response.PoetryVo;
 import com.bing.funread.response.ReadInfoVo;
+import com.bing.funread.response.UserCourseInfoVo;
 import com.bing.funread.response.UserStudyInfoVo;
+import com.bing.funread.server.service.FileService;
 import com.bing.funread.server.service.UserCourseService;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -42,6 +56,18 @@ public class UserCourseServiceImpl implements UserCourseService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private CoursePoetryMapper coursePoetryMapper;
+
+    @Autowired
+    private PoetryInfoMapper poetryInfoMapper;
+
+    @Autowired
+    private UserCourseAudioMapper userCourseAudioMapper;
+
+    @Autowired
+    private FileService fileService;
 
     @Override
     public List<UserCourseInfoVo> getUserCourseInfo(Long userId) {
@@ -88,5 +114,62 @@ public class UserCourseServiceImpl implements UserCourseService {
     public ReadInfoVo getReadInfo(Long userId, Long courseId, Long poetryId) {
         ReadInfoDto readInfo = userCourseMapper.selectReadInfo(userId, courseId, poetryId);
         return BeanUtil.copyBean(readInfo, ReadInfoVo.class);
+    }
+
+    @Override
+    public void upload(Long userId, MultipartFile[] files, CoursePoetryRequest request) {
+        // 检查文件数量与诗句数量是否一样
+        if (files == null || files.length == 0 || files.length != request.getPoetryInfoIdList().size()) {
+            throw new ServiceException("", "上传信息不匹配");
+        }
+        // 检查课程ID、诗词ID、诗句ID是否有效
+        UserCourse userCourse = userCourseMapper.selectByUserAndCourse(userId, request.getCourseId());
+        if (userCourse == null) {
+            throw new ServiceException("", "用户课程不存在");
+        }
+        CoursePoetry coursePoetry = coursePoetryMapper.selectByCourseAndPoetry(request.getCourseId(), request.getPoetryId());
+        if (coursePoetry == null) {
+            throw new ServiceException("", "课程诗词不存在");
+        }
+        List<PoetryInfo> poetryInfoList = poetryInfoMapper.selectByPoetryId(request.getPoetryId());
+        if (CollectionUtils.isEmpty(poetryInfoList)) {
+            throw new ServiceException("", "诗句不存在");
+        }
+        List<Long> poetryInfoIdList = Lists.newArrayList();
+        for (PoetryInfo poetryInfo : poetryInfoList) {
+            poetryInfoIdList.add(poetryInfo.getId());
+        }
+        for (Long poetryInfoId : request.getPoetryInfoIdList()) {
+            if (!poetryInfoIdList.contains(poetryInfoId)) {
+                throw new ServiceException("", "诗句ID不存在");
+            }
+        }
+        // 创建用户课程音频文件保存对象
+        List<UserCourseAudio> userCourseAudioList = Lists.newArrayList();
+        // 保存文件
+        int i = 0;
+        for (MultipartFile file : files) {
+            String saveDir = createFileDir(request, userId, CommonConstant.FILE_DIR_COURSE);
+            Long poetryInfoId = request.getPoetryInfoIdList().get(i);
+            String audioUrl = fileService.upload(file, saveDir, poetryInfoId.toString());
+
+            UserCourseAudio userCourseAudio = new UserCourseAudio();
+            userCourseAudio.setUserCourseId(userCourse.getId());
+            userCourseAudio.setPoetryId(request.getPoetryId());
+            userCourseAudio.setPoetryInfoId(poetryInfoId);
+            userCourseAudio.setAudioUrl(audioUrl);
+            userCourseAudioList.add(userCourseAudio);
+        }
+        // 更新数据库
+        for (UserCourseAudio userCourseAudio : userCourseAudioList) {
+            userCourseAudioMapper.insertSelective(userCourseAudio);
+        }
+    }
+
+    private String createFileDir(CoursePoetryRequest request, Long userId, String baseDir) {
+        return File.separator + baseDir +
+                File.separator + userId +
+                File.separator + request.getCourseId() +
+                File.separator + request.getPoetryId();
     }
 }
