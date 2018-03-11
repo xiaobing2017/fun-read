@@ -117,13 +117,13 @@
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
   <select id="selectReadInfo" resultType="com.bing.funread.common.dto.ReadInfoDto" parameterType="java.lang.Long" >
-    select poetry_info_id poetryInfoId,`order`,uca.audio_url audioUrl
+    select poetry_info_id poetryInfoId,`order`,uca.audio_url audioUrl,p.pic_url picUrl
     from user_course uc
     inner join user_course_audio uca on uc.id = uca.user_course_id
-    inner join poetry_info p on uca.poetry_id = p.id
-    where uc.user_id = = #{userId,jdbcType=BIGINT}
-      and uc.course_id = = #{courseId,jdbcType=BIGINT}
-      and uca.poetry_id = = #{poetryId,jdbcType=BIGINT}
+    inner join poetry_info p on uca.poetry_id = p.poetry_id and uca.poetry_info_id = p.id
+    where uc.user_id = #{userId,jdbcType=BIGINT}
+      and uc.course_id = #{courseId,jdbcType=BIGINT}
+      and uca.poetry_id = #{poetryId,jdbcType=BIGINT}
     order by p.`order`
   </select>
 </mapper>

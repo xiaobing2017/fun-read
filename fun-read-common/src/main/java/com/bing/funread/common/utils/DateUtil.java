@@ -12,6 +12,9 @@ import java.util.Date;
  */
 public class DateUtil {
 
+    /**
+     * 一天的毫秒数
+     */
     private static final long ONE_DAY_MILLIS = 24 * 60 * 60 * 1000;
 
     /**

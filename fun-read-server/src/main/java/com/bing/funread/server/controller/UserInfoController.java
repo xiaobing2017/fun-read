@@ -41,7 +41,7 @@ public class UserInfoController extends BaseController {
     }
 
     @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
-    @ApiOperation(value = "查询用户资料", httpMethod = "POST", notes = "更新用户资料")
+    @ApiOperation(value = "更新用户资料", httpMethod = "POST", notes = "更新用户资料")
     public Result<String> updateUserInfo(@ApiParam(required = true, name = "userInfo", value = "用户资料")
                                              @Valid @RequestBody UserInfoRequest userInfo) {
         Long userId = getUserId();

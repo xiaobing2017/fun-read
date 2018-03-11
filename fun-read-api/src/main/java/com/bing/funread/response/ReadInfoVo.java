@@ -19,6 +19,9 @@ public class ReadInfoVo implements Serializable {
     @ApiModelProperty(value = "顺序")
     private Integer order;
 
+    @ApiModelProperty(value = "图片地址")
+    private String picUrl;
+
     @ApiModelProperty(value = "跟读文件地址")
     private String audioUrl;
 
@@ -36,6 +39,14 @@ public class ReadInfoVo implements Serializable {
 
     public void setOrder(Integer order) {
         this.order = order;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     public String getAudioUrl() {

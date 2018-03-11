@@ -13,6 +13,8 @@ public class ReadInfoDto implements Serializable {
 
     private Integer order;
 
+    private String picUrl;
+
     private String audioUrl;
 
     public Long getPoetryInfoId() {
@@ -29,6 +31,14 @@ public class ReadInfoDto implements Serializable {
 
     public void setOrder(Integer order) {
         this.order = order;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     public String getAudioUrl() {
