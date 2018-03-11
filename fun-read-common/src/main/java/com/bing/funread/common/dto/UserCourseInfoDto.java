@@ -7,13 +7,13 @@ import java.io.Serializable;
  * Author: zhangfusheng
  * Date: 2018/3/7 下午5:39
  */
-public class CourseInfoDto implements Serializable {
+public class UserCourseInfoDto implements Serializable {
 
     private Long courseId;
 
-    private Integer poetryCount;
+    private Integer poetryNum;
 
-    private Integer userCount;
+    private Integer userNum;
 
     private String name;
 
@@ -21,7 +21,7 @@ public class CourseInfoDto implements Serializable {
 
     private String picUrl;
 
-    private Integer unlockNum;
+    private Integer finishedNum;
 
     public Long getCourseId() {
         return courseId;
@@ -31,20 +31,20 @@ public class CourseInfoDto implements Serializable {
         this.courseId = courseId;
     }
 
-    public Integer getPoetryCount() {
-        return poetryCount;
+    public Integer getPoetryNum() {
+        return poetryNum;
     }
 
-    public void setPoetryCount(Integer poetryCount) {
-        this.poetryCount = poetryCount;
+    public void setPoetryNum(Integer poetryNum) {
+        this.poetryNum = poetryNum;
     }
 
-    public Integer getUserCount() {
-        return userCount;
+    public Integer getUserNum() {
+        return userNum;
     }
 
-    public void setUserCount(Integer userCount) {
-        this.userCount = userCount;
+    public void setUserNum(Integer userNum) {
+        this.userNum = userNum;
     }
 
     public String getName() {
@@ -71,11 +71,11 @@ public class CourseInfoDto implements Serializable {
         this.picUrl = picUrl;
     }
 
-    public Integer getUnlockNum() {
-        return unlockNum;
+    public Integer getFinishedNum() {
+        return finishedNum;
     }
 
-    public void setUnlockNum(Integer unlockNum) {
-        this.unlockNum = unlockNum;
+    public void setFinishedNum(Integer finishedNum) {
+        this.finishedNum = finishedNum;
     }
 }

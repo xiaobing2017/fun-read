@@ -1,7 +1,7 @@
 package com.bing.funread.common.mapper;
 
 import com.bing.funread.common.domain.Course;
-import com.bing.funread.common.dto.CourseInfoDto;
+import com.bing.funread.common.dto.UserCourseInfoDto;
 
 import java.util.List;
 
@@ -22,12 +22,12 @@ public interface CourseMapper {
      * 查询课程列表
      * @return
      */
-    List<CourseInfoDto> selectAllCourseInfo();
+    List<UserCourseInfoDto> selectAllCourseInfo();
 
     /**
      * 查询用户课程
      * @param userId
      * @return
      */
-    List<CourseInfoDto> selectUserCourseInfo(Long userId);
+    List<UserCourseInfoDto> selectUserCourseInfo(Long userId);
 }

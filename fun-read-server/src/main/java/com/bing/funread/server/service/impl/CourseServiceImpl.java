@@ -2,7 +2,7 @@ package com.bing.funread.server.service.impl;
 
 import com.bing.funread.common.domain.Course;
 import com.bing.funread.common.domain.Poetry;
-import com.bing.funread.common.dto.CourseInfoDto;
+import com.bing.funread.common.dto.UserCourseInfoDto;
 import com.bing.funread.common.mapper.CourseMapper;
 import com.bing.funread.common.mapper.PoetryMapper;
 import com.bing.funread.common.utils.BeanUtil;
@@ -31,7 +31,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<UserCourseInfoVo> getCourseInfo() {
-        List<CourseInfoDto> courseInfoList = courseMapper.selectAllCourseInfo();
+        List<UserCourseInfoDto> courseInfoList = courseMapper.selectAllCourseInfo();
         return BeanUtil.copyList(courseInfoList, UserCourseInfoVo.class);
     }
 

@@ -20,6 +20,12 @@ public class CourseDetailVo implements Serializable {
     @ApiModelProperty(value = "课程介绍")
     private String describe;
 
+    @ApiModelProperty(value = "课时数量")
+    private Integer poetryNum;
+
+    @ApiModelProperty(value = "已完成课时数量")
+    private Integer finishedNum;
+
     @ApiModelProperty(value = "课程诗词信息")
     private List<PoetryVo> poetryList;
 
@@ -39,6 +45,22 @@ public class CourseDetailVo implements Serializable {
         this.describe = describe;
     }
 
+    public Integer getPoetryNum() {
+        return poetryNum;
+    }
+
+    public void setPoetryNum(Integer poetryNum) {
+        this.poetryNum = poetryNum;
+    }
+
+    public Integer getFinishedNum() {
+        return finishedNum;
+    }
+
+    public void setFinishedNum(Integer finishedNum) {
+        this.finishedNum = finishedNum;
+    }
+
     public List<PoetryVo> getPoetryList() {
         return poetryList;
     }
@@ -52,6 +74,8 @@ public class CourseDetailVo implements Serializable {
         return "CourseDetailVo{" +
                 "name='" + name + '\'' +
                 ", describe='" + describe + '\'' +
+                ", poetryNum='" + poetryNum + '\'' +
+                ", finishedNum='" + finishedNum + '\'' +
                 ", poetryList=" + poetryList +
                 '}';
     }

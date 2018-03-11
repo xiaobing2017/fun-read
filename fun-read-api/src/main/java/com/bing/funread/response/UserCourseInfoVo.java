@@ -17,10 +17,10 @@ public class UserCourseInfoVo implements Serializable {
     private Long courseId;
 
     @ApiModelProperty(value = "课时数量")
-    private Integer poetryCount;
+    private Integer poetryNum;
 
-    @ApiModelProperty(value = "已购买数量")
-    private Integer userCount;
+    @ApiModelProperty(value = "已加入人数")
+    private Integer userNum;
 
     @ApiModelProperty(value = "课程名称")
     private String name;
@@ -31,8 +31,8 @@ public class UserCourseInfoVo implements Serializable {
     @ApiModelProperty(value = "图片地址")
     private String picUrl;
 
-    @ApiModelProperty(value = "已解锁课程诗词数量")
-    private Integer unlockNum;
+    @ApiModelProperty(value = "已完成课时数量")
+    private Integer finishedNum;
 
     public Long getCourseId() {
         return courseId;
@@ -42,20 +42,20 @@ public class UserCourseInfoVo implements Serializable {
         this.courseId = courseId;
     }
 
-    public Integer getPoetryCount() {
-        return poetryCount;
+    public Integer getPoetryNum() {
+        return poetryNum;
     }
 
-    public void setPoetryCount(Integer poetryCount) {
-        this.poetryCount = poetryCount;
+    public void setPoetryNum(Integer poetryNum) {
+        this.poetryNum = poetryNum;
     }
 
-    public Integer getUserCount() {
-        return userCount;
+    public Integer getUserNum() {
+        return userNum;
     }
 
-    public void setUserCount(Integer userCount) {
-        this.userCount = userCount;
+    public void setUserNum(Integer userNum) {
+        this.userNum = userNum;
     }
 
     public String getName() {
@@ -82,24 +82,24 @@ public class UserCourseInfoVo implements Serializable {
         this.picUrl = picUrl;
     }
 
-    public Integer getUnlockNum() {
-        return unlockNum;
+    public Integer getFinishedNum() {
+        return finishedNum;
     }
 
-    public void setUnlockNum(Integer unlockNum) {
-        this.unlockNum = unlockNum;
+    public void setFinishedNum(Integer unlockNum) {
+        this.finishedNum = finishedNum;
     }
 
     @Override
     public String toString() {
         return "UserCourseInfoVo{" +
                 "courseId=" + courseId +
-                "poetryCount=" + poetryCount +
-                ", userCount=" + userCount +
+                "poetryNum=" + poetryNum +
+                ", userNum=" + userNum +
                 ", name='" + name + '\'' +
                 ", classify='" + classify + '\'' +
                 ", picUrl='" + picUrl + '\'' +
-                ", unlockNum='" + unlockNum + '\'' +
+                ", finishedNum='" + finishedNum + '\'' +
                 '}';
     }
 }

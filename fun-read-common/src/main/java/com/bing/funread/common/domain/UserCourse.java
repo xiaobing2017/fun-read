@@ -9,7 +9,7 @@ public class UserCourse {
 
     private Long courseId;
 
-    private Integer unlockNum;
+    private Integer finishedNum;
 
     private Date createTime;
 
@@ -39,12 +39,12 @@ public class UserCourse {
         this.courseId = courseId;
     }
 
-    public Integer getUnlockNum() {
-        return unlockNum;
+    public Integer getFinishedNum() {
+        return finishedNum;
     }
 
-    public void setUnlockNum(Integer unlockNum) {
-        this.unlockNum = unlockNum;
+    public void setFinishedNum(Integer finishedNum) {
+        this.finishedNum = finishedNum;
     }
 
     public Date getCreateTime() {

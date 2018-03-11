@@ -4,7 +4,7 @@ import com.bing.funread.common.domain.Course;
 import com.bing.funread.common.domain.Poetry;
 import com.bing.funread.common.domain.User;
 import com.bing.funread.common.domain.UserCourse;
-import com.bing.funread.common.dto.CourseInfoDto;
+import com.bing.funread.common.dto.UserCourseInfoDto;
 import com.bing.funread.common.dto.ReadInfoDto;
 import com.bing.funread.common.mapper.CourseMapper;
 import com.bing.funread.common.mapper.PoetryMapper;
@@ -45,7 +45,7 @@ public class UserCourseServiceImpl implements UserCourseService {
 
     @Override
     public List<UserCourseInfoVo> getUserCourseInfo(Long userId) {
-        List<CourseInfoDto> courseInfoList = courseMapper.selectUserCourseInfo(userId);
+        List<UserCourseInfoDto> courseInfoList = courseMapper.selectUserCourseInfo(userId);
         return BeanUtil.copyList(courseInfoList, UserCourseInfoVo.class);
     }
 
@@ -57,10 +57,16 @@ public class UserCourseServiceImpl implements UserCourseService {
 
         CourseDetailVo detailVo = new CourseDetailVo();
         detailVo.setName(course.getName());
+        detailVo.setDescribe(course.getDescribe());
+        detailVo.setPoetryNum(course.getPoetryNum());
+        detailVo.setFinishedNum(userCourse.getFinishedNum());
         List<PoetryVo> poetryVoList = BeanUtil.copyList(poetryList, PoetryVo.class);
         for (int i = 0; i < poetryVoList.size(); i++) {
-            if (i == userCourse.getUnlockNum()) break;
-            poetryVoList.get(i).setUnlock(true);
+            if (i == userCourse.getFinishedNum()) {
+                poetryVoList.get(i).setCurrent(true);
+                break;
+            }
+            poetryVoList.get(i).setFinish(true);
         }
         detailVo.setPoetryList(poetryVoList);
         return detailVo;
