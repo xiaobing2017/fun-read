@@ -13,6 +13,8 @@ public class Banner {
 
     private Integer order;
 
+    private String linkUrl;
+
     private String isShow;
 
     private Date createTime;
@@ -57,6 +59,14 @@ public class Banner {
 
     public void setOrder(Integer order) {
         this.order = order;
+    }
+
+    public String getLinkUrl() {
+        return linkUrl;
+    }
+
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl == null ? null : linkUrl.trim();
     }
 
     public String getIsShow() {

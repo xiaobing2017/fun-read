@@ -1,132 +1,145 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bing.funread.common.mapper.BannerMapper" >
-  <resultMap id="BaseResultMap" type="com.bing.funread.common.domain.Banner" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="describe" property="describe" jdbcType="VARCHAR" />
-    <result column="banner_url" property="bannerUrl" jdbcType="VARCHAR" />
-    <result column="order" property="order" jdbcType="INTEGER" />
-    <result column="is_show" property="isShow" jdbcType="CHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bing.funread.common.mapper.BannerMapper">
+  <resultMap id="BaseResultMap" type="com.bing.funread.common.domain.Banner">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="banner_url" jdbcType="VARCHAR" property="bannerUrl" />
+    <result column="order" jdbcType="INTEGER" property="order" />
+    <result column="link_url" jdbcType="VARCHAR" property="linkUrl" />
+    <result column="is_show" jdbcType="CHAR" property="isShow" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, name, describe, banner_url, order, is_show, create_time, update_time
+  <sql id="Base_Column_List">
+    id, name, describe, banner_url, order, link_url, is_show, create_time, update_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from banner
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from banner
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.bing.funread.common.domain.Banner" >
+  <insert id="insert" parameterType="com.bing.funread.common.domain.Banner">
     insert into banner (id, name, describe, 
-      banner_url, order, is_show, 
-      create_time, update_time)
+      banner_url, order, link_url, 
+      is_show, create_time, update_time
+      )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
-      #{bannerUrl,jdbcType=VARCHAR}, #{order,jdbcType=INTEGER}, #{isShow,jdbcType=CHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{bannerUrl,jdbcType=VARCHAR}, #{order,jdbcType=INTEGER}, #{linkUrl,jdbcType=VARCHAR}, 
+      #{isShow,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.bing.funread.common.domain.Banner" >
+  <insert id="insertSelective" parameterType="com.bing.funread.common.domain.Banner">
     insert into banner
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         name,
       </if>
-      <if test="describe != null" >
+      <if test="describe != null">
         describe,
       </if>
-      <if test="bannerUrl != null" >
+      <if test="bannerUrl != null">
         banner_url,
       </if>
-      <if test="order != null" >
+      <if test="order != null">
         order,
       </if>
-      <if test="isShow != null" >
+      <if test="linkUrl != null">
+        link_url,
+      </if>
+      <if test="isShow != null">
         is_show,
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time,
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         update_time,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="describe != null" >
+      <if test="describe != null">
         #{describe,jdbcType=VARCHAR},
       </if>
-      <if test="bannerUrl != null" >
+      <if test="bannerUrl != null">
         #{bannerUrl,jdbcType=VARCHAR},
       </if>
-      <if test="order != null" >
+      <if test="order != null">
         #{order,jdbcType=INTEGER},
       </if>
-      <if test="isShow != null" >
+      <if test="linkUrl != null">
+        #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
         #{isShow,jdbcType=CHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bing.funread.common.domain.Banner" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.bing.funread.common.domain.Banner">
     update banner
-    <set >
-      <if test="name != null" >
+    <set>
+      <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="describe != null" >
+      <if test="describe != null">
         describe = #{describe,jdbcType=VARCHAR},
       </if>
-      <if test="bannerUrl != null" >
+      <if test="bannerUrl != null">
         banner_url = #{bannerUrl,jdbcType=VARCHAR},
       </if>
-      <if test="order != null" >
+      <if test="order != null">
         order = #{order,jdbcType=INTEGER},
       </if>
-      <if test="isShow != null" >
+      <if test="linkUrl != null">
+        link_url = #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
         is_show = #{isShow,jdbcType=CHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bing.funread.common.domain.Banner" >
+  <update id="updateByPrimaryKey" parameterType="com.bing.funread.common.domain.Banner">
     update banner
     set name = #{name,jdbcType=VARCHAR},
       describe = #{describe,jdbcType=VARCHAR},
       banner_url = #{bannerUrl,jdbcType=VARCHAR},
       order = #{order,jdbcType=INTEGER},
+      link_url = #{linkUrl,jdbcType=VARCHAR},
       is_show = #{isShow,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectAllShowBanners" resultMap="BaseResultMap" >
+  <select id="selectAllShowBanners" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from banner

@@ -19,6 +19,9 @@ public class HomeBannerVo implements Serializable {
     @ApiModelProperty(value = "顺序")
     private Integer order;
 
+    @ApiModelProperty(value = "链接地址")
+    private String linkUrl;
+
     public String getBannerUrl() {
         return bannerUrl;
     }
@@ -35,11 +38,20 @@ public class HomeBannerVo implements Serializable {
         this.order = order;
     }
 
+    public String getLinkUrl() {
+        return linkUrl;
+    }
+
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl;
+    }
+
     @Override
     public String toString() {
         return "HomeBannerVo{" +
                 "bannerUrl='" + bannerUrl + '\'' +
                 ", order=" + order +
+                ", linkUrl=" + linkUrl +
                 '}';
     }
 }
