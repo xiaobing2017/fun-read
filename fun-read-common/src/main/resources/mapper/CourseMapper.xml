@@ -134,7 +134,7 @@
     order by c.id
   </select>
   <select id="selectUserCourseInfo" resultMap="com.bing.funread.common.dto.CourseInfoDto" >
-    select c.id courseId,name,classify,pic_url picUrl,poetry_num peotryCount
+    select c.id courseId,name,classify,pic_url picUrl,poetry_num peotryCount,unlock_num unlockNum
     from course c
     inner join user_course uc on uc.course_id = c.id
     where uc.user_id = #{userId,jdbcType=BIGINT}

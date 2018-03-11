@@ -11,7 +11,7 @@ import java.io.Serializable;
  * Date: 2018/3/7 下午5:22
  */
 @ApiModel(value = "课程信息")
-public class CourseInfoVo implements Serializable {
+public class UserCourseInfoVo implements Serializable {
 
     @ApiModelProperty(value = "课程ID")
     private Long courseId;
@@ -30,6 +30,9 @@ public class CourseInfoVo implements Serializable {
 
     @ApiModelProperty(value = "图片地址")
     private String picUrl;
+
+    @ApiModelProperty(value = "已解锁课程诗词数量")
+    private Integer unlockNum;
 
     public Long getCourseId() {
         return courseId;
@@ -79,15 +82,24 @@ public class CourseInfoVo implements Serializable {
         this.picUrl = picUrl;
     }
 
+    public Integer getUnlockNum() {
+        return unlockNum;
+    }
+
+    public void setUnlockNum(Integer unlockNum) {
+        this.unlockNum = unlockNum;
+    }
+
     @Override
     public String toString() {
-        return "CourseInfoVo{" +
+        return "UserCourseInfoVo{" +
                 "courseId=" + courseId +
                 "poetryCount=" + poetryCount +
                 ", userCount=" + userCount +
                 ", name='" + name + '\'' +
                 ", classify='" + classify + '\'' +
                 ", picUrl='" + picUrl + '\'' +
+                ", unlockNum='" + unlockNum + '\'' +
                 '}';
     }
 }

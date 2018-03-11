@@ -21,6 +21,8 @@ public class CourseInfoDto implements Serializable {
 
     private String picUrl;
 
+    private Integer unlockNum;
+
     public Long getCourseId() {
         return courseId;
     }
@@ -67,5 +69,13 @@ public class CourseInfoDto implements Serializable {
 
     public void setPicUrl(String picUrl) {
         this.picUrl = picUrl;
+    }
+
+    public Integer getUnlockNum() {
+        return unlockNum;
+    }
+
+    public void setUnlockNum(Integer unlockNum) {
+        this.unlockNum = unlockNum;
     }
 }

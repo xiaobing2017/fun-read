@@ -7,7 +7,7 @@ import com.bing.funread.common.mapper.CourseMapper;
 import com.bing.funread.common.mapper.PoetryMapper;
 import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.response.CourseDetailVo;
-import com.bing.funread.response.CourseInfoVo;
+import com.bing.funread.response.UserCourseInfoVo;
 import com.bing.funread.response.PoetryVo;
 import com.bing.funread.server.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +30,9 @@ public class CourseServiceImpl implements CourseService {
     private PoetryMapper poetryMapper;
 
     @Override
-    public List<CourseInfoVo> getCourseInfo() {
+    public List<UserCourseInfoVo> getCourseInfo() {
         List<CourseInfoDto> courseInfoList = courseMapper.selectAllCourseInfo();
-        return BeanUtil.copyList(courseInfoList, CourseInfoVo.class);
+        return BeanUtil.copyList(courseInfoList, UserCourseInfoVo.class);
     }
 
     @Override

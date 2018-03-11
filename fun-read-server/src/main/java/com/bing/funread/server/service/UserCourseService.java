@@ -1,7 +1,7 @@
 package com.bing.funread.server.service;
 
 import com.bing.funread.response.CourseDetailVo;
-import com.bing.funread.response.CourseInfoVo;
+import com.bing.funread.response.UserCourseInfoVo;
 import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.UserStudyInfoVo;
 
@@ -19,7 +19,7 @@ public interface UserCourseService {
      * @param userId
      * @return
      */
-    List<CourseInfoVo> getUserCourseInfo(Long userId);
+    List<UserCourseInfoVo> getUserCourseInfo(Long userId);
 
     /**
      * 用户课程详情

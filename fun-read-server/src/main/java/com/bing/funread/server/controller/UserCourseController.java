@@ -1,7 +1,7 @@
 package com.bing.funread.server.controller;
 
 import com.bing.funread.response.CourseDetailVo;
-import com.bing.funread.response.CourseInfoVo;
+import com.bing.funread.response.UserCourseInfoVo;
 import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
@@ -37,9 +37,9 @@ public class UserCourseController extends BaseController {
 
     @RequestMapping(value = "/getUserCourse", method = RequestMethod.GET)
     @ApiOperation(value = "查询用户课程列表", httpMethod = "GET", notes = "查询用户课程信息列表")
-    public Result<List<CourseInfoVo>> getUserCourse() {
+    public Result<List<UserCourseInfoVo>> getUserCourse() {
         Long userId = getUserId();
-        List<CourseInfoVo> result = userCourseService.getUserCourseInfo(userId);
+        List<UserCourseInfoVo> result = userCourseService.getUserCourseInfo(userId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 

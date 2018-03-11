@@ -13,7 +13,7 @@ import com.bing.funread.common.mapper.UserMapper;
 import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.common.utils.DateUtil;
 import com.bing.funread.response.CourseDetailVo;
-import com.bing.funread.response.CourseInfoVo;
+import com.bing.funread.response.UserCourseInfoVo;
 import com.bing.funread.response.PoetryVo;
 import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.UserStudyInfoVo;
@@ -44,9 +44,9 @@ public class UserCourseServiceImpl implements UserCourseService {
     private UserMapper userMapper;
 
     @Override
-    public List<CourseInfoVo> getUserCourseInfo(Long userId) {
+    public List<UserCourseInfoVo> getUserCourseInfo(Long userId) {
         List<CourseInfoDto> courseInfoList = courseMapper.selectUserCourseInfo(userId);
-        return BeanUtil.copyList(courseInfoList, CourseInfoVo.class);
+        return BeanUtil.copyList(courseInfoList, UserCourseInfoVo.class);
     }
 
     @Override
