@@ -126,18 +126,12 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectAllCourseInfo" resultMap="com.bing.funread.common.dto.UserCourseInfoDto" >
+  <select id="selectUserCourseInfo" resultMap="com.bing.funread.common.dto.UserCourseInfoDto" parameterType="java.lang.Long" >
     select c.id courseId,name,classify,pic_url picUrl,poetry_num peotryNum,finished_num finishedNum,count(1) userNum
     from course c
     inner join user_course uc on uc.course_id = c.id
-    group by c.id
-    order by c.id
-  </select>
-  <select id="selectUserCourseInfo" resultMap="com.bing.funread.common.dto.UserCourseInfoDto" >
-    select c.id courseId,name,classify,pic_url picUrl,poetry_num peotryNum,finished_num finishedNum
-    from course c
-    inner join user_course uc on uc.course_id = c.id
     where uc.user_id = #{userId,jdbcType=BIGINT}
+    group by c.id
     order by c.id
   </select>
 </mapper>

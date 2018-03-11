@@ -2,12 +2,10 @@ package com.bing.funread.server.service.impl;
 
 import com.bing.funread.common.domain.Course;
 import com.bing.funread.common.domain.Poetry;
-import com.bing.funread.common.dto.UserCourseInfoDto;
 import com.bing.funread.common.mapper.CourseMapper;
 import com.bing.funread.common.mapper.PoetryMapper;
 import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.response.CourseDetailVo;
-import com.bing.funread.response.UserCourseInfoVo;
 import com.bing.funread.response.PoetryVo;
 import com.bing.funread.server.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +26,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private PoetryMapper poetryMapper;
-
-    @Override
-    public List<UserCourseInfoVo> getCourseInfo() {
-        List<UserCourseInfoDto> courseInfoList = courseMapper.selectAllCourseInfo();
-        return BeanUtil.copyList(courseInfoList, UserCourseInfoVo.class);
-    }
 
     @Override
     public CourseDetailVo getCourseDetail(Long courseId) {

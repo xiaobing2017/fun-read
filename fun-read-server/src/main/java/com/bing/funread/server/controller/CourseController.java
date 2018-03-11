@@ -1,7 +1,6 @@
 package com.bing.funread.server.controller;
 
 import com.bing.funread.response.CourseDetailVo;
-import com.bing.funread.response.UserCourseInfoVo;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 /**
  * Description:课程接口
  * Author: zhangfusheng
@@ -32,13 +29,6 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
-
-    @RequestMapping(value = "/getCourse", method = RequestMethod.GET)
-    @ApiOperation(value = "查询课程列表", httpMethod = "GET", notes = "查询首页课程信息列表")
-    public Result<List<UserCourseInfoVo>> getCourse() {
-        List<UserCourseInfoVo> result = courseService.getCourseInfo();
-        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
-    }
 
     @RequestMapping(value = "/getCourseDetail/{courseId}", method = RequestMethod.GET)
     @ApiOperation(value = "查询课程说明", httpMethod = "GET", notes = "查询课程说明")
