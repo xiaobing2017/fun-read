@@ -10,7 +10,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, course_id, poetry_id, order, create_time, update_time
+    id, course_id, poetry_id, `order`, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -24,7 +24,7 @@
   </delete>
   <insert id="insert" parameterType="com.bing.funread.common.domain.CoursePoetry" >
     insert into course_poetry (id, course_id, poetry_id, 
-      order, create_time, update_time
+      `order`, create_time, update_time
       )
     values (#{id,jdbcType=BIGINT}, #{courseId,jdbcType=VARCHAR}, #{poetryId,jdbcType=BIGINT}, 
       #{order,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
@@ -43,7 +43,7 @@
         poetry_id,
       </if>
       <if test="order != null" >
-        order,
+        `order`,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -83,7 +83,7 @@
         poetry_id = #{poetryId,jdbcType=BIGINT},
       </if>
       <if test="order != null" >
-        order = #{order,jdbcType=INTEGER},
+        `order` = #{order,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -98,7 +98,7 @@
     update course_poetry
     set course_id = #{courseId,jdbcType=VARCHAR},
       poetry_id = #{poetryId,jdbcType=BIGINT},
-      order = #{order,jdbcType=INTEGER},
+      `order` = #{order,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

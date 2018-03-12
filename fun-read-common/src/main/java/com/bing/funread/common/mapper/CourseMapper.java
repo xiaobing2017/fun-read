@@ -2,6 +2,7 @@ package com.bing.funread.common.mapper;
 
 import com.bing.funread.common.domain.Course;
 import com.bing.funread.common.dto.UserCourseInfoDto;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,5 +24,5 @@ public interface CourseMapper {
      * @param userId
      * @return
      */
-    List<UserCourseInfoDto> selectUserCourseInfo(Long userId);
+    List<UserCourseInfoDto> selectUserCourseInfo(@Param("userId")Long userId);
 }

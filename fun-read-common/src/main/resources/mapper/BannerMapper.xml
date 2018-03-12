@@ -13,7 +13,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, describe, banner_url, order, link_url, is_show, create_time, update_time
+    id, `name`, `describe`, banner_url, `order`, link_url, is_show, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -26,8 +26,8 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.bing.funread.common.domain.Banner">
-    insert into banner (id, name, describe, 
-      banner_url, order, link_url, 
+    insert into banner (id, name, describe,
+      banner_url, `order`, link_url,
       is_show, create_time, update_time
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
@@ -51,7 +51,7 @@
         banner_url,
       </if>
       <if test="order != null">
-        order,
+        `order`,
       </if>
       <if test="linkUrl != null">
         link_url,
@@ -109,7 +109,7 @@
         banner_url = #{bannerUrl,jdbcType=VARCHAR},
       </if>
       <if test="order != null">
-        order = #{order,jdbcType=INTEGER},
+        `order` = #{order,jdbcType=INTEGER},
       </if>
       <if test="linkUrl != null">
         link_url = #{linkUrl,jdbcType=VARCHAR},
@@ -131,7 +131,7 @@
     set name = #{name,jdbcType=VARCHAR},
       describe = #{describe,jdbcType=VARCHAR},
       banner_url = #{bannerUrl,jdbcType=VARCHAR},
-      order = #{order,jdbcType=INTEGER},
+      `order` = #{order,jdbcType=INTEGER},
       link_url = #{linkUrl,jdbcType=VARCHAR},
       is_show = #{isShow,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

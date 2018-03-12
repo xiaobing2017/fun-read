@@ -11,6 +11,6 @@ import com.bing.funread.common.utils.TokenUtil;
 abstract class BaseController {
 
     Long getUserId() {
-        return TokenUtil.get(CommonConstant.TOKEN_USER_ID);
+        return ((Integer) TokenUtil.get(CommonConstant.TOKEN_USER_ID)).longValue();
     }
 }

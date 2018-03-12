@@ -1,6 +1,7 @@
 package com.bing.funread.common.mapper;
 
 import com.bing.funread.common.domain.CoursePoetry;
+import org.apache.ibatis.annotations.Param;
 
 public interface CoursePoetryMapper {
     int deleteByPrimaryKey(Long id);
@@ -15,5 +16,5 @@ public interface CoursePoetryMapper {
 
     int updateByPrimaryKey(CoursePoetry record);
 
-    CoursePoetry selectByCourseAndPoetry(Long courseId, Long poetryId);
+    CoursePoetry selectByCourseAndPoetry(@Param("courseId")Long courseId, @Param("poetryId")Long poetryId);
 }

@@ -1,6 +1,7 @@
 package com.bing.funread.common.mapper;
 
 import com.bing.funread.common.domain.UserActivity;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserActivityMapper {
     int deleteByPrimaryKey(Long id);
@@ -15,5 +16,5 @@ public interface UserActivityMapper {
 
     int updateByPrimaryKey(UserActivity record);
 
-    UserActivity selectUserActivityInfo(Long userId, Long activityId);
+    UserActivity selectUserActivityInfo(@Param("userId")Long userId, @Param("activityId")Long activityId);
 }

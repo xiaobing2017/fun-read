@@ -2,6 +2,7 @@ package com.bing.funread.common.mapper;
 
 import com.bing.funread.common.domain.UserCourse;
 import com.bing.funread.common.dto.ReadInfoDto;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserCourseMapper {
     int deleteByPrimaryKey(Long id);
@@ -16,11 +17,11 @@ public interface UserCourseMapper {
 
     int updateByPrimaryKey(UserCourse record);
 
-    UserCourse selectByUserAndCourse(Long userId, Long courseId);
+    UserCourse selectByUserAndCourse(@Param("userId")Long userId, @Param("courseId")Long courseId);
 
     int selectHasStudyPoetrys(Long userId);
 
-    ReadInfoDto selectReadInfo(Long userId, Long courseId, Long poetryId);
+    ReadInfoDto selectReadInfo(@Param("userId")Long userId, @Param("courseId")Long courseId, @Param("poetryId")Long poetryId);
 
     int updateCourseFinishedAddOne(Long id);
 }

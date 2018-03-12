@@ -1,6 +1,7 @@
 package com.bing.funread.common.mapper;
 
 import com.bing.funread.common.domain.PoetryInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface PoetryInfoMapper {
 
     int updateByPrimaryKey(PoetryInfo record);
 
-    List<PoetryInfo> selectByPoetryId(Long poetryId);
+    List<PoetryInfo> selectByPoetryId(@Param("poetryId")Long poetryId);
 }

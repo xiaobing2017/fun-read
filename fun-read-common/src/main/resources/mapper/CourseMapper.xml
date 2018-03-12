@@ -126,8 +126,17 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectUserCourseInfo" resultMap="com.bing.funread.common.dto.UserCourseInfoDto" parameterType="java.lang.Long" >
-    select c.id courseId,name,classify,pic_url picUrl,poetry_num peotryNum,finished_num finishedNum,count(1) userNum
+  <resultMap id="UserCourseInfoDto" type="com.bing.funread.common.dto.UserCourseInfoDto" >
+    <id column="id" property="courseId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="classify" property="classify" jdbcType="VARCHAR" />
+    <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+    <result column="poetry_num" property="poetryNum" jdbcType="INTEGER" />
+    <result column="finished_num" property="finishedNum" jdbcType="INTEGER" />
+    <result column="user_num" property="userNum" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectUserCourseInfo" resultMap="UserCourseInfoDto" parameterType="java.lang.Long" >
+    select c.id,name,classify,pic_url,poetry_num,finished_num,count(1) user_num
     from course c
     inner join user_course uc on uc.course_id = c.id
     where uc.user_id = #{userId,jdbcType=BIGINT}
