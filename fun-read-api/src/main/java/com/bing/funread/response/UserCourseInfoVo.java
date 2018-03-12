@@ -86,7 +86,7 @@ public class UserCourseInfoVo implements Serializable {
         return finishedNum;
     }
 
-    public void setFinishedNum(Integer unlockNum) {
+    public void setFinishedNum(Integer finishedNum) {
         this.finishedNum = finishedNum;
     }
 

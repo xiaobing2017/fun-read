@@ -14,4 +14,6 @@ public interface UserActivityAudioMapper {
     int updateByPrimaryKeySelective(UserActivityAudio record);
 
     int updateByPrimaryKey(UserActivityAudio record);
+
+    int insertOrUpdateSelective(UserActivityAudio record);
 }

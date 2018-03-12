@@ -17,4 +17,6 @@ public interface UserActivityMapper {
     int updateByPrimaryKey(UserActivity record);
 
     UserActivity selectUserActivityInfo(@Param("userId")Long userId, @Param("activityId")Long activityId);
+
+    int updateActivityFinishedNum(Long id);
 }

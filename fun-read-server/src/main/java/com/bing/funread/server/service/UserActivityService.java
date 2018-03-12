@@ -1,6 +1,8 @@
 package com.bing.funread.server.service;
 
+import com.bing.funread.request.ActivityPoetryRequest;
 import com.bing.funread.response.UserActivityInfoVo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Description:用户活动接口
@@ -16,4 +18,13 @@ public interface UserActivityService {
      * @return
      */
     UserActivityInfoVo getUserActivityInfo(Long userId, Long activityId);
+
+    /**
+     * 保存跟读文件
+     * @param userId
+     * @param files
+     * @param request
+     */
+    void upload(Long userId, MultipartFile[] files, ActivityPoetryRequest request);
 }
+
