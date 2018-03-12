@@ -137,6 +137,9 @@ public class UserCourseServiceImpl implements UserCourseService {
         if (CollectionUtils.isEmpty(poetryInfoList)) {
             throw new ServiceException("", "诗句不存在");
         }
+        if (poetryInfoList.size() != request.getPoetryInfoIdList().size()) {
+            throw new ServiceException("", "上传文件不完整");
+        }
         List<Long> poetryInfoIdList = Lists.newArrayList();
         for (PoetryInfo poetryInfo : poetryInfoList) {
             poetryInfoIdList.add(poetryInfo.getId());
@@ -154,7 +157,6 @@ public class UserCourseServiceImpl implements UserCourseService {
             String saveDir = createFileDir(request, userId, CommonConstant.FILE_DIR_COURSE);
             Long poetryInfoId = request.getPoetryInfoIdList().get(i++);
             String audioUrl = fileService.upload(file, saveDir, poetryInfoId.toString());
-
             UserCourseAudio userCourseAudio = new UserCourseAudio();
             userCourseAudio.setUserCourseId(userCourse.getId());
             userCourseAudio.setPoetryId(request.getPoetryId());
@@ -164,16 +166,16 @@ public class UserCourseServiceImpl implements UserCourseService {
         }
         // 更新数据库
         for (UserCourseAudio userCourseAudio : userCourseAudioList) {
-            userCourseAudioMapper.insertSelective(userCourseAudio);
+            userCourseAudioMapper.insertOrUpdateSelective(userCourseAudio);
         }
-        // 用户课程诗词已完成数量+1
-        userCourseMapper.updateCourseFinishedAddOne(userCourse.getId());
+        // 更新用户课程诗词已完成数量
+        userCourseMapper.updateCourseFinishedNum(userCourse.getId());
     }
 
     private String createFileDir(CoursePoetryRequest request, Long userId, String baseDir) {
-        return File.separator + baseDir +
-                File.separator + userId +
-                File.separator + request.getCourseId() +
-                File.separator + request.getPoetryId();
+        return baseDir + File.separator +
+                userId + File.separator +
+                request.getCourseId() + File.separator +
+                request.getPoetryId() + File.separator;
     }
 }

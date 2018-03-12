@@ -2,6 +2,7 @@ package com.bing.funread.common.utils;
 
 import org.apache.commons.lang3.time.DateUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -49,5 +50,16 @@ public class DateUtil {
     public static int getDiffDays(Date beginDate, Date endDate) {
         long days = (getDate(endDate).getTime() - getDate(beginDate).getTime()) / ONE_DAY_MILLIS;
         return new Long(days).intValue();
+    }
+
+    /**
+     * 格式化时间
+     * @param date
+     * @param pattern
+     * @return
+     */
+    public static String format(Date date, String pattern) {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
     }
 }

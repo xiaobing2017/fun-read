@@ -23,5 +23,5 @@ public interface UserCourseMapper {
 
     ReadInfoDto selectReadInfo(@Param("userId")Long userId, @Param("courseId")Long courseId, @Param("poetryId")Long poetryId);
 
-    int updateCourseFinishedAddOne(Long id);
+    int updateCourseFinishedNum(Long id);
 }

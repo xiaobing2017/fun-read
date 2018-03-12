@@ -1,6 +1,11 @@
 package com.bing.funread.server.service.impl;
 
+import com.bing.funread.common.exception.ServiceException;
+import com.bing.funread.common.utils.DateUtil;
 import com.bing.funread.server.service.FileService;
+import org.apache.commons.lang.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,21 +21,31 @@ import java.io.IOException;
 @Service
 public class FileServiceImpl implements FileService {
 
+    public static final Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
+
     @Value("${web.upload-path}")
-    private static String FILE_BASE_DIR;
+    private String FILE_BASE_DIR;
 
     @Override
     public String upload(MultipartFile file, String saveDir, String filename) {
         try {
-            File saveFile = new File(FILE_BASE_DIR + saveDir + filename);
+            String sourceName = file.getOriginalFilename();
+            String fileSuffix = sourceName.substring(sourceName.lastIndexOf("."), sourceName.length());
+            String savePath = saveDir + filename + "-" + random() + fileSuffix;
+            File saveFile = new File(FILE_BASE_DIR + savePath);
             if (!saveFile.getParentFile().exists()) {
                 saveFile.getParentFile().mkdirs();
             }
             file.transferTo(saveFile);
-            return saveFile.getParent();
+            return savePath;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("文件上传失败，{}", e);
+            throw new ServiceException("", "文件上传失败");
         }
-        return null;
+    }
+
+    private String random() {
+        return DateUtil.format(DateUtil.getCurrentTime(), "yyMMddHHmmssSSS") +
+                RandomStringUtils.randomNumeric(5);
     }
 }
