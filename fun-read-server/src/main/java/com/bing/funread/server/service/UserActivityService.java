@@ -1,8 +1,11 @@
 package com.bing.funread.server.service;
 
 import com.bing.funread.request.ActivityPoetryRequest;
+import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.UserActivityInfoVo;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * Description:用户活动接口
@@ -10,6 +13,13 @@ import org.springframework.web.multipart.MultipartFile;
  * Date: 2018/3/8 下午3:39
  */
 public interface UserActivityService {
+
+    /**
+     * 查询活动列表
+     * @param userId
+     * @return
+     */
+    List<ActivityInfoVo> getActivityInfo(Long userId);
 
     /**
      * 查询用户活动信息

@@ -123,4 +123,18 @@
     set t1.finished_num = t2.num
     where t1.id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectActivityInfo" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    a.id,a.name,a.banner_url,a.poetry_num,count(1) user_num
+    from activity a
+    left join user_activity ua on a.id = ua.activity_id
+    where user_id = #{userId,jdbcType=BIGINT}
+    group by a.id
+    order by a.id
+  </select>
+  <select id="selectUserActivityId" resultType="java.lang.Long" parameterType="java.lang.Long" >
+    select id
+    from user_activity
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

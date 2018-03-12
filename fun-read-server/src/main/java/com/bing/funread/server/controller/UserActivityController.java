@@ -1,6 +1,7 @@
 package com.bing.funread.server.controller;
 
 import com.bing.funread.request.ActivityPoetryRequest;
+import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Description:用户活动接口
@@ -36,6 +38,14 @@ public class UserActivityController extends BaseController {
     @Autowired
     private UserActivityService userActivityService;
 
+    @RequestMapping(value = "/getUserActivity", method = RequestMethod.GET)
+    @ApiOperation(value = "查询活动信息", httpMethod = "GET", notes = "查询活动信息")
+    public Result<List<ActivityInfoVo>> getActivity() {
+        Long userId = getUserId();
+        List<ActivityInfoVo> result = userActivityService.getActivityInfo(userId);
+        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
+    }
+
     @RequestMapping(value = "/getUserActivity/{activityId}", method = RequestMethod.GET)
     @ApiOperation(value = "查询用户活动信息", httpMethod = "GET", notes = "查询用户活动信息")
     public Result<UserActivityInfoVo> getUserActivity(@ApiParam(required = true, name = "activityId", value = "活动ID")
@@ -46,7 +56,7 @@ public class UserActivityController extends BaseController {
     }
 
     @RequestMapping(value = "/upload/audio", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "上传跟读文件", httpMethod = "POST", notes = "上传用户课程诗词跟读音频文件并保存")
+    @ApiOperation(value = "上传跟读文件", httpMethod = "POST", notes = "上传用户活动诗词跟读音频文件并保存")
     public Result<String> upload(@ApiParam(required = true, name = "files", value = "文件列表")
                                  @NotNull(message="文件不能为空") @RequestParam("files") MultipartFile[] files,
                                  ActivityPoetryRequest request) {

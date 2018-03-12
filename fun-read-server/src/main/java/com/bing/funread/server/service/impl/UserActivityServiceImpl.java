@@ -6,13 +6,16 @@ import com.bing.funread.common.domain.ActivityPoetry;
 import com.bing.funread.common.domain.PoetryInfo;
 import com.bing.funread.common.domain.UserActivity;
 import com.bing.funread.common.domain.UserActivityAudio;
+import com.bing.funread.common.dto.ActivityInfoDto;
 import com.bing.funread.common.exception.ServiceException;
 import com.bing.funread.common.mapper.ActivityMapper;
 import com.bing.funread.common.mapper.ActivityPoetryMapper;
 import com.bing.funread.common.mapper.PoetryInfoMapper;
 import com.bing.funread.common.mapper.UserActivityAudioMapper;
 import com.bing.funread.common.mapper.UserActivityMapper;
+import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.request.ActivityPoetryRequest;
+import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.UserActivityInfoVo;
 import com.bing.funread.server.service.FileService;
 import com.bing.funread.server.service.UserActivityService;
@@ -52,6 +55,25 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     @Autowired
     private FileService fileService;
+
+    @Override
+    public List<ActivityInfoVo> getActivityInfo(Long userId) {
+        List<ActivityInfoDto> activityInfoList = userActivityMapper.selectActivityInfo(userId);
+        if (CollectionUtils.isEmpty(activityInfoList)) {
+            return null;
+        }
+        List<ActivityInfoVo> activityInfoVoList = BeanUtil.copyList(activityInfoList, ActivityInfoVo.class);
+        List<Long> userActivityIdList = userActivityMapper.selectUserActivityId(userId);
+        if (CollectionUtils.isEmpty(userActivityIdList)) {
+            return activityInfoVoList;
+        }
+        for (ActivityInfoVo activityInfoVo : activityInfoVoList) {
+            if (userActivityIdList.contains(activityInfoVo.getId())) {
+                activityInfoVo.setJoin(true);
+            }
+        }
+        return activityInfoVoList;
+    }
 
     @Override
     public UserActivityInfoVo getUserActivityInfo(Long userId, Long activityId) {
