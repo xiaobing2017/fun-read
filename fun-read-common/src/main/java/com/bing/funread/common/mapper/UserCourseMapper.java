@@ -21,4 +21,6 @@ public interface UserCourseMapper {
     int selectHasStudyPoetrys(Long userId);
 
     ReadInfoDto selectReadInfo(Long userId, Long courseId, Long poetryId);
+
+    int updateCourseFinishedAddOne(Long id);
 }

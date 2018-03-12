@@ -31,6 +31,7 @@ import com.bing.funread.server.service.UserCourseService;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -116,6 +117,7 @@ public class UserCourseServiceImpl implements UserCourseService {
         return BeanUtil.copyBean(readInfo, ReadInfoVo.class);
     }
 
+    @Transactional
     @Override
     public void upload(Long userId, MultipartFile[] files, CoursePoetryRequest request) {
         // 检查文件数量与诗句数量是否一样
@@ -164,6 +166,8 @@ public class UserCourseServiceImpl implements UserCourseService {
         for (UserCourseAudio userCourseAudio : userCourseAudioList) {
             userCourseAudioMapper.insertSelective(userCourseAudio);
         }
+        // 用户课程诗词已完成数量+1
+        userCourseMapper.updateCourseFinishedAddOne(userCourse.getId());
     }
 
     private String createFileDir(CoursePoetryRequest request, Long userId, String baseDir) {

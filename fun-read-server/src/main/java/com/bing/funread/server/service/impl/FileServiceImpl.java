@@ -16,7 +16,7 @@ import java.io.IOException;
 @Service
 public class FileServiceImpl implements FileService {
 
-    @Value("upload_file_base_dir")
+    @Value("${upload.file.base.dir}")
     private static String FILE_BASE_DIR;
 
     @Override

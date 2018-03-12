@@ -126,4 +126,9 @@
       and uca.poetry_id = #{poetryId,jdbcType=BIGINT}
     order by p.`order`
   </select>
+  <update id="updateCourseFinishedAddOne" parameterType="java.lang.Long" >
+    update user_course
+    set finished_num = finished_num + 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>
