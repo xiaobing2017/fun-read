@@ -14,6 +14,7 @@ import com.bing.funread.common.mapper.PoetryInfoMapper;
 import com.bing.funread.common.mapper.UserActivityAudioMapper;
 import com.bing.funread.common.mapper.UserActivityMapper;
 import com.bing.funread.common.utils.BeanUtil;
+import com.bing.funread.common.utils.DateUtil;
 import com.bing.funread.request.ActivityPoetryRequest;
 import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.UserActivityInfoVo;
@@ -83,6 +84,16 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     @Override
     public void join(Long userId, Long activityId) {
+        Activity activity = activityMapper.selectByPrimaryKey(activityId);
+        if (activity == null || !CommonConstant.YES.equals(activity.getIsValid())) {
+            throw new ServiceException("", "活动无效");
+        }
+        if (activity.getStartDate() != null && DateUtil.getCurrentTime().before(activity.getStartDate())) {
+            throw new ServiceException("", "活动未开始");
+        }
+        if (activity.getEndDate() != null && DateUtil.getCurrentTime().after(activity.getEndDate())) {
+            throw new ServiceException("", "活动已结束");
+        }
         UserActivity userActivity = new UserActivity();
         userActivity.setUserId(userId);
         userActivity.setActivityId(activityId);

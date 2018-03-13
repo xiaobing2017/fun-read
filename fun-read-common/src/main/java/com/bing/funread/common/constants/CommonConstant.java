@@ -26,4 +26,14 @@ public class CommonConstant {
      * 用户活动音频文件保存路径
      */
     public static final String FILE_DIR_ACTIVITY = "activity";
+
+    /**
+     * 状态 1：是
+     */
+    public static final String YES = "1";
+
+    /**
+     * 状态 0：否
+     */
+    public static final String NO = "0";
 }
