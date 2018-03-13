@@ -10,8 +10,9 @@ import com.bing.funread.response.ActivityVo;
 public interface ActivityService {
 
     /**
-     * 查询当前活动信息
+     * 查询活动介绍
+     * @param activityId
      * @return
      */
-    ActivityVo getCurrentActivityInfo();
+    ActivityVo getActivityInfo(Long activityId);
 }

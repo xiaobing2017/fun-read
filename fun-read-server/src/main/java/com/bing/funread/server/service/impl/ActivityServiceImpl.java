@@ -20,8 +20,8 @@ public class ActivityServiceImpl implements ActivityService {
     private ActivityMapper activityMapper;
 
     @Override
-    public ActivityVo getCurrentActivityInfo() {
-        Activity activity = activityMapper.selectValidActivity();
+    public ActivityVo getActivityInfo(Long activityId) {
+        Activity activity = activityMapper.selectByPrimaryKey(activityId);
         return BeanUtil.copyBean(activity, ActivityVo.class);
     }
 }

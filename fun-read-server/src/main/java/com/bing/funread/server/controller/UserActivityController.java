@@ -47,7 +47,7 @@ public class UserActivityController extends BaseController {
     }
 
     @RequestMapping(value = "/getUserActivityStatus/{activityId}", method = RequestMethod.GET)
-    @ApiOperation(value = "查询用户是否参加活动", httpMethod = "GET", notes = "查询用户是否参加活动")
+    @ApiOperation(value = "查询用户是否已参加活动", httpMethod = "GET", notes = "查询用户是否已参加活动")
     public Result<Boolean> getUserActivityStatus(@ApiParam(required = true, name = "activityId", value = "活动ID")
                                                  @NotBlank(message="活动ID不能为空") @PathVariable Long activityId) {
         Long userId = getUserId();
