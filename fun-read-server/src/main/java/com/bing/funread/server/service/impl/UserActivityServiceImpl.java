@@ -76,6 +76,20 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
+    public Boolean getUserActivityStatus(Long userId, Long activityId) {
+        UserActivity userActivity = userActivityMapper.selectUserActivityInfo(userId, activityId);
+        return userActivity != null;
+    }
+
+    @Override
+    public void join(Long userId, Long activityId) {
+        UserActivity userActivity = new UserActivity();
+        userActivity.setUserId(userId);
+        userActivity.setActivityId(activityId);
+        userActivityMapper.insertIgnoreSelective(userActivity);
+    }
+
+    @Override
     public UserActivityInfoVo getUserActivityInfo(Long userId, Long activityId) {
         Activity activity = activityMapper.selectByPrimaryKey(activityId);
         UserActivity userActivity = userActivityMapper.selectUserActivityInfo(userId, activityId);

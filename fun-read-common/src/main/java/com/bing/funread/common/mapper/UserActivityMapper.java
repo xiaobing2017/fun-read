@@ -26,4 +26,6 @@ public interface UserActivityMapper {
     List<ActivityInfoDto> selectActivityInfo(@Param("userId")Long userId);
 
     List<Long> selectUserActivityId(@Param("userId")Long userId);
+
+    int insertIgnoreSelective(UserActivity record);
 }

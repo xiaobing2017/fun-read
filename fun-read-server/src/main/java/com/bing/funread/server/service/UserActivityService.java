@@ -22,6 +22,21 @@ public interface UserActivityService {
     List<ActivityInfoVo> getActivityInfo(Long userId);
 
     /**
+     * 检查用户是否参加了活动
+     * @param userId
+     * @param activityId
+     * @return
+     */
+    Boolean getUserActivityStatus(Long userId, Long activityId);
+
+    /**
+     * 用户参加活动
+     * @param userId
+     * @param activityId
+     */
+    void join(Long userId, Long activityId);
+
+    /**
      * 查询用户活动信息
      * @param userId
      * @param activityId

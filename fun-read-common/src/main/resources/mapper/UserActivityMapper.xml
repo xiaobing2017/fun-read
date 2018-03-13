@@ -137,4 +137,8 @@
     from user_activity
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
+  <insert id="insertIgnoreSelective" parameterType="com.bing.funread.common.domain.UserActivity" >
+    insert ignore into user_activity (user_id, activity_id)
+    values (#{userId,jdbcType=BIGINT}, #{activityId,jdbcType=BIGINT})
+  </insert>
 </mapper>
