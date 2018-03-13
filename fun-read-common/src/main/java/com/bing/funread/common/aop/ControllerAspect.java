@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ControllerAspect {
 
     @Value("${auth.intercept.url}")
-    private static String authInterceptUrl;
+    private String authInterceptUrl;
 
     @Before(value = "execution(* com.bing.funread.server.controller.*.*(..))")
     public void authToken(JoinPoint joinPoint) {
