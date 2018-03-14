@@ -15,6 +15,8 @@ public class Course {
 
     private String picUrl;
 
+    private Integer finalTestNum;
+
     private Date createTime;
 
     private Date updateTime;
@@ -65,6 +67,14 @@ public class Course {
 
     public void setPicUrl(String picUrl) {
         this.picUrl = picUrl == null ? null : picUrl.trim();
+    }
+
+    public Integer getFinalTestNum() {
+        return finalTestNum;
+    }
+
+    public void setFinalTestNum(Integer finalTestNum) {
+        this.finalTestNum = finalTestNum;
     }
 
     public Date getCreateTime() {

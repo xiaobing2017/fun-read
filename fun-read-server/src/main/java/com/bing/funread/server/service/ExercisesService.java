@@ -17,4 +17,11 @@ public interface ExercisesService {
      * @return
      */
     List<ExercisesInfoVo> getExercises(Long poetryId);
+
+    /**
+     * 查询课程期末练习题
+     * @param courseId
+     * @return
+     */
+    List<ExercisesInfoVo> getFinalTest(Long courseId);
 }

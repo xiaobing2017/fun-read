@@ -39,4 +39,12 @@ public class ExercisesController {
         List<ExercisesInfoVo> result = exercisesService.getExercises(poetryId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
+
+    @RequestMapping(value = "/getFinalTest/{courseId}", method = RequestMethod.GET)
+    @ApiOperation(value = "查询期末测试题", httpMethod = "GET", notes = "查询课程期末测试题")
+    public Result<List<ExercisesInfoVo>> getFinalTest(@ApiParam(required = true, name = "courseId", value = "课程ID")
+                                                      @NotBlank(message="课程ID不能为空") @PathVariable Long courseId) {
+        List<ExercisesInfoVo> result = exercisesService.getFinalTest(courseId);
+        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
+    }
 }

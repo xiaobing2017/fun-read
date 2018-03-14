@@ -122,4 +122,20 @@
     from exercises
     where poetry_id = #{poetryId,jdbcType=BIGINT}
   </select>
+  <select id="selectCourseExercises" resultType="java.lang.Long" parameterType="java.lang.Long" >
+    select e.id
+    from exercises e
+    inner join course_poetry cp on cp.poetry_id = e.poetry_id
+    where course_id = #{courseId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCourseIdList" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from exercises
+    where id in
+    <foreach collection="courseIdList" item="courseId" index="index"
+             open="(" close=")" separator=",">
+      #{courseId}
+    </foreach>
+  </select>
 </mapper>

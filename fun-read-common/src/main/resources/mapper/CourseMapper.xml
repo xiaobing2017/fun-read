@@ -1,141 +1,154 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bing.funread.common.mapper.CourseMapper" >
-  <resultMap id="BaseResultMap" type="com.bing.funread.common.domain.Course" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="describe" property="describe" jdbcType="VARCHAR" />
-    <result column="classify" property="classify" jdbcType="VARCHAR" />
-    <result column="poetry_num" property="poetryNum" jdbcType="INTEGER" />
-    <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bing.funread.common.mapper.CourseMapper">
+  <resultMap id="BaseResultMap" type="com.bing.funread.common.domain.Course">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="classify" jdbcType="VARCHAR" property="classify" />
+    <result column="poetry_num" jdbcType="INTEGER" property="poetryNum" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="final_test_num" jdbcType="INTEGER" property="finalTestNum" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, name, describe, classify, poetry_num, pic_url, create_time, update_time
+  <sql id="Base_Column_List">
+    id, name, describe, classify, poetry_num, pic_url, final_test_num, create_time, update_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from course
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from course
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.bing.funread.common.domain.Course" >
+  <insert id="insert" parameterType="com.bing.funread.common.domain.Course">
     insert into course (id, name, describe, 
       classify, poetry_num, pic_url, 
-      create_time, update_time)
+      final_test_num, create_time, update_time
+      )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
       #{classify,jdbcType=VARCHAR}, #{poetryNum,jdbcType=INTEGER}, #{picUrl,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{finalTestNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.bing.funread.common.domain.Course" >
+  <insert id="insertSelective" parameterType="com.bing.funread.common.domain.Course">
     insert into course
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         name,
       </if>
-      <if test="describe != null" >
+      <if test="describe != null">
         describe,
       </if>
-      <if test="classify != null" >
+      <if test="classify != null">
         classify,
       </if>
-      <if test="poetryNum != null" >
+      <if test="poetryNum != null">
         poetry_num,
       </if>
-      <if test="picUrl != null" >
+      <if test="picUrl != null">
         pic_url,
       </if>
-      <if test="createTime != null" >
+      <if test="finalTestNum != null">
+        final_test_num,
+      </if>
+      <if test="createTime != null">
         create_time,
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         update_time,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="describe != null" >
+      <if test="describe != null">
         #{describe,jdbcType=VARCHAR},
       </if>
-      <if test="classify != null" >
+      <if test="classify != null">
         #{classify,jdbcType=VARCHAR},
       </if>
-      <if test="poetryNum != null" >
+      <if test="poetryNum != null">
         #{poetryNum,jdbcType=INTEGER},
       </if>
-      <if test="picUrl != null" >
+      <if test="picUrl != null">
         #{picUrl,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="finalTestNum != null">
+        #{finalTestNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bing.funread.common.domain.Course" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.bing.funread.common.domain.Course">
     update course
-    <set >
-      <if test="name != null" >
+    <set>
+      <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="describe != null" >
+      <if test="describe != null">
         describe = #{describe,jdbcType=VARCHAR},
       </if>
-      <if test="classify != null" >
+      <if test="classify != null">
         classify = #{classify,jdbcType=VARCHAR},
       </if>
-      <if test="poetryNum != null" >
+      <if test="poetryNum != null">
         poetry_num = #{poetryNum,jdbcType=INTEGER},
       </if>
-      <if test="picUrl != null" >
+      <if test="picUrl != null">
         pic_url = #{picUrl,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="finalTestNum != null">
+        final_test_num = #{finalTestNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bing.funread.common.domain.Course" >
+  <update id="updateByPrimaryKey" parameterType="com.bing.funread.common.domain.Course">
     update course
     set name = #{name,jdbcType=VARCHAR},
       describe = #{describe,jdbcType=VARCHAR},
       classify = #{classify,jdbcType=VARCHAR},
       poetry_num = #{poetryNum,jdbcType=INTEGER},
       pic_url = #{picUrl,jdbcType=VARCHAR},
+      final_test_num = #{finalTestNum,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <resultMap id="UserCourseInfoDto" type="com.bing.funread.common.dto.UserCourseInfoDto" >
-    <id column="id" property="courseId" jdbcType="BIGINT" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="classify" property="classify" jdbcType="VARCHAR" />
-    <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
-    <result column="poetry_num" property="poetryNum" jdbcType="INTEGER" />
-    <result column="finished_num" property="finishedNum" jdbcType="INTEGER" />
-    <result column="user_num" property="userNum" jdbcType="INTEGER" />
+  <resultMap id="UserCourseInfoDto" type="com.bing.funread.common.dto.UserCourseInfoDto">
+    <id column="id" jdbcType="BIGINT" property="courseId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="classify" jdbcType="VARCHAR" property="classify" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="poetry_num" jdbcType="INTEGER" property="poetryNum" />
+    <result column="finished_num" jdbcType="INTEGER" property="finishedNum" />
+    <result column="user_num" jdbcType="INTEGER" property="userNum" />
   </resultMap>
-  <select id="selectUserCourseInfo" resultMap="UserCourseInfoDto" parameterType="java.lang.Long" >
+  <select id="selectUserCourseInfo" parameterType="java.lang.Long" resultMap="UserCourseInfoDto">
     select c.id,name,classify,pic_url,poetry_num,finished_num,count(1) user_num
     from course c
     inner join user_course uc on uc.course_id = c.id

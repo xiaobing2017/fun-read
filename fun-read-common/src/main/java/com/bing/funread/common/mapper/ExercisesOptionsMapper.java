@@ -19,4 +19,6 @@ public interface ExercisesOptionsMapper {
     int updateByPrimaryKey(ExercisesOptions record);
 
     List<ExercisesOptions> selectByPoetryId(@Param("poetryId")Long poetryId);
+
+    List<ExercisesOptions> selectByCourseIdList(@Param("courseIdList")List<Long> courseIdList);
 }

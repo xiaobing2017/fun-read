@@ -7,7 +7,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 /**
- * Description:
+ * Description:对象转换工具类
  * Author: zhangfusheng
  * Date: 2017/8/31 上午10:52
  */
