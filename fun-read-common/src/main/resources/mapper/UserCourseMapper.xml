@@ -138,4 +138,19 @@
     set t1.finished_num = t2.num
     where t1.id = #{id,jdbcType=BIGINT}
   </update>
+  <resultMap id="CourseUserNumDto" type="com.bing.funread.common.dto.CourseUserNumDto">
+    <id column="id" jdbcType="BIGINT" property="courseId" />
+    <result column="user_num" jdbcType="INTEGER" property="userNum" />
+  </resultMap>
+  <select id="selectUserNumByCourseIdList" resultMap="CourseUserNumDto" >
+    select c.id,count(1) user_num
+    from course c
+    inner join user_course uc on c.id = uc.course_id
+    where c.id in
+    <foreach collection="courseIdList" item="courseId" index="index"
+             open="(" close=")" separator=",">
+      #{courseId}
+    </foreach>
+    group by c.id
+  </select>
 </mapper>

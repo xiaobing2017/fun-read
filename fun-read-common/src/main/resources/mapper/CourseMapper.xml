@@ -149,11 +149,10 @@
     <result column="user_num" jdbcType="INTEGER" property="userNum" />
   </resultMap>
   <select id="selectUserCourseInfo" parameterType="java.lang.Long" resultMap="UserCourseInfoDto">
-    select c.id,name,classify,pic_url,poetry_num,finished_num,count(1) user_num
+    select c.id,name,classify,pic_url,poetry_num,finished_num
     from course c
     inner join user_course uc on uc.course_id = c.id
     where uc.user_id = #{userId,jdbcType=BIGINT}
-    group by c.id
     order by c.id
   </select>
 </mapper>

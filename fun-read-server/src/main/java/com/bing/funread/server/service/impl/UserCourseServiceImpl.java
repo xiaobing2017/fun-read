@@ -8,6 +8,7 @@ import com.bing.funread.common.domain.PoetryInfo;
 import com.bing.funread.common.domain.User;
 import com.bing.funread.common.domain.UserCourse;
 import com.bing.funread.common.domain.UserCourseAudio;
+import com.bing.funread.common.dto.CourseUserNumDto;
 import com.bing.funread.common.dto.ReadInfoDto;
 import com.bing.funread.common.dto.UserCourseInfoDto;
 import com.bing.funread.common.exception.ServiceException;
@@ -29,6 +30,8 @@ import com.bing.funread.response.UserStudyInfoVo;
 import com.bing.funread.server.service.FileService;
 import com.bing.funread.server.service.UserCourseService;
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +39,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -45,6 +49,8 @@ import java.util.List;
  */
 @Service
 public class UserCourseServiceImpl implements UserCourseService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserCourseServiceImpl.class);
 
     @Autowired
     private CourseMapper courseMapper;
@@ -72,8 +78,30 @@ public class UserCourseServiceImpl implements UserCourseService {
 
     @Override
     public List<UserCourseInfoVo> getUserCourseInfo(Long userId) {
+        // 查询当前用户课程情况
         List<UserCourseInfoDto> courseInfoList = courseMapper.selectUserCourseInfo(userId);
-        return BeanUtil.copyList(courseInfoList, UserCourseInfoVo.class);
+        if (CollectionUtils.isEmpty(courseInfoList)) {
+            logger.info("用户：{} 目前没有课程", userId);
+            return null;
+        }
+        List<UserCourseInfoVo> voList = BeanUtil.copyList(courseInfoList, UserCourseInfoVo.class);
+        // 查询当前用户课程参与人数
+        List<Long> courseIdList = Lists.newArrayList();
+        for (UserCourseInfoVo vo : voList) {
+            courseIdList.add(vo.getCourseId());
+        }
+        List<CourseUserNumDto> userNumList = userCourseMapper.selectUserNumByCourseIdList(courseIdList);
+        for (UserCourseInfoVo vo : voList) {
+            for (Iterator<CourseUserNumDto> it = userNumList.iterator(); it.hasNext(); ) {
+                CourseUserNumDto userNum = it.next();
+                if (vo.getCourseId() == userNum.getCourserId()) {
+                    vo.setUserNum(userNum.getUserNum());
+                    it.remove();
+                    break;
+                }
+            }
+        }
+        return voList;
     }
 
     @Override
