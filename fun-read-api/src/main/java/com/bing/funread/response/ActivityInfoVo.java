@@ -29,6 +29,9 @@ public class ActivityInfoVo {
     @ApiModelProperty(value = "是否已参加 true是 false否")
     private boolean isJoin;
 
+    @ApiModelProperty(value = "已完成课时数量")
+    private Integer finishedNum;
+
     public Integer getId() {
         return id;
     }
@@ -77,6 +80,14 @@ public class ActivityInfoVo {
         isJoin = join;
     }
 
+    public Integer getFinishedNum() {
+        return finishedNum;
+    }
+
+    public void setFinishedNum(Integer finishedNum) {
+        this.finishedNum = finishedNum;
+    }
+
     @Override
     public String toString() {
         return "ActivityInfoVo{" +
@@ -86,6 +97,7 @@ public class ActivityInfoVo {
                 ", poetryNum=" + poetryNum +
                 ", userNum=" + userNum +
                 ", isJoin=" + isJoin +
+                ", finishedNum=" + finishedNum +
                 '}';
     }
 }

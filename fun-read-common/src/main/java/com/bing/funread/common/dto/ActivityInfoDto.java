@@ -21,6 +21,8 @@ public class ActivityInfoDto implements Serializable {
 
     private boolean isJoin;
 
+    private Integer finishedNum;
+
     public Integer getId() {
         return id;
     }
@@ -67,5 +69,13 @@ public class ActivityInfoDto implements Serializable {
 
     public void setJoin(boolean join) {
         isJoin = join;
+    }
+
+    public Integer getFinishedNum() {
+        return finishedNum;
+    }
+
+    public void setFinishedNum(Integer finishedNum) {
+        this.finishedNum = finishedNum;
     }
 }

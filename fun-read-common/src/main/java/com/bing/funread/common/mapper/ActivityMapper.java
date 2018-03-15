@@ -1,6 +1,9 @@
 package com.bing.funread.common.mapper;
 
 import com.bing.funread.common.domain.Activity;
+import com.bing.funread.common.dto.ActivityUserNumDto;
+
+import java.util.List;
 
 public interface ActivityMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,6 @@ public interface ActivityMapper {
     int updateByPrimaryKeySelective(Activity record);
 
     int updateByPrimaryKey(Activity record);
+
+    List<ActivityUserNumDto> selectActivityUserNum();
 }

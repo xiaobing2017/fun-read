@@ -150,4 +150,15 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <resultMap id="ActivityUserNumDto" type="com.bing.funread.common.dto.ActivityUserNumDto">
+    <id column="id" jdbcType="BIGINT" property="activityId" />
+    <result column="user_num" jdbcType="INTEGER" property="userNum" />
+  </resultMap>
+  <select id="selectActivityUserNum" resultMap="ActivityUserNumDto" >
+    select a.id,count(1) user_num
+    from activity a
+    inner join user_activity ua on a.id = ua.activity_id
+    group by a.id
+  </select>
 </mapper>

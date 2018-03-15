@@ -122,13 +122,20 @@
     set t1.finished_num = t2.num
     where t1.id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectActivityInfo" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <resultMap id="ActivityInfoDto" type="com.bing.funread.common.dto.ActivityInfoDto" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="banner_url" property="bannerUrl" jdbcType="VARCHAR" />
+    <result column="poetry_num" property="poetryNum" jdbcType="INTEGER" />
+    <result column="isJoin" property="isJoin" jdbcType="BOOLEAN" />
+    <result column="finished_num" property="finishedNum" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectActivityInfo" resultMap="ActivityInfoDto" parameterType="java.lang.Long" >
     select
-    a.id,a.name,a.banner_url,a.poetry_num,count(1) user_num
+    a.id,a.name,a.banner_url,a.poetry_num,finished_num,if(ua.id != null,true,false) isJoin
     from activity a
     left join user_activity ua on a.id = ua.activity_id
-    where user_id = #{userId,jdbcType=BIGINT}
-    group by a.id
+      and user_id = #{userId,jdbcType=BIGINT} and is_valid = '1'
     order by a.id
   </select>
   <select id="selectUserActivityId" resultType="java.lang.Long" parameterType="java.lang.Long" >

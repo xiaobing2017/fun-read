@@ -7,6 +7,7 @@ import com.bing.funread.common.domain.PoetryInfo;
 import com.bing.funread.common.domain.UserActivity;
 import com.bing.funread.common.domain.UserActivityAudio;
 import com.bing.funread.common.dto.ActivityInfoDto;
+import com.bing.funread.common.dto.ActivityUserNumDto;
 import com.bing.funread.common.exception.ServiceException;
 import com.bing.funread.common.mapper.ActivityMapper;
 import com.bing.funread.common.mapper.ActivityPoetryMapper;
@@ -30,6 +31,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -61,18 +63,22 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     @Override
     public List<ActivityInfoVo> getActivityInfo(Long userId) {
+        // 查询活动情况
         List<ActivityInfoDto> activityInfoList = userActivityMapper.selectActivityInfo(userId);
         if (CollectionUtils.isEmpty(activityInfoList)) {
             return null;
         }
         List<ActivityInfoVo> activityInfoVoList = BeanUtil.copyList(activityInfoList, ActivityInfoVo.class);
-        List<Long> userActivityIdList = userActivityMapper.selectUserActivityId(userId);
-        if (CollectionUtils.isEmpty(userActivityIdList)) {
-            return activityInfoVoList;
-        }
-        for (ActivityInfoVo activityInfoVo : activityInfoVoList) {
-            if (userActivityIdList.contains(activityInfoVo.getId())) {
-                activityInfoVo.setJoin(true);
+        // 查询活动参与人数
+        List<ActivityUserNumDto> userNumList = activityMapper.selectActivityUserNum();
+        for (ActivityInfoVo vo : activityInfoVoList) {
+            for (Iterator<ActivityUserNumDto> it = userNumList.iterator(); it.hasNext(); ) {
+                ActivityUserNumDto userNum = it.next();
+                if (vo.getId().equals(userNum.getActivityId())) {
+                    vo.setUserNum(userNum.getUserNum());
+                    it.remove();
+                    break;
+                }
             }
         }
         return activityInfoVoList;
