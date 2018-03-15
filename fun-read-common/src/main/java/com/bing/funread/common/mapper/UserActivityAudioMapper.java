@@ -16,4 +16,6 @@ public interface UserActivityAudioMapper {
     int updateByPrimaryKey(UserActivityAudio record);
 
     int insertOrUpdateSelective(UserActivityAudio record);
+
+    UserActivityAudio selectLastedFinishedTime(Long userId, Long activityId);
 }

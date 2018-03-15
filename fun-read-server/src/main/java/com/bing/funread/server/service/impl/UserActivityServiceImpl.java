@@ -112,13 +112,26 @@ public class UserActivityServiceImpl implements UserActivityService {
     public UserActivityInfoVo getUserActivityInfo(Long userId, Long activityId) {
         Activity activity = activityMapper.selectByPrimaryKey(activityId);
         UserActivity userActivity = userActivityMapper.selectUserActivityInfo(userId, activityId);
-        List<ActivityPoetry> activityPoetryList = activityPoetryMapper.selectByActivityId(activityId);
 
         UserActivityInfoVo activityInfoVo = new UserActivityInfoVo();
         activityInfoVo.setFinishNum(userActivity.getFinishedNum());
         activityInfoVo.setUnFinishNum(activity.getPoetryNum() - userActivity.getFinishedNum());
-        activityInfoVo.setPoetryId(activityPoetryList.get(userActivity.getFinishedNum()).getPoetryId());
-        return null;
+
+        // 如果没有未完成的任务诗词，则设置所有诗词ID
+        List<Long> poetryIdList = activityPoetryMapper.selectPoetryIdByActivityId(activityId);
+        if (activityInfoVo.getUnFinishNum() == 0) {
+            activityInfoVo.setPoetryIdList(poetryIdList);
+        } else {
+            // 如果有未完成的任务诗词，则设置所有已解锁的诗词ID
+            UserActivityAudio audio = userActivityAudioMapper.selectLastedFinishedTime(userId, activityId);
+            if (audio == null) {
+                activityInfoVo.setPoetryIdList(poetryIdList.subList(0, 1));
+            } else if (DateUtil.getDiffDays(audio.getCreateTime(), DateUtil.getCurrentTime()) >= 1) {
+                // 第二天解锁下一个任务
+                activityInfoVo.setPoetryIdList(poetryIdList.subList(0, userActivity.getFinishedNum() + 1));
+            }
+        }
+        return activityInfoVo;
     }
 
     @Override

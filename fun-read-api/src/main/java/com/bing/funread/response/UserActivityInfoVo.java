@@ -3,6 +3,8 @@ package com.bing.funread.response;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.List;
+
 /**
  * Description:用户活动信息
  * Author: zhangfusheng
@@ -17,8 +19,8 @@ public class UserActivityInfoVo {
     @ApiModelProperty(value = "未完成任务数量")
     private Integer unFinishNum;
 
-    @ApiModelProperty(value = "当前任务诗词ID")
-    private Long poetryId;
+    @ApiModelProperty(value = "当前已解锁任务诗词ID")
+    private List<Long> poetryIdList;
 
     public Integer getFinishNum() {
         return finishNum;
@@ -36,12 +38,12 @@ public class UserActivityInfoVo {
         this.unFinishNum = unFinishNum;
     }
 
-    public Long getPoetryId() {
-        return poetryId;
+    public List<Long> getPoetryIdList() {
+        return poetryIdList;
     }
 
-    public void setPoetryId(Long poetryId) {
-        this.poetryId = poetryId;
+    public void setPoetryIdList(List<Long> poetryIdList) {
+        this.poetryIdList = poetryIdList;
     }
 
     @Override
@@ -49,7 +51,7 @@ public class UserActivityInfoVo {
         return "UserActivityInfoVo{" +
                 "finishNum='" + finishNum + '\'' +
                 ", unFinishNum='" + unFinishNum + '\'' +
-                ", poetryId=" + poetryId +
+                ", poetryIdList=" + poetryIdList +
                 '}';
     }
 }

@@ -122,4 +122,15 @@
     #{poetryInfoId,jdbcType=BIGINT}, #{audioUrl,jdbcType=VARCHAR})
     on duplicate key update audio_url = #{audioUrl,jdbcType=VARCHAR}
   </insert>
+  <select id="selectLastedFinishedTime" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from user_activity_audio uaa
+    where exists(select 1 from user_activity ua
+      where ua.id = uaa.user_activity_id
+        and ua.user_id = #{userId,jdbcType=BIGINT}
+        and ua.activity_id = #{activityId,jdbcType=BIGINT})
+    order by id desc
+    limit 1
+  </select>
 </mapper>

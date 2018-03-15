@@ -18,7 +18,7 @@ public interface ActivityPoetryMapper {
 
     int updateByPrimaryKey(ActivityPoetry record);
 
-    List<ActivityPoetry> selectByActivityId(@Param("activityId")Long activityId);
+    List<Long> selectPoetryIdByActivityId(@Param("activityId")Long activityId);
 
     ActivityPoetry selectByActivityAndPoetry(@Param("activityId")Long activityId, @Param("poetryId")Long poetryId);
 }

@@ -104,12 +104,11 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectByActivityId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
-    <include refid="Base_Column_List" />
+  <select id="selectPoetryIdByActivityId" resultType="java.lang.Long" parameterType="java.lang.Long" >
+    select poetry_id
     from activity_poetry
     where activity_id = #{activityId,jdbcType=BIGINT}
-    order by `order`,id
+    order by `order`,poetry_id
   </select>
   <select id="selectByActivityAndPoetry" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
