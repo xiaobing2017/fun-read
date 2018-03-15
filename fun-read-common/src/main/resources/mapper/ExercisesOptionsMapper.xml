@@ -112,15 +112,15 @@
       where e.id = eo.exercises_id and e.poetry_id = #{poetryId,jdbcType=BIGINT})
     order by exercises_id,`order`
   </select>
-  <select id="selectByCourseIdList" resultMap="BaseResultMap" >
+  <select id="selectByExercisesIdList" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
     from exercises_options eo
     where exists(select 1 from exercises e
       where e.id = eo.exercises_id and e.id in
-      <foreach collection="courseIdList" item="courseId" index="index"
+      <foreach collection="exercisesIdList" item="exercisesId" index="index"
                open="(" close=")" separator=",">
-        #{courseId}
+        #{exercisesId}
       </foreach>
       )
     order by exercises_id,`order`

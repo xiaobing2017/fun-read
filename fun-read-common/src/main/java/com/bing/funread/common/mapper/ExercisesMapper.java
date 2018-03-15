@@ -22,5 +22,5 @@ public interface ExercisesMapper {
 
     List<Long> selectCourseExercises(@Param("courseId")Long courseId);
 
-    List<Exercises> selectByCourseIdList(@Param("courseIdList")List<Long> courseIdList);
+    List<Exercises> selectByExercisesIdList(@Param("exercisesIdList")List<Long> exercisesIdList);
 }

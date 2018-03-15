@@ -52,14 +52,13 @@ public class ExercisesServiceImpl implements ExercisesService {
         }
         List<Long> exercisesIdList = exercisesMapper.selectCourseExercises(courseId);
         if (CollectionUtils.isEmpty(exercisesIdList)) {
-
             return null;
         }
         // 随机选取若干不重复的练习题
         List<Long> idList = RandomUtil.getRandomList(exercisesIdList, course.getFinalTestNum());
 
-        List<Exercises> exercisesList = exercisesMapper.selectByCourseIdList(idList);
-        List<ExercisesOptions> optionsList = exercisesOptionsMapper.selectByCourseIdList(idList);
+        List<Exercises> exercisesList = exercisesMapper.selectByExercisesIdList(idList);
+        List<ExercisesOptions> optionsList = exercisesOptionsMapper.selectByExercisesIdList(idList);
 
         return buildExercisesInfo(exercisesList, optionsList);
     }
@@ -73,7 +72,7 @@ public class ExercisesServiceImpl implements ExercisesService {
         for (ExercisesInfoVo exercisesInfo : exercisesInfoList) {
             for (Iterator<ExercisesOptions> it = optionsList.iterator(); it.hasNext(); ) {
                 ExercisesOptions options = it.next();
-                if (options.getExercisesId() != exercisesInfo.getId()) continue;
+                if (!options.getExercisesId().equals(exercisesInfo.getId())) continue;
                 ExercisesOptionsVo optionsVo = BeanUtil.copyBean(options, ExercisesOptionsVo.class);
                 List<ExercisesOptionsVo> optionsVoList = exercisesInfo.getExercisesOptionsList();
                 if (optionsVoList == null) {

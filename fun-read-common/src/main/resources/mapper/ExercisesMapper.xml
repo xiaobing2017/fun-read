@@ -128,14 +128,14 @@
     inner join course_poetry cp on cp.poetry_id = e.poetry_id
     where course_id = #{courseId,jdbcType=BIGINT}
   </select>
-  <select id="selectByCourseIdList" resultMap="BaseResultMap" >
+  <select id="selectByExercisesIdList" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
     from exercises
     where id in
-    <foreach collection="courseIdList" item="courseId" index="index"
+    <foreach collection="exercisesIdList" item="exercisesId" index="index"
              open="(" close=")" separator=",">
-      #{courseId}
+      #{exercisesId}
     </foreach>
   </select>
 </mapper>
