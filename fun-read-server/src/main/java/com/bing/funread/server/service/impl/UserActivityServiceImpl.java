@@ -17,6 +17,8 @@ import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.common.utils.DateUtil;
 import com.bing.funread.request.ActivityPoetryRequest;
 import com.bing.funread.response.ActivityInfoVo;
+import com.bing.funread.response.ResultCode;
+import com.bing.funread.response.ResultMessage;
 import com.bing.funread.response.UserActivityInfoVo;
 import com.bing.funread.server.service.FileService;
 import com.bing.funread.server.service.UserActivityService;
@@ -113,28 +115,30 @@ public class UserActivityServiceImpl implements UserActivityService {
         return null;
     }
 
-    @Transactional
     @Override
-    public void upload(Long userId, MultipartFile[] files, ActivityPoetryRequest request) {
+    public List<UserActivityAudio> upload(Long userId, MultipartFile[] files, ActivityPoetryRequest request) {
+        if (files == null || files.length == 0) {
+            throw new ServiceException(ResultCode.UPLOAD_FILE_EMPTY, ResultMessage.UPLOAD_FILE_EMPTY);
+        }
         // 检查文件数量与诗句数量是否一样
-        if (files == null || files.length == 0 || files.length != request.getPoetryInfoIdList().size()) {
-            throw new ServiceException("", "上传信息不匹配");
+        if (files.length != request.getPoetryInfoIdList().size()) {
+            throw new ServiceException(ResultCode.UPLOAD_FILE_POETRY_NUM_DIFF, ResultMessage.UPLOAD_FILE_POETRY_NUM_DIFF);
         }
         // 检查活动ID、诗词ID、诗句ID是否有效
         UserActivity userActivity = userActivityMapper.selectUserActivityInfo(userId, request.getActivityId());
         if (userActivity == null) {
-            throw new ServiceException("", "用户活动不存在");
+            throw new ServiceException(ResultCode.USER_ACTIVITY_ERROR, ResultMessage.USER_ACTIVITY_ERROR);
         }
         ActivityPoetry activityPoetry = activityPoetryMapper.selectByActivityAndPoetry(request.getActivityId(), request.getPoetryId());
         if (activityPoetry == null) {
-            throw new ServiceException("", "活动诗词不存在");
+            throw new ServiceException(ResultCode.ACTIVITY_POETRY_ERROR, ResultMessage.ACTIVITY_POETRY_ERROR);
         }
         List<PoetryInfo> poetryInfoList = poetryInfoMapper.selectByPoetryId(request.getPoetryId());
         if (CollectionUtils.isEmpty(poetryInfoList)) {
-            throw new ServiceException("", "诗句不存在");
+            throw new ServiceException(ResultCode.POETRY_INFO_EMPTY, ResultMessage.POETRY_INFO_EMPTY);
         }
         if (poetryInfoList.size() != request.getPoetryInfoIdList().size()) {
-            throw new ServiceException("", "上传文件不完整");
+            throw new ServiceException(ResultCode.NOT_ALL_POETRY_FILE, ResultMessage.NOT_ALL_POETRY_FILE);
         }
         List<Long> poetryInfoIdList = Lists.newArrayList();
         for (PoetryInfo poetryInfo : poetryInfoList) {
@@ -142,7 +146,7 @@ public class UserActivityServiceImpl implements UserActivityService {
         }
         for (Long poetryInfoId : request.getPoetryInfoIdList()) {
             if (!poetryInfoIdList.contains(poetryInfoId)) {
-                throw new ServiceException("", "诗句ID不存在");
+                throw new ServiceException(ResultCode.POETRY_INFO_NOT_EXISTS, ResultMessage.POETRY_INFO_NOT_EXISTS);
             }
         }
         // 创建用户课程音频文件保存对象
@@ -160,12 +164,22 @@ public class UserActivityServiceImpl implements UserActivityService {
             userActivityAudio.setAudioUrl(audioUrl);
             userActivityAudioList.add(userActivityAudio);
         }
+
+        return userActivityAudioList;
+    }
+
+    @Transactional
+    @Override
+    public void saveUploadInfo(List<UserActivityAudio> userActivityAudioList) {
+        if (CollectionUtils.isEmpty(userActivityAudioList)) {
+            return;
+        }
         // 更新数据库
         for (UserActivityAudio userActivityAudio : userActivityAudioList) {
             userActivityAudioMapper.insertOrUpdateSelective(userActivityAudio);
         }
         // 更新用户课程诗词已完成数量
-        userActivityMapper.updateActivityFinishedNum(userActivity.getId());
+        userActivityMapper.updateActivityFinishedNum(userActivityAudioList.get(0).getUserActivityId());
     }
 
     private String createFileDir(ActivityPoetryRequest request, Long userId, String baseDir) {

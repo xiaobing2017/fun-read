@@ -25,6 +25,8 @@ import com.bing.funread.request.CoursePoetryRequest;
 import com.bing.funread.response.CourseDetailVo;
 import com.bing.funread.response.PoetryVo;
 import com.bing.funread.response.ReadInfoVo;
+import com.bing.funread.response.ResultCode;
+import com.bing.funread.response.ResultMessage;
 import com.bing.funread.response.UserCourseInfoVo;
 import com.bing.funread.response.UserStudyInfoVo;
 import com.bing.funread.server.service.FileService;
@@ -145,28 +147,30 @@ public class UserCourseServiceImpl implements UserCourseService {
         return BeanUtil.copyBean(readInfo, ReadInfoVo.class);
     }
 
-    @Transactional
     @Override
-    public void upload(Long userId, MultipartFile[] files, CoursePoetryRequest request) {
+    public List<UserCourseAudio> upload(Long userId, MultipartFile[] files, CoursePoetryRequest request) {
+        if (files == null || files.length == 0) {
+            throw new ServiceException(ResultCode.UPLOAD_FILE_EMPTY, ResultMessage.UPLOAD_FILE_EMPTY);
+        }
         // 检查文件数量与诗句数量是否一样
-        if (files == null || files.length == 0 || files.length != request.getPoetryInfoIdList().size()) {
-            throw new ServiceException("", "上传信息不匹配");
+        if (files.length != request.getPoetryInfoIdList().size()) {
+            throw new ServiceException(ResultCode.UPLOAD_FILE_POETRY_NUM_DIFF, ResultMessage.UPLOAD_FILE_POETRY_NUM_DIFF);
         }
         // 检查课程ID、诗词ID、诗句ID是否有效
         UserCourse userCourse = userCourseMapper.selectByUserAndCourse(userId, request.getCourseId());
         if (userCourse == null) {
-            throw new ServiceException("", "用户课程不存在");
+            throw new ServiceException(ResultCode.USER_COURSE_ERROR, ResultMessage.USER_COURSE_ERROR);
         }
         CoursePoetry coursePoetry = coursePoetryMapper.selectByCourseAndPoetry(request.getCourseId(), request.getPoetryId());
         if (coursePoetry == null) {
-            throw new ServiceException("", "课程诗词不存在");
+            throw new ServiceException(ResultCode.COURSE_POETRY_ERROR, ResultMessage.COURSE_POETRY_ERROR);
         }
         List<PoetryInfo> poetryInfoList = poetryInfoMapper.selectByPoetryId(request.getPoetryId());
         if (CollectionUtils.isEmpty(poetryInfoList)) {
-            throw new ServiceException("", "诗句不存在");
+            throw new ServiceException(ResultCode.POETRY_INFO_EMPTY, ResultMessage.POETRY_INFO_EMPTY);
         }
         if (poetryInfoList.size() != request.getPoetryInfoIdList().size()) {
-            throw new ServiceException("", "上传文件不完整");
+            throw new ServiceException(ResultCode.NOT_ALL_POETRY_FILE, ResultMessage.NOT_ALL_POETRY_FILE);
         }
         List<Long> poetryInfoIdList = Lists.newArrayList();
         for (PoetryInfo poetryInfo : poetryInfoList) {
@@ -174,7 +178,7 @@ public class UserCourseServiceImpl implements UserCourseService {
         }
         for (Long poetryInfoId : request.getPoetryInfoIdList()) {
             if (!poetryInfoIdList.contains(poetryInfoId)) {
-                throw new ServiceException("", "诗句ID不存在");
+                throw new ServiceException(ResultCode.POETRY_INFO_NOT_EXISTS, ResultMessage.POETRY_INFO_NOT_EXISTS);
             }
         }
         // 创建用户课程音频文件保存对象
@@ -192,12 +196,22 @@ public class UserCourseServiceImpl implements UserCourseService {
             userCourseAudio.setAudioUrl(audioUrl);
             userCourseAudioList.add(userCourseAudio);
         }
+
+        return userCourseAudioList;
+    }
+
+    @Transactional
+    @Override
+    public void saveUploadInfo(List<UserCourseAudio> userCourseAudioList) {
+        if (CollectionUtils.isEmpty(userCourseAudioList)) {
+            return;
+        }
         // 更新数据库
         for (UserCourseAudio userCourseAudio : userCourseAudioList) {
             userCourseAudioMapper.insertOrUpdateSelective(userCourseAudio);
         }
         // 更新用户课程诗词已完成数量
-        userCourseMapper.updateCourseFinishedNum(userCourse.getId());
+        userCourseMapper.updateCourseFinishedNum(userCourseAudioList.get(0).getUserCourseId());
     }
 
     private String createFileDir(CoursePoetryRequest request, Long userId, String baseDir) {

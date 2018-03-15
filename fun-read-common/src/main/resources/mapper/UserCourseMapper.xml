@@ -129,11 +129,10 @@
   <update id="updateCourseFinishedNum" parameterType="java.lang.Long" >
     update user_course t1,
     (
-    select count(1) num
-    from user_course uc
-    where
-    uc.id = #{id,jdbcType=BIGINT} and
-    exists(select 1 from user_course_audio uca where uca.user_course_id = uc.id)
+    select count(distinct poetry_id) num
+	from user_course uc
+	inner join user_course_audio uca on uc.id = uca.user_course_id
+	where uc.id = #{id,jdbcType=BIGINT}
     ) t2
     set t1.finished_num = t2.num
     where t1.id = #{id,jdbcType=BIGINT}
