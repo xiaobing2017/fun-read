@@ -21,6 +21,16 @@ public class ResultCode {
 	public static final String REQUEST_PARAMETER_ERROR = "11111";
 
 	/**
+	 * token无效，请先登录
+	 */
+	public static final String TOKEN_INVALID = "11112";
+
+	/**
+	 * token已过期
+	 */
+	public static final String TOKEN_EXPIRED = "11113";
+
+	/**
 	 * 账号有误
 	 */
 	public static final String USER_ID_ERROR = "10001";

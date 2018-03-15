@@ -2,6 +2,8 @@ package com.bing.funread.common.aop;
 
 import com.bing.funread.common.exception.ServiceException;
 import com.bing.funread.common.utils.TokenUtil;
+import com.bing.funread.response.ResultCode;
+import com.bing.funread.response.ResultMessage;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +12,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -39,10 +40,9 @@ public class ControllerAspect {
                 if (claims != null) {
                     TokenUtil.initUserToken(claims);
 
-
                 }
             } catch (ExpiredJwtException e) {
-//                throw new ServiceException(ResultCode.TOKEN_EXPIREDU_ERRORR_CODE, ResultMessage.TOKEN_EXPIREDU_ERRORR_MSG);
+                throw new ServiceException(ResultCode.TOKEN_EXPIRED, ResultMessage.TOKEN_EXPIRED);
             }
         }
     }
@@ -59,11 +59,11 @@ public class ControllerAspect {
         if (authInterceptUrl.endsWith("*")) {
             String prefix = authInterceptUrl.substring(0, authInterceptUrl.length() - 1);
             if (path.startsWith(prefix) && StringUtils.isBlank(token)) {
-                throw new ServiceException("", "token无效，请先登录");
+                throw new ServiceException(ResultCode.TOKEN_INVALID, ResultMessage.TOKEN_INVALID);
             }
         } else {
             if (path.equals(authInterceptUrl) && StringUtils.isBlank(token)) {
-                throw new ServiceException("", "token无效，请先登录");
+                throw new ServiceException(ResultCode.TOKEN_INVALID, ResultMessage.TOKEN_INVALID);
             }
         }
     }

@@ -197,7 +197,7 @@ public class UserActivityServiceImpl implements UserActivityService {
         for (UserActivityAudio userActivityAudio : userActivityAudioList) {
             userActivityAudioMapper.insertOrUpdateSelective(userActivityAudio);
         }
-        // 更新用户课程诗词已完成数量
+        // 更新用户活动诗词已完成数量
         userActivityMapper.updateActivityFinishedNum(userActivityAudioList.get(0).getUserActivityId());
     }
 

@@ -21,6 +21,16 @@ public class ResultMessage {
     public static final String REQUEST_PARAMETER_ERROR = "验证请求参数异常:";
 
     /**
+     * token无效，请先登录
+     */
+    public static final String TOKEN_INVALID = "token无效，请先登录";
+
+    /**
+     * token已过期
+     */
+    public static final String TOKEN_EXPIRED = "token已过期";
+
+    /**
      * 账号有误
      */
     public static final String USER_ID_ERROR = "账号有误";
