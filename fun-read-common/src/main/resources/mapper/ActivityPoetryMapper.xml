@@ -109,7 +109,7 @@
     <include refid="Base_Column_List" />
     from activity_poetry
     where activity_id = #{activityId,jdbcType=BIGINT}
-    order by `order`
+    order by `order`,id
   </select>
   <select id="selectByActivityAndPoetry" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select

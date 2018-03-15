@@ -94,13 +94,13 @@ public class UserActivityServiceImpl implements UserActivityService {
     public void join(Long userId, Long activityId) {
         Activity activity = activityMapper.selectByPrimaryKey(activityId);
         if (activity == null || !CommonConstant.YES.equals(activity.getIsValid())) {
-            throw new ServiceException("", "活动无效");
+            throw new ServiceException(ResultCode.ACTIVITY_INVALID, ResultMessage.ACTIVITY_INVALID);
         }
         if (activity.getStartDate() != null && DateUtil.getCurrentTime().before(activity.getStartDate())) {
-            throw new ServiceException("", "活动未开始");
+            throw new ServiceException(ResultCode.ACTIVITY_NOT_START, ResultMessage.ACTIVITY_NOT_START);
         }
         if (activity.getEndDate() != null && DateUtil.getCurrentTime().after(activity.getEndDate())) {
-            throw new ServiceException("", "活动已结束");
+            throw new ServiceException(ResultCode.ACTIVITY_HAS_END, ResultMessage.ACTIVITY_NOT_START);
         }
         UserActivity userActivity = new UserActivity();
         userActivity.setUserId(userId);

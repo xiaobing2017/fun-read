@@ -110,7 +110,7 @@
     from exercises_options eo
     where exists(select 1 from exercises e
       where e.id = eo.exercises_id and e.poetry_id = #{poetryId,jdbcType=BIGINT})
-    order by exercises_id,`order`
+    order by exercises_id,`order`,id
   </select>
   <select id="selectByExercisesIdList" resultMap="BaseResultMap" >
     select
@@ -123,6 +123,6 @@
         #{exercisesId}
       </foreach>
       )
-    order by exercises_id,`order`
+    order by exercises_id,`order`,id
   </select>
 </mapper>

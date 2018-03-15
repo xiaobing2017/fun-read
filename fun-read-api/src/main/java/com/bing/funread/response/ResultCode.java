@@ -70,6 +70,20 @@ public class ResultCode {
 	 */
 	public static final String ACTIVITY_POETRY_ERROR = "10010";
 
+	/**
+	 * 活动无效
+	 */
+	public static final String ACTIVITY_INVALID = "10011";
+
+	/**
+	 * 活动未开始
+	 */
+	public static final String ACTIVITY_NOT_START = "10012";
+
+	/**
+	 * 活动已结束
+	 */
+	public static final String ACTIVITY_HAS_END = "10013";
 
 	private ResultCode() {
 

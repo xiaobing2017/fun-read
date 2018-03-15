@@ -131,6 +131,6 @@
     <include refid="Base_Column_List" />
     from poetry_info
     where poetry_id = #{poetryId,jdbcType=BIGINT}
-    order by `order`
+    order by `order`,id
   </select>
 </mapper>

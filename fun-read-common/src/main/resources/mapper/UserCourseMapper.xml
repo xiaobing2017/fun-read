@@ -124,7 +124,7 @@
     where uc.user_id = #{userId,jdbcType=BIGINT}
       and uc.course_id = #{courseId,jdbcType=BIGINT}
       and uca.poetry_id = #{poetryId,jdbcType=BIGINT}
-    order by p.`order`
+    order by p.`order`,p.id
   </select>
   <update id="updateCourseFinishedNum" parameterType="java.lang.Long" >
     update user_course t1,

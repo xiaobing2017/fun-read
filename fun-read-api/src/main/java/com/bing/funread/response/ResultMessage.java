@@ -70,6 +70,21 @@ public class ResultMessage {
      */
     public static final String ACTIVITY_POETRY_ERROR = "活动诗词不存在";
 
+    /**
+     * 活动无效
+     */
+    public static final String ACTIVITY_INVALID = "活动无效";
+
+    /**
+     * 活动未开始
+     */
+    public static final String ACTIVITY_NOT_START = "活动未开始";
+
+    /**
+     * 活动已结束
+     */
+    public static final String ACTIVITY_HAS_END = "活动已结束";
+
     private ResultMessage() {
     	
     }

@@ -144,6 +144,6 @@
     <include refid="Base_Column_List" />
     from banner
     where is_show = 1
-    order by `order`
+    order by `order`,id
   </select>
 </mapper>

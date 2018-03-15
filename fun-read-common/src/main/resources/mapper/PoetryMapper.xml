@@ -96,6 +96,6 @@
     from poetry p
     inner join course_poetry cp on cp.poetry_id = p.id
     where course_id = #{courseId,jdbcType=BIGINT}
-    order by `order`
+    order by `order`,p.id
   </select>
 </mapper>
