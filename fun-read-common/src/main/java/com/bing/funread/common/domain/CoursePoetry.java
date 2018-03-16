@@ -5,7 +5,7 @@ import java.util.Date;
 public class CoursePoetry {
     private Long id;
 
-    private String courseId;
+    private Long courseId;
 
     private Long poetryId;
 
@@ -23,12 +23,12 @@ public class CoursePoetry {
         this.id = id;
     }
 
-    public String getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId == null ? null : courseId.trim();
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     public Long getPoetryId() {
