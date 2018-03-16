@@ -2,7 +2,7 @@ package com.bing.funread.server.service;
 
 import com.bing.funread.common.domain.User;
 import com.bing.funread.request.UserInfoRequest;
-import com.bing.funread.request.WeChatRegRequest;
+import com.bing.funread.request.WeChatLoginRequest;
 import com.bing.funread.response.UserInfoVo;
 
 /**
@@ -13,11 +13,11 @@ import com.bing.funread.response.UserInfoVo;
 public interface UserService {
 
     /**
-     * 微信用户注册
-     * @param request
+     * 微信授权登录
+     * @param login
      * @return
      */
-    User weChatRegister(WeChatRegRequest request);
+    User login(WeChatLoginRequest login);
 
     /**
      * 查询用户资料

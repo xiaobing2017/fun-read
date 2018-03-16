@@ -1,17 +1,30 @@
 package com.bing.funread.server.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bing.funread.common.domain.User;
+import com.bing.funread.common.dto.WeChatLoginCheckDto;
+import com.bing.funread.common.dto.WeChatUserInfoDto;
 import com.bing.funread.common.exception.ServiceException;
 import com.bing.funread.common.mapper.UserMapper;
+import com.bing.funread.common.utils.AESUtil;
 import com.bing.funread.common.utils.BeanUtil;
+import com.bing.funread.common.utils.HttpUtil;
 import com.bing.funread.request.UserInfoRequest;
-import com.bing.funread.request.WeChatRegRequest;
+import com.bing.funread.request.WeChatLoginRequest;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
 import com.bing.funread.response.UserInfoVo;
 import com.bing.funread.server.service.UserService;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Description:用户接口服务类
@@ -21,22 +34,45 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    @Value("${weChat.app.id}")
+    private String appId;
+
+    @Value("${weChat.app.secret}")
+    private String appSecret;
+
+    @Value("${weChat.login.check.url}")
+    private String checkUrl;
+
     @Autowired
     private UserMapper userMapper;
 
     @Override
-    public User weChatRegister(WeChatRegRequest request) {
-        User user = new User();
-        user.setUnionId(request.getUnionid());
-        user.setOpenId(request.getOpenid());
-        user.setWeChatName(request.getNickname());
-        user.setSex(request.getSex());
-        user.setCountry(request.getCounty());
-        user.setProvince(request.getProvince());
-        user.setCity(request.getCity());
-        user.setHeadImgUrl(request.getHeadimgurl());
-        userMapper.insertSelective(user);
-        return user;
+    public User login(WeChatLoginRequest login) {
+        String url = String.format(checkUrl, appId, appSecret, login.getCode());
+        WeChatLoginCheckDto checkResult = HttpUtil.httpsRequest(url, RequestMethod.GET.name(), null, WeChatLoginCheckDto.class);
+        if (checkResult == null || StringUtils.isBlank(checkResult.getSession_key())) {
+            throw new ServiceException(ResultCode.FAILED, ResultMessage.FAILED);
+        }
+        byte[] resultByte = AESUtil.decrypt(Base64.decodeBase64(login.getEncryptedData()),
+                Base64.decodeBase64(checkResult.getSession_key()),
+                Base64.decodeBase64(login.getIv()));
+        if (resultByte == null || resultByte.length == 0) {
+            throw new ServiceException(ResultCode.FAILED, ResultMessage.FAILED);
+        }
+        try {
+            String userInfo = new String(resultByte, "UTF-8");
+            logger.info("微信用户明文信息：{}", userInfo);
+            WeChatUserInfoDto userInfoDto = JSONObject.parseObject(userInfo, WeChatUserInfoDto.class);
+
+            User user = BeanUtil.copyBean(userInfoDto, User.class);
+            userMapper.insertSelective(user);
+            return user;
+        } catch (UnsupportedEncodingException e) {
+            logger.error("微信用户信息转码错误：{}", e);
+            throw new ServiceException(ResultCode.FAILED, ResultMessage.FAILED);
+        }
     }
 
     @Override

@@ -1,197 +1,186 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bing.funread.common.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.bing.funread.common.domain.User" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="union_id" property="unionId" jdbcType="VARCHAR" />
-    <result column="open_id" property="openId" jdbcType="VARCHAR" />
-    <result column="we_chat_no" property="weChatNo" jdbcType="VARCHAR" />
-    <result column="we_chat_name" property="weChatName" jdbcType="VARCHAR" />
-    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
-    <result column="sex" property="sex" jdbcType="CHAR" />
-    <result column="birthday" property="birthday" jdbcType="CHAR" />
-    <result column="province" property="province" jdbcType="VARCHAR" />
-    <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="country" property="country" jdbcType="VARCHAR" />
-    <result column="head_img_url" property="headImgUrl" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bing.funread.common.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.bing.funread.common.domain.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="union_id" jdbcType="VARCHAR" property="unionId" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="birthday" jdbcType="CHAR" property="birthday" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, union_id, open_id, we_chat_no, we_chat_name, nick_name, sex, birthday, province, 
-    city, country, head_img_url, create_time, update_time
+  <sql id="Base_Column_List">
+    id, union_id, open_id, nick_name, name, gender, birthday, province, city, country, 
+    avatar_url, create_time, update_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.bing.funread.common.domain.User" >
+  <insert id="insert" parameterType="com.bing.funread.common.domain.User">
     insert into user (id, union_id, open_id, 
-      we_chat_no, we_chat_name, nick_name, 
-      sex, birthday, province, 
-      city, country, head_img_url, 
-      create_time, update_time)
+      nick_name, name, gender, 
+      birthday, province, city, 
+      country, avatar_url, create_time, 
+      update_time)
     values (#{id,jdbcType=BIGINT}, #{unionId,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
-      #{weChatNo,jdbcType=VARCHAR}, #{weChatName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=CHAR}, #{birthday,jdbcType=CHAR}, #{province,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{headImgUrl,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{nickName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
+      #{birthday,jdbcType=CHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.bing.funread.common.domain.User" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+  <insert id="insertSelective" parameterType="com.bing.funread.common.domain.User">
     insert into user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="unionId != null" >
+      <if test="unionId != null">
         union_id,
       </if>
-      <if test="openId != null" >
+      <if test="openId != null">
         open_id,
       </if>
-      <if test="weChatNo != null" >
-        we_chat_no,
-      </if>
-      <if test="weChatName != null" >
-        we_chat_name,
-      </if>
-      <if test="nickName != null" >
+      <if test="nickName != null">
         nick_name,
       </if>
-      <if test="sex != null" >
-        sex,
+      <if test="name != null">
+        name,
       </if>
-      <if test="birthday != null" >
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="birthday != null">
         birthday,
       </if>
-      <if test="province != null" >
+      <if test="province != null">
         province,
       </if>
-      <if test="city != null" >
+      <if test="city != null">
         city,
       </if>
-      <if test="country != null" >
+      <if test="country != null">
         country,
       </if>
-      <if test="headImgUrl != null" >
-        head_img_url,
+      <if test="avatarUrl != null">
+        avatar_url,
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time,
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         update_time,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="unionId != null" >
+      <if test="unionId != null">
         #{unionId,jdbcType=VARCHAR},
       </if>
-      <if test="openId != null" >
+      <if test="openId != null">
         #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="weChatNo != null" >
-        #{weChatNo,jdbcType=VARCHAR},
-      </if>
-      <if test="weChatName != null" >
-        #{weChatName,jdbcType=VARCHAR},
-      </if>
-      <if test="nickName != null" >
+      <if test="nickName != null">
         #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null" >
-        #{sex,jdbcType=CHAR},
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
-      <if test="birthday != null" >
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
         #{birthday,jdbcType=CHAR},
       </if>
-      <if test="province != null" >
+      <if test="province != null">
         #{province,jdbcType=VARCHAR},
       </if>
-      <if test="city != null" >
+      <if test="city != null">
         #{city,jdbcType=VARCHAR},
       </if>
-      <if test="country != null" >
+      <if test="country != null">
         #{country,jdbcType=VARCHAR},
       </if>
-      <if test="headImgUrl != null" >
-        #{headImgUrl,jdbcType=VARCHAR},
+      <if test="avatarUrl != null">
+        #{avatarUrl,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bing.funread.common.domain.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.bing.funread.common.domain.User">
     update user
-    <set >
-      <if test="unionId != null" >
+    <set>
+      <if test="unionId != null">
         union_id = #{unionId,jdbcType=VARCHAR},
       </if>
-      <if test="openId != null" >
+      <if test="openId != null">
         open_id = #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="weChatNo != null" >
-        we_chat_no = #{weChatNo,jdbcType=VARCHAR},
-      </if>
-      <if test="weChatName != null" >
-        we_chat_name = #{weChatName,jdbcType=VARCHAR},
-      </if>
-      <if test="nickName != null" >
+      <if test="nickName != null">
         nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null" >
-        sex = #{sex,jdbcType=CHAR},
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="birthday != null" >
+      <if test="gender != null">
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
         birthday = #{birthday,jdbcType=CHAR},
       </if>
-      <if test="province != null" >
+      <if test="province != null">
         province = #{province,jdbcType=VARCHAR},
       </if>
-      <if test="city != null" >
+      <if test="city != null">
         city = #{city,jdbcType=VARCHAR},
       </if>
-      <if test="country != null" >
+      <if test="country != null">
         country = #{country,jdbcType=VARCHAR},
       </if>
-      <if test="headImgUrl != null" >
-        head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+      <if test="avatarUrl != null">
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bing.funread.common.domain.User" >
+  <update id="updateByPrimaryKey" parameterType="com.bing.funread.common.domain.User">
     update user
     set union_id = #{unionId,jdbcType=VARCHAR},
       open_id = #{openId,jdbcType=VARCHAR},
-      we_chat_no = #{weChatNo,jdbcType=VARCHAR},
-      we_chat_name = #{weChatName,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=CHAR},
+      name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
       birthday = #{birthday,jdbcType=CHAR},
       province = #{province,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       country = #{country,jdbcType=VARCHAR},
-      head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

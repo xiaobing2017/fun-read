@@ -9,13 +9,11 @@ public class User {
 
     private String openId;
 
-    private String weChatNo;
-
-    private String weChatName;
-
     private String nickName;
 
-    private String sex;
+    private String name;
+
+    private Integer gender;
 
     private String birthday;
 
@@ -25,7 +23,7 @@ public class User {
 
     private String country;
 
-    private String headImgUrl;
+    private String avatarUrl;
 
     private Date createTime;
 
@@ -55,22 +53,6 @@ public class User {
         this.openId = openId == null ? null : openId.trim();
     }
 
-    public String getWeChatNo() {
-        return weChatNo;
-    }
-
-    public void setWeChatNo(String weChatNo) {
-        this.weChatNo = weChatNo == null ? null : weChatNo.trim();
-    }
-
-    public String getWeChatName() {
-        return weChatName;
-    }
-
-    public void setWeChatName(String weChatName) {
-        this.weChatName = weChatName == null ? null : weChatName.trim();
-    }
-
     public String getNickName() {
         return nickName;
     }
@@ -79,12 +61,20 @@ public class User {
         this.nickName = nickName == null ? null : nickName.trim();
     }
 
-    public String getSex() {
-        return sex;
+    public String getName() {
+        return name;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
     public String getBirthday() {
@@ -119,12 +109,12 @@ public class User {
         this.country = country == null ? null : country.trim();
     }
 
-    public String getHeadImgUrl() {
-        return headImgUrl;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setHeadImgUrl(String headImgUrl) {
-        this.headImgUrl = headImgUrl == null ? null : headImgUrl.trim();
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
     }
 
     public Date getCreateTime() {

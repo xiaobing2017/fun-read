@@ -18,6 +18,11 @@ public class CommonConstant {
     public static final String TOKEN_UNION_ID = "unionId";
 
     /**
+     * 生成token参数：微信openId
+     */
+    public static final String TOKEN_OPEN_ID = "openId";
+
+    /**
      * 用户课程音频文件保存路径
      */
     public static final String FILE_DIR_COURSE = "course";

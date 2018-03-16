@@ -2,8 +2,7 @@ package com.bing.funread.server.controller;
 
 import com.bing.funread.common.domain.User;
 import com.bing.funread.common.utils.TokenUtil;
-import com.bing.funread.request.LoginUser;
-import com.bing.funread.request.WeChatRegRequest;
+import com.bing.funread.request.WeChatLoginRequest;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
@@ -39,18 +38,11 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ApiOperation(value = "普通登录", httpMethod = "POST", notes = "根据用户填写资料验证登录")
-    public String login(@ApiParam(required = true, name = "loginUser", value = "用户登录信息")
-                            @Valid @RequestBody LoginUser loginUser) {
-        logger.info("欢迎 {} 登录", loginUser);
-        return "login";
-    }
-
-    @RequestMapping(value = "/weChatReg", method = RequestMethod.POST)
-    @ApiOperation(value = "注册", httpMethod = "POST", notes = "根据微信信息注册")
-    public Result<String> weChatRegister(@ApiParam(required = true, name = "request", value = "用户微信信息")
-                                             @Valid @RequestBody WeChatRegRequest request) {
-        User user = userService.weChatRegister(request);
+    @ApiOperation(value = "微信授权登录", httpMethod = "POST", notes = "微信授权登录")
+    public Result<String> weChatRegister(@ApiParam(required = true, name = "request", value = "微信授权信息")
+                                             @Valid @RequestBody WeChatLoginRequest login) {
+        logger.info("登录参数：{}", login);
+        User user = userService.login(login);
         String token = TokenUtil.createToken(user);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, token);
     }

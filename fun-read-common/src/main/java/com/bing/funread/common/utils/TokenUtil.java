@@ -35,7 +35,7 @@ public class TokenUtil {
         JwtBuilder builder = Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .claim(CommonConstant.TOKEN_USER_ID, user.getId())
-                .claim(CommonConstant.TOKEN_UNION_ID, user.getUnionId())
+                .claim(CommonConstant.TOKEN_OPEN_ID, user.getOpenId())
                 .setSubject(user.getUnionId())
                 .setIssuer("fun-read-server")
                 .setIssuedAt(new Date()) // 设置签发时间
