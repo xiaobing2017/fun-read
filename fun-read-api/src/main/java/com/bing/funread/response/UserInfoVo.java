@@ -20,10 +20,13 @@ public class UserInfoVo implements Serializable {
     private String nickName;
 
     @ApiModelProperty(value = "性别 0:未知 1:男 2:女")
-    private String sex;
+    private Integer gender;
 
     @ApiModelProperty(value = "生日 yyyyMM")
     private String birthday;
+
+    @ApiModelProperty(value = "手机号")
+    private String phone;
 
     public Long getId() {
         return id;
@@ -41,12 +44,12 @@ public class UserInfoVo implements Serializable {
         this.nickName = nickName;
     }
 
-    public String getSex() {
-        return sex;
+    public Integer getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
     public String getBirthday() {
@@ -57,13 +60,22 @@ public class UserInfoVo implements Serializable {
         this.birthday = birthday;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
         return "UserInfoVo{" +
                 "id='" + id + '\'' +
                 "nickName='" + nickName + '\'' +
-                ", sex='" + sex + '\'' +
+                ", gender='" + gender + '\'' +
                 ", birthday='" + birthday + '\'' +
+                ", phone='" + phone + '\'' +
                 '}';
     }
 }
