@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
             WeChatUserInfoDto userInfoDto = JSONObject.parseObject(userInfo, WeChatUserInfoDto.class);
 
             User user = BeanUtil.copyBean(userInfoDto, User.class);
-            userMapper.insertSelective(user);
+            userMapper.insertOrUpdateSelective(user);
             return user;
         } catch (UnsupportedEncodingException e) {
             logger.error("微信用户信息转码错误：{}", e);
