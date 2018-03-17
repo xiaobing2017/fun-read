@@ -11,6 +11,8 @@ public class UserCourse {
 
     private Integer finishedNum;
 
+    private String phone;
+
     private Date createTime;
 
     private Date updateTime;
@@ -45,6 +47,14 @@ public class UserCourse {
 
     public void setFinishedNum(Integer finishedNum) {
         this.finishedNum = finishedNum;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public Date getCreateTime() {
