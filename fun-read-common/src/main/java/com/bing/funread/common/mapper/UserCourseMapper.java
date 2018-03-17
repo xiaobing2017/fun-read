@@ -29,4 +29,6 @@ public interface UserCourseMapper {
     int updateCourseFinishedNum(Long id);
 
     List<CourseUserNumDto> selectUserNumByCourseIdList(@Param("courseIdList")List<Long> courseIdList);
+
+    int updateUserIdByPhone(UserCourse record);
 }

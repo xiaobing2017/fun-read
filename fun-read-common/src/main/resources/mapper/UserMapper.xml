@@ -211,4 +211,10 @@
         province = #{province,jdbcType=VARCHAR}, city = #{city,jdbcType=VARCHAR},
         country = #{country,jdbcType=VARCHAR}, avatar_url = #{avatarUrl,jdbcType=VARCHAR}
   </insert>
+  <update id="bindPhone" parameterType="com.bing.funread.common.domain.User">
+    update user
+    set phone = #{phone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+      and (phone is null or phone = '')
+  </update>
 </mapper>

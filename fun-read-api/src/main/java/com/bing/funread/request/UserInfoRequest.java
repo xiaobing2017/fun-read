@@ -22,7 +22,7 @@ public class UserInfoRequest implements Serializable {
     private String nickName;
 
     @ApiModelProperty(value = "性别 0:未知 1:男 2:女")
-    private String sex;
+    private Integer gender;
 
     @ApiModelProperty(value = "生日 yyyyMM")
     private String birthday;
@@ -43,12 +43,12 @@ public class UserInfoRequest implements Serializable {
         this.nickName = nickName;
     }
 
-    public String getSex() {
-        return sex;
+    public Integer getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
     public String getBirthday() {
@@ -64,7 +64,7 @@ public class UserInfoRequest implements Serializable {
         return "UserInfoVo{" +
                 "id='" + id + '\'' +
                 "nickName='" + nickName + '\'' +
-                ", sex='" + sex + '\'' +
+                ", gender='" + gender + '\'' +
                 ", birthday='" + birthday + '\'' +
                 '}';
     }

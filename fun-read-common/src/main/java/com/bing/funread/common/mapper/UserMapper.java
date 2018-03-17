@@ -16,4 +16,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     int insertOrUpdateSelective(User record);
+
+    int bindPhone(User record);
 }

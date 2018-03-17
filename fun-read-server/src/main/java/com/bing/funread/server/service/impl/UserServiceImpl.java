@@ -2,9 +2,11 @@ package com.bing.funread.server.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bing.funread.common.domain.User;
+import com.bing.funread.common.domain.UserCourse;
 import com.bing.funread.common.dto.WeChatLoginCheckDto;
 import com.bing.funread.common.dto.WeChatUserInfoDto;
 import com.bing.funread.common.exception.ServiceException;
+import com.bing.funread.common.mapper.UserCourseMapper;
 import com.bing.funread.common.mapper.UserMapper;
 import com.bing.funread.common.utils.AESUtil;
 import com.bing.funread.common.utils.BeanUtil;
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.UnsupportedEncodingException;
@@ -47,6 +50,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserCourseMapper userCourseMapper;
 
     @Override
     public User login(WeChatLoginRequest login) {
@@ -88,5 +94,25 @@ public class UserServiceImpl implements UserService {
         }
         User user = BeanUtil.copyBean(userInfo, User.class);
         userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Transactional
+    @Override
+    public boolean bindPhone(Long userId, String phone) {
+        // 绑定手机号
+        User user = new User();
+        user.setId(userId);
+        user.setPhone(phone);
+        if (userMapper.bindPhone(user) < 1) {
+            logger.info("绑定手机号失败，userId:{},phone:{}", userId, phone);
+            return false;
+        }
+        // 更新用户课程
+        UserCourse userCourse = new UserCourse();
+        userCourse.setUserId(userId);
+        userCourse.setPhone(phone);
+        userCourseMapper.updateUserIdByPhone(userCourse);
+        logger.info("手机号绑定成功，userId:{},phone:{}", userId, phone);
+        return true;
     }
 }

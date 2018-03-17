@@ -32,4 +32,11 @@ public interface UserService {
      * @param userInfo
      */
     void updateUserInfo(Long userId, UserInfoRequest userInfo);
+
+    /**
+     * 绑定手机号
+     * @param userId
+     * @param phone
+     */
+    boolean bindPhone(Long userId, String phone);
 }

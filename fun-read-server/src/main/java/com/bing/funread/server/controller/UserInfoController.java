@@ -9,8 +9,10 @@ import com.bing.funread.server.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,5 +49,14 @@ public class UserInfoController extends BaseController {
         Long userId = getUserId();
         userService.updateUserInfo(userId, userInfo);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS);
+    }
+
+    @RequestMapping(value = "/bindPhone/{phone}", method = RequestMethod.GET)
+    @ApiOperation(value = "绑定手机号", httpMethod = "GET", notes = "绑定手机号")
+    public Result<Boolean> bindPhone(@ApiParam(required = true, name = "phone", value = "手机号")
+                                    @NotBlank(message="手机号不能为空") @PathVariable String phone) {
+        Long userId = getUserId();
+        boolean result = userService.bindPhone(userId, phone);
+        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 }

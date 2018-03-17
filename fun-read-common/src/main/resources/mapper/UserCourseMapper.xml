@@ -163,4 +163,9 @@
     </foreach>
     group by c.id
   </select>
+  <update id="updateUserIdByPhone" parameterType="com.bing.funread.common.domain.UserCourse" >
+    update user_course
+    set user_id = #{userId,jdbcType=BIGINT}
+    where phone = #{phone,jdbcType=VARCHAR} and user_id is null
+  </update>
 </mapper>
