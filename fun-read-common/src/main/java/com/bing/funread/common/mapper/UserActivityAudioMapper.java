@@ -1,6 +1,7 @@
 package com.bing.funread.common.mapper;
 
 import com.bing.funread.common.domain.UserActivityAudio;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserActivityAudioMapper {
     int deleteByPrimaryKey(Long id);
@@ -17,5 +18,5 @@ public interface UserActivityAudioMapper {
 
     int insertOrUpdateSelective(UserActivityAudio record);
 
-    UserActivityAudio selectLastedFinishedTime(Long userId, Long activityId);
+    UserActivityAudio selectLastedFinishedTime(@Param("userId")Long userId, @Param("activityId")Long activityId);
 }

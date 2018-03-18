@@ -22,7 +22,7 @@ public interface UserCourseMapper {
 
     UserCourse selectByUserAndCourse(@Param("userId")Long userId, @Param("courseId")Long courseId);
 
-    int selectHasStudyPoetrys(Long userId);
+    int selectHasStudyPoetrys(@Param("userId")Long userId);
 
     ReadInfoDto selectReadInfo(@Param("userId")Long userId, @Param("courseId")Long courseId, @Param("poetryId")Long poetryId);
 
