@@ -217,4 +217,10 @@
     where id = #{id,jdbcType=BIGINT}
       and (phone is null or phone = '')
   </update>
+  <select id="selectByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </select>
 </mapper>

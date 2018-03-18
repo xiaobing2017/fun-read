@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserService {
 
             User user = BeanUtil.copyBean(userInfoDto, User.class);
             userMapper.insertOrUpdateSelective(user);
+            user = userMapper.selectByOpenId(user.getOpenId());
             return user;
         } catch (UnsupportedEncodingException e) {
             logger.error("微信用户信息转码错误：{}", e);
