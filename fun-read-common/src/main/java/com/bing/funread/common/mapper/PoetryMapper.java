@@ -19,4 +19,6 @@ public interface PoetryMapper {
     int updateByPrimaryKey(Poetry record);
 
     List<Poetry> selectCoursePoetryInfo(@Param("courseId")Long courseId);
+
+    List<Poetry> selectActivityPoetryInfo(@Param("activityId")Long activityId);
 }

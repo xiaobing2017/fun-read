@@ -98,4 +98,11 @@
     where course_id = #{courseId,jdbcType=BIGINT}
     order by `order`,p.id
   </select>
+  <select id="selectActivityPoetryInfo" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select p.id,`name`,`describe`
+    from poetry p
+    inner join activity_poetry ap on ap.poetry_id = p.id
+    where activity_id = #{activityId,jdbcType=BIGINT}
+    order by `order`,p.id
+  </select>
 </mapper>
