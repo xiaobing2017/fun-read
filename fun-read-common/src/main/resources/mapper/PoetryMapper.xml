@@ -9,7 +9,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, describe, create_time, update_time
+    id, `name`, `describe`, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -22,7 +22,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.bing.funread.common.domain.Poetry" >
-    insert into poetry (id, name, describe, 
+    insert into poetry (id, `name`, `describe`,
       create_time, update_time)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
@@ -34,7 +34,7 @@
         id,
       </if>
       <if test="name != null" >
-        name,
+        `name`,
       </if>
       <if test="describe != null" >
         describe,
@@ -68,7 +68,7 @@
     update poetry
     <set >
       <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="describe != null" >
         describe = #{describe,jdbcType=VARCHAR},
@@ -84,8 +84,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bing.funread.common.domain.Poetry" >
     update poetry
-    set name = #{name,jdbcType=VARCHAR},
-      describe = #{describe,jdbcType=VARCHAR},
+    set `name` = #{name,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

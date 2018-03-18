@@ -18,7 +18,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, union_id, open_id, nick_name, name, gender, birthday, province, city, country, 
+    id, union_id, open_id, nick_name, `name`, gender, birthday, province, city, country,
     avatar_url, phone, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -33,7 +33,7 @@
   </delete>
   <insert id="insert" parameterType="com.bing.funread.common.domain.User">
     insert into user (id, union_id, open_id, 
-      nick_name, name, gender, 
+      nick_name, `name`, gender,
       birthday, province, city, 
       country, avatar_url, phone, 
       create_time, update_time)
@@ -59,7 +59,7 @@
         nick_name,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="gender != null">
         gender,
@@ -147,7 +147,7 @@
         nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
         gender = #{gender,jdbcType=INTEGER},
@@ -184,7 +184,7 @@
     set union_id = #{unionId,jdbcType=VARCHAR},
       open_id = #{openId,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=INTEGER},
       birthday = #{birthday,jdbcType=CHAR},
       province = #{province,jdbcType=VARCHAR},
@@ -199,7 +199,7 @@
 
   <insert id="insertOrUpdateSelective" parameterType="com.bing.funread.common.domain.User" keyProperty="id" useGeneratedKeys="true">
     insert into user (union_id, open_id,
-      nick_name, name, gender,
+      nick_name, `name`, gender,
       birthday, province, city,
       country, avatar_url)
     values (#{unionId,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},

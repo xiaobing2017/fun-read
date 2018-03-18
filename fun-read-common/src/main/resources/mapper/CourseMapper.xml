@@ -13,7 +13,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, describe, classify, poetry_num, pic_url, final_test_num, create_time, update_time
+    id, `name`, `describe`, classify, poetry_num, pic_url, final_test_num, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -26,7 +26,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.bing.funread.common.domain.Course">
-    insert into course (id, name, describe, 
+    insert into course (id, `name`, `describe`,
       classify, poetry_num, pic_url, 
       final_test_num, create_time, update_time
       )
@@ -42,7 +42,7 @@
         id,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="describe != null">
         describe,
@@ -100,10 +100,10 @@
     update course
     <set>
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="describe != null">
-        describe = #{describe,jdbcType=VARCHAR},
+        `describe` = #{describe,jdbcType=VARCHAR},
       </if>
       <if test="classify != null">
         classify = #{classify,jdbcType=VARCHAR},
@@ -128,8 +128,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bing.funread.common.domain.Course">
     update course
-    set name = #{name,jdbcType=VARCHAR},
-      describe = #{describe,jdbcType=VARCHAR},
+    set `name` = #{name,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
       classify = #{classify,jdbcType=VARCHAR},
       poetry_num = #{poetryNum,jdbcType=INTEGER},
       pic_url = #{picUrl,jdbcType=VARCHAR},
@@ -149,7 +149,7 @@
     <result column="user_num" jdbcType="INTEGER" property="userNum" />
   </resultMap>
   <select id="selectUserCourseInfo" parameterType="java.lang.Long" resultMap="UserCourseInfoDto">
-    select c.id,name,classify,pic_url,poetry_num,finished_num
+    select c.id,`name`,classify,pic_url,poetry_num,finished_num
     from course c
     inner join user_course uc on uc.course_id = c.id
     where uc.user_id = #{userId,jdbcType=BIGINT}

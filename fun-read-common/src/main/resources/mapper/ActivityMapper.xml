@@ -14,7 +14,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, describe, banner_url, start_date, end_date, poetry_num, is_valid, create_time, 
+    id, `name`, `describe`, banner_url, start_date, end_date, poetry_num, is_valid, create_time,
     update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -28,7 +28,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.bing.funread.common.domain.Activity" >
-    insert into activity (id, name, describe, 
+    insert into activity (id, `name`, `describe`,
       banner_url, start_date, end_date, 
       poetry_num, is_valid, create_time, 
       update_time)
@@ -44,10 +44,10 @@
         id,
       </if>
       <if test="name != null" >
-        name,
+        `name`,
       </if>
       <if test="describe != null" >
-        describe,
+        `describe`,
       </if>
       <if test="bannerUrl != null" >
         banner_url,
@@ -108,10 +108,10 @@
     update activity
     <set >
       <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="describe != null" >
-        describe = #{describe,jdbcType=VARCHAR},
+        `describe` = #{describe,jdbcType=VARCHAR},
       </if>
       <if test="bannerUrl != null" >
         banner_url = #{bannerUrl,jdbcType=VARCHAR},
@@ -139,8 +139,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bing.funread.common.domain.Activity" >
     update activity
-    set name = #{name,jdbcType=VARCHAR},
-      describe = #{describe,jdbcType=VARCHAR},
+    set `name` = #{name,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
       banner_url = #{bannerUrl,jdbcType=VARCHAR},
       start_date = #{startDate,jdbcType=TIMESTAMP},
       end_date = #{endDate,jdbcType=TIMESTAMP},

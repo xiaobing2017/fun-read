@@ -26,7 +26,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.bing.funread.common.domain.Banner">
-    insert into banner (id, name, describe,
+    insert into banner (id, `name`, `describe`,
       banner_url, `order`, link_url,
       is_show, create_time, update_time
       )
@@ -42,10 +42,10 @@
         id,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="describe != null">
-        describe,
+        `describe`,
       </if>
       <if test="bannerUrl != null">
         banner_url,
@@ -100,7 +100,7 @@
     update banner
     <set>
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="describe != null">
         describe = #{describe,jdbcType=VARCHAR},
@@ -128,8 +128,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bing.funread.common.domain.Banner">
     update banner
-    set name = #{name,jdbcType=VARCHAR},
-      describe = #{describe,jdbcType=VARCHAR},
+    set `name` = #{name,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
       banner_url = #{bannerUrl,jdbcType=VARCHAR},
       `order` = #{order,jdbcType=INTEGER},
       link_url = #{linkUrl,jdbcType=VARCHAR},
