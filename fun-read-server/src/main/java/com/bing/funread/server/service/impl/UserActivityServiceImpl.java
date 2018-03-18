@@ -129,7 +129,7 @@ public class UserActivityServiceImpl implements UserActivityService {
         for (int i = 0; i < poetryVoList.size(); i++) {
             if (i == userActivity.getFinishedNum()) {
                 UserActivityAudio audio = userActivityAudioMapper.selectLastedFinishedTime(userId, activityId);
-                if (audio != null && DateUtil.getDiffDays(audio.getCreateTime(), DateUtil.getCurrentTime()) >= 1) {
+                if (audio == null || DateUtil.getDiffDays(audio.getCreateTime(), DateUtil.getCurrentTime()) >= 1) {
                     // 第二天解锁下一个任务
                     poetryVoList.get(i).setCurrent(true);
                 }
