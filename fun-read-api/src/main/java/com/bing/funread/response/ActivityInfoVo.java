@@ -69,6 +69,9 @@ public class ActivityInfoVo {
     }
 
     public void setUserNum(Integer userNum) {
+        if (userNum == null) {
+            userNum = 0;
+        }
         this.userNum = userNum;
     }
 

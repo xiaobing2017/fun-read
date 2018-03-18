@@ -55,6 +55,9 @@ public class UserCourseInfoVo implements Serializable {
     }
 
     public void setUserNum(Integer userNum) {
+        if (userNum == null) {
+            userNum = 0;
+        }
         this.userNum = userNum;
     }
 
