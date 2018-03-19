@@ -44,6 +44,7 @@ public class UserController {
         logger.info("登录参数：{}", login);
         User user = userService.login(login);
         String token = TokenUtil.createToken(user);
+        logger.info("user:{}, token:{}", user.getId(), token);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, token);
     }
 }
