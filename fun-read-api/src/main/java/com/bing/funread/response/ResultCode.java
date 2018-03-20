@@ -95,6 +95,16 @@ public class ResultCode {
 	 */
 	public static final String ACTIVITY_HAS_END = "10013";
 
+	/**
+	 * 文件上传失败
+	 */
+	public static final String FILE_UPLOAD_FAILURE = "10014";
+
+	/**
+	 * 保存跟读信息不完整
+	 */
+	public static final String NOT_ALL_POETRY_AUDIO = "10015";
+
 	private ResultCode() {
 
 	}

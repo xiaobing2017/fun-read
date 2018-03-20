@@ -3,16 +3,18 @@ package com.bing.funread.request;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 /**
- * Description:活动跟读文件上传参数
+ * Description:跟读文件地址信息保存
  * Author: zhangfusheng
- * Date: 2018/3/11 下午4:19
+ * Date: 2018/3/20 下午7:32
  */
-@ApiModel(value = "活动跟读文件上传参数")
-public class ActivityPoetryRequest implements Serializable {
+@ApiModel("跟读文件地址信息保存")
+public class ActivityAudioRequest implements Serializable {
 
     @NotNull(message = "活动ID不能为空")
     @ApiModelProperty(value = "活动ID")
@@ -22,9 +24,10 @@ public class ActivityPoetryRequest implements Serializable {
     @ApiModelProperty(value = "诗词ID")
     private Long poetryId;
 
-    @NotNull(message = "诗句ID不能为空")
-    @ApiModelProperty(value = "诗句ID")
-    private Long poetryInfoId;
+    @Valid
+    @NotNull(message = "诗句跟读信息列表不能为空")
+    @ApiModelProperty(value = "诗句跟读信息列表")
+    private List<PoetryAudioRequest> poetryAudioList;
 
     public Long getActivityId() {
         return activityId;
@@ -42,20 +45,20 @@ public class ActivityPoetryRequest implements Serializable {
         this.poetryId = poetryId;
     }
 
-    public Long getPoetryInfoId() {
-        return poetryInfoId;
+    public List<PoetryAudioRequest> getPoetryAudioList() {
+        return poetryAudioList;
     }
 
-    public void setPoetryInfoId(Long poetryInfoId) {
-        this.poetryInfoId = poetryInfoId;
+    public void setPoetryAudioList(List<PoetryAudioRequest> poetryAudioList) {
+        this.poetryAudioList = poetryAudioList;
     }
 
     @Override
     public String toString() {
-        return "ActivityPoetryRequest{" +
+        return "ActivityAudioRequest{" +
                 "activityId=" + activityId +
                 ", poetryId=" + poetryId +
-                ", poetryInfoId=" + poetryInfoId +
+                ", poetryAudioList=" + poetryAudioList +
                 '}';
     }
 }

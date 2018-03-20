@@ -18,7 +18,9 @@ import com.bing.funread.common.mapper.UserActivityAudioMapper;
 import com.bing.funread.common.mapper.UserActivityMapper;
 import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.common.utils.DateUtil;
+import com.bing.funread.request.ActivityAudioRequest;
 import com.bing.funread.request.ActivityPoetryRequest;
+import com.bing.funread.request.PoetryAudioRequest;
 import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.PoetryVo;
 import com.bing.funread.response.ResultCode;
@@ -105,7 +107,7 @@ public class UserActivityServiceImpl implements UserActivityService {
             throw new ServiceException(ResultCode.ACTIVITY_NOT_START, ResultMessage.ACTIVITY_NOT_START);
         }
         if (activity.getEndDate() != null && DateUtil.getCurrentTime().after(activity.getEndDate())) {
-            throw new ServiceException(ResultCode.ACTIVITY_HAS_END, ResultMessage.ACTIVITY_NOT_START);
+            throw new ServiceException(ResultCode.ACTIVITY_HAS_END, ResultMessage.ACTIVITY_HAS_END);
         }
         UserActivity userActivity = new UserActivity();
         userActivity.setUserId(userId);
@@ -141,58 +143,58 @@ public class UserActivityServiceImpl implements UserActivityService {
         return detailVo;
     }
 
-    @Override
-    public List<UserActivityAudio> upload(Long userId, MultipartFile[] files, ActivityPoetryRequest request) {
-        if (files == null || files.length == 0) {
-            throw new ServiceException(ResultCode.UPLOAD_FILE_EMPTY, ResultMessage.UPLOAD_FILE_EMPTY);
-        }
-        // 检查文件数量与诗句数量是否一样
-        if (files.length != request.getPoetryInfoIdList().size()) {
-            throw new ServiceException(ResultCode.UPLOAD_FILE_POETRY_NUM_DIFF, ResultMessage.UPLOAD_FILE_POETRY_NUM_DIFF);
-        }
-        // 检查活动ID、诗词ID、诗句ID是否有效
-        UserActivity userActivity = userActivityMapper.selectUserActivityInfo(userId, request.getActivityId());
-        if (userActivity == null) {
-            throw new ServiceException(ResultCode.USER_ACTIVITY_ERROR, ResultMessage.USER_ACTIVITY_ERROR);
-        }
-        ActivityPoetry activityPoetry = activityPoetryMapper.selectByActivityAndPoetry(request.getActivityId(), request.getPoetryId());
-        if (activityPoetry == null) {
-            throw new ServiceException(ResultCode.ACTIVITY_POETRY_ERROR, ResultMessage.ACTIVITY_POETRY_ERROR);
-        }
-        List<PoetryInfo> poetryInfoList = poetryInfoMapper.selectByPoetryId(request.getPoetryId());
-        if (CollectionUtils.isEmpty(poetryInfoList)) {
-            throw new ServiceException(ResultCode.POETRY_INFO_EMPTY, ResultMessage.POETRY_INFO_EMPTY);
-        }
-        if (poetryInfoList.size() != request.getPoetryInfoIdList().size()) {
-            throw new ServiceException(ResultCode.NOT_ALL_POETRY_FILE, ResultMessage.NOT_ALL_POETRY_FILE);
-        }
-        List<Long> poetryInfoIdList = Lists.newArrayList();
-        for (PoetryInfo poetryInfo : poetryInfoList) {
-            poetryInfoIdList.add(poetryInfo.getId());
-        }
-        for (Long poetryInfoId : request.getPoetryInfoIdList()) {
-            if (!poetryInfoIdList.contains(poetryInfoId)) {
-                throw new ServiceException(ResultCode.POETRY_INFO_NOT_EXISTS, ResultMessage.POETRY_INFO_NOT_EXISTS);
-            }
-        }
-        // 创建用户课程音频文件保存对象
-        List<UserActivityAudio> userActivityAudioList = Lists.newArrayList();
-        // 保存文件
-        int i = 0;
-        for (MultipartFile file : files) {
-            String saveDir = createFileDir(request, userId, CommonConstant.FILE_DIR_ACTIVITY);
-            Long poetryInfoId = request.getPoetryInfoIdList().get(i++);
-            String audioUrl = fileService.upload(file, saveDir, poetryInfoId.toString());
-            UserActivityAudio userActivityAudio = new UserActivityAudio();
-            userActivityAudio.setUserActivityId(userActivity.getId());
-            userActivityAudio.setPoetryId(request.getPoetryId());
-            userActivityAudio.setPoetryInfoId(poetryInfoId);
-            userActivityAudio.setAudioUrl(audioUrl);
-            userActivityAudioList.add(userActivityAudio);
-        }
-
-        return userActivityAudioList;
-    }
+//    @Override
+//    public List<UserActivityAudio> upload(Long userId, MultipartFile[] files, ActivityPoetryRequest request) {
+//        if (files == null || files.length == 0) {
+//            throw new ServiceException(ResultCode.UPLOAD_FILE_EMPTY, ResultMessage.UPLOAD_FILE_EMPTY);
+//        }
+//        // 检查文件数量与诗句数量是否一样
+//        if (files.length != request.getPoetryInfoIdList().size()) {
+//            throw new ServiceException(ResultCode.UPLOAD_FILE_POETRY_NUM_DIFF, ResultMessage.UPLOAD_FILE_POETRY_NUM_DIFF);
+//        }
+//        // 检查活动ID、诗词ID、诗句ID是否有效
+//        UserActivity userActivity = userActivityMapper.selectUserActivityInfo(userId, request.getActivityId());
+//        if (userActivity == null) {
+//            throw new ServiceException(ResultCode.USER_ACTIVITY_ERROR, ResultMessage.USER_ACTIVITY_ERROR);
+//        }
+//        ActivityPoetry activityPoetry = activityPoetryMapper.selectByActivityAndPoetry(request.getActivityId(), request.getPoetryId());
+//        if (activityPoetry == null) {
+//            throw new ServiceException(ResultCode.ACTIVITY_POETRY_ERROR, ResultMessage.ACTIVITY_POETRY_ERROR);
+//        }
+//        List<PoetryInfo> poetryInfoList = poetryInfoMapper.selectByPoetryId(request.getPoetryId());
+//        if (CollectionUtils.isEmpty(poetryInfoList)) {
+//            throw new ServiceException(ResultCode.POETRY_INFO_EMPTY, ResultMessage.POETRY_INFO_EMPTY);
+//        }
+//        if (poetryInfoList.size() != request.getPoetryInfoIdList().size()) {
+//            throw new ServiceException(ResultCode.NOT_ALL_POETRY_FILE, ResultMessage.NOT_ALL_POETRY_FILE);
+//        }
+//        List<Long> poetryInfoIdList = Lists.newArrayList();
+//        for (PoetryInfo poetryInfo : poetryInfoList) {
+//            poetryInfoIdList.add(poetryInfo.getId());
+//        }
+//        for (Long poetryInfoId : request.getPoetryInfoIdList()) {
+//            if (!poetryInfoIdList.contains(poetryInfoId)) {
+//                throw new ServiceException(ResultCode.POETRY_INFO_NOT_EXISTS, ResultMessage.POETRY_INFO_NOT_EXISTS);
+//            }
+//        }
+//        // 创建用户课程音频文件保存对象
+//        List<UserActivityAudio> userActivityAudioList = Lists.newArrayList();
+//        // 保存文件
+//        int i = 0;
+//        for (MultipartFile file : files) {
+//            String saveDir = createFileDir(request, userId, CommonConstant.FILE_DIR_ACTIVITY);
+//            Long poetryInfoId = request.getPoetryInfoIdList().get(i++);
+//            String audioUrl = fileService.upload(file, saveDir, poetryInfoId.toString());
+//            UserActivityAudio userActivityAudio = new UserActivityAudio();
+//            userActivityAudio.setUserActivityId(userActivity.getId());
+//            userActivityAudio.setPoetryId(request.getPoetryId());
+//            userActivityAudio.setPoetryInfoId(poetryInfoId);
+//            userActivityAudio.setAudioUrl(audioUrl);
+//            userActivityAudioList.add(userActivityAudio);
+//        }
+//
+//        return userActivityAudioList;
+//    }
 
     @Transactional
     @Override
@@ -206,6 +208,67 @@ public class UserActivityServiceImpl implements UserActivityService {
         }
         // 更新用户活动诗词已完成数量
         userActivityMapper.updateActivityFinishedNum(userActivityAudioList.get(0).getUserActivityId());
+    }
+
+    @Override
+    public String upload(Long userId, MultipartFile file, ActivityPoetryRequest request) {
+        // 检查活动ID、诗词ID、诗句ID是否有效
+        UserActivity userActivity = userActivityMapper.selectUserActivityInfo(userId, request.getActivityId());
+        if (userActivity == null) {
+            throw new ServiceException(ResultCode.USER_ACTIVITY_ERROR, ResultMessage.USER_ACTIVITY_ERROR);
+        }
+        ActivityPoetry activityPoetry = activityPoetryMapper.selectByActivityAndPoetry(request.getActivityId(), request.getPoetryId());
+        if (activityPoetry == null) {
+            throw new ServiceException(ResultCode.ACTIVITY_POETRY_ERROR, ResultMessage.ACTIVITY_POETRY_ERROR);
+        }
+        PoetryInfo poetryInfo = poetryInfoMapper.selectByPrimaryKey(request.getPoetryInfoId());
+        if (poetryInfo == null) {
+            throw new ServiceException(ResultCode.POETRY_INFO_NOT_EXISTS, ResultMessage.POETRY_INFO_NOT_EXISTS);
+        }
+        // 保存文件
+        String saveDir = createFileDir(request, userId, CommonConstant.FILE_DIR_ACTIVITY);
+        return fileService.upload(file, saveDir, poetryInfo.getId().toString());
+    }
+
+    @Transactional
+    @Override
+    public void saveAudio(Long userId, ActivityAudioRequest request) {
+        // 检查活动ID、诗词ID、诗句ID是否有效
+        UserActivity userActivity = userActivityMapper.selectUserActivityInfo(userId, request.getActivityId());
+        if (userActivity == null) {
+            throw new ServiceException(ResultCode.USER_ACTIVITY_ERROR, ResultMessage.USER_ACTIVITY_ERROR);
+        }
+        ActivityPoetry activityPoetry = activityPoetryMapper.selectByActivityAndPoetry(request.getActivityId(), request.getPoetryId());
+        if (activityPoetry == null) {
+            throw new ServiceException(ResultCode.ACTIVITY_POETRY_ERROR, ResultMessage.ACTIVITY_POETRY_ERROR);
+        }
+        List<PoetryInfo> poetryInfoList = poetryInfoMapper.selectByPoetryId(request.getPoetryId());
+        if (CollectionUtils.isEmpty(poetryInfoList)) {
+            throw new ServiceException(ResultCode.POETRY_INFO_EMPTY, ResultMessage.POETRY_INFO_EMPTY);
+        }
+        if (poetryInfoList.size() != request.getPoetryAudioList().size()) {
+            throw new ServiceException(ResultCode.NOT_ALL_POETRY_AUDIO, ResultMessage.NOT_ALL_POETRY_AUDIO);
+        }
+        List<Long> poetryInfoIdList = Lists.newArrayList();
+        for (PoetryAudioRequest audio : request.getPoetryAudioList()) {
+            poetryInfoIdList.add(audio.getPoetryInfoId());
+        }
+        for (PoetryInfo poetryInfo : poetryInfoList) {
+            if (!poetryInfoIdList.contains(poetryInfo.getId())) {
+                throw new ServiceException(ResultCode.POETRY_INFO_NOT_EXISTS, ResultMessage.POETRY_INFO_NOT_EXISTS);
+            }
+        }
+        // 更新数据库
+        for (PoetryAudioRequest audio : request.getPoetryAudioList()) {
+            UserActivityAudio userActivityAudio = new UserActivityAudio();
+            userActivityAudio.setUserActivityId(userActivity.getId());
+            userActivityAudio.setPoetryId(request.getPoetryId());
+            userActivityAudio.setPoetryInfoId(audio.getPoetryInfoId());
+            userActivityAudio.setAudioUrl(audio.getAudioUrl());
+            userActivityAudioMapper.insertOrUpdateSelective(userActivityAudio);
+        }
+        // 更新用户活动诗词已完成数量
+        userActivityMapper.updateActivityFinishedNum(userActivity.getId());
     }
 
     private String createFileDir(ActivityPoetryRequest request, Long userId, String baseDir) {

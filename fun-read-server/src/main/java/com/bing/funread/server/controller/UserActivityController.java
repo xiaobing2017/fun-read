@@ -1,6 +1,6 @@
 package com.bing.funread.server.controller;
 
-import com.bing.funread.common.domain.UserActivityAudio;
+import com.bing.funread.request.ActivityAudioRequest;
 import com.bing.funread.request.ActivityPoetryRequest;
 import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.Result;
@@ -76,15 +76,35 @@ public class UserActivityController extends BaseController {
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 
+//    @RequestMapping(value = "/upload/audio", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ApiOperation(value = "上传跟读文件", httpMethod = "POST", notes = "上传用户活动诗词跟读音频文件并保存")
+//    public Result<String> upload(@ApiParam(required = true, name = "files", value = "文件列表")
+//                                 @NotNull(message="文件不能为空") @RequestParam("files") MultipartFile[] files,
+//                                 @ApiParam(required = true, name = "request", value = "活动跟读文件上传参数")
+//                                 @Valid @RequestBody ActivityPoetryRequest request) {
+//        Long userId = getUserId();
+//        List<UserActivityAudio> audioList = userActivityService.upload(userId, files, request);
+//        userActivityService.saveUploadInfo(audioList);
+//        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS);
+//    }
+
     @RequestMapping(value = "/upload/audio", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "上传跟读文件", httpMethod = "POST", notes = "上传用户活动诗词跟读音频文件并保存")
-    public Result<String> upload(@ApiParam(required = true, name = "files", value = "文件列表")
-                                 @NotNull(message="文件不能为空") @RequestParam("files") MultipartFile[] files,
+    public Result<String> upload(@ApiParam(required = true, name = "file", value = "跟读文件")
+                                 @NotNull(message="文件不能为空") @RequestParam("file") MultipartFile file,
                                  @ApiParam(required = true, name = "request", value = "活动跟读文件上传参数")
                                  @Valid @RequestBody ActivityPoetryRequest request) {
         Long userId = getUserId();
-        List<UserActivityAudio> audioList = userActivityService.upload(userId, files, request);
-        userActivityService.saveUploadInfo(audioList);
+        String audioUrl = userActivityService.upload(userId, file, request);
+        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, audioUrl);
+    }
+
+    @RequestMapping(value = "/saveAudio", method = RequestMethod.POST)
+    @ApiOperation(value = "保存跟读文件信息", httpMethod = "POST", notes = "保存跟读文件信息")
+    public Result<String> saveAudio(@ApiParam(required = true, name = "audios", value = "活动跟读信息保存参数")
+                                        @Valid @RequestBody ActivityAudioRequest audio) {
+        Long userId = getUserId();
+        userActivityService.saveAudio(userId, audio);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS);
     }
 }

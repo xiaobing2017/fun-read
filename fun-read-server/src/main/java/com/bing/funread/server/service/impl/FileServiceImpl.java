@@ -2,6 +2,8 @@ package com.bing.funread.server.service.impl;
 
 import com.bing.funread.common.exception.ServiceException;
 import com.bing.funread.common.utils.DateUtil;
+import com.bing.funread.response.ResultCode;
+import com.bing.funread.response.ResultMessage;
 import com.bing.funread.server.service.FileService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
@@ -40,7 +42,7 @@ public class FileServiceImpl implements FileService {
             return savePath;
         } catch (IOException e) {
             logger.error("文件上传失败，{}", e);
-            throw new ServiceException("", "文件上传失败");
+            throw new ServiceException(ResultCode.FILE_UPLOAD_FAILURE, ResultMessage.FILE_UPLOAD_FAILURE);
         }
     }
 

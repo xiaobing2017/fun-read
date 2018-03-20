@@ -95,6 +95,16 @@ public class ResultMessage {
      */
     public static final String ACTIVITY_HAS_END = "活动已结束";
 
+    /**
+     * 文件上传失败
+     */
+    public static final String FILE_UPLOAD_FAILURE = "文件上传失败";
+
+    /**
+     * 保存跟读信息不完整
+     */
+    public static final String NOT_ALL_POETRY_AUDIO = "保存跟读信息不完整";
+
     private ResultMessage() {
     	
     }

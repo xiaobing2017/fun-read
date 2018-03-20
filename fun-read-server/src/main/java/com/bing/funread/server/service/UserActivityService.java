@@ -1,6 +1,7 @@
 package com.bing.funread.server.service;
 
 import com.bing.funread.common.domain.UserActivityAudio;
+import com.bing.funread.request.ActivityAudioRequest;
 import com.bing.funread.request.ActivityPoetryRequest;
 import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.UserActivityInfoVo;
@@ -52,12 +53,28 @@ public interface UserActivityService {
      * @param request
      * @return
      */
-    List<UserActivityAudio> upload(Long userId, MultipartFile[] files, ActivityPoetryRequest request);
+//    List<UserActivityAudio> upload(Long userId, MultipartFile[] files, ActivityPoetryRequest request);
 
     /**
      * 保存跟读信息
      * @param userActivityAudioList
      */
     void saveUploadInfo(List<UserActivityAudio> userActivityAudioList);
+
+    /**
+     * 单文件上传
+     * @param userId
+     * @param file
+     * @param request
+     * @return
+     */
+    String upload(Long userId, MultipartFile file, ActivityPoetryRequest request);
+
+    /**
+     * 保存跟读文件信息
+     * @param userId
+     * @param request
+     */
+    void saveAudio(Long userId, ActivityAudioRequest request);
 }
 
