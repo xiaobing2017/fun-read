@@ -2,7 +2,6 @@ package com.bing.funread.server.service;
 
 import com.bing.funread.common.domain.UserActivityAudio;
 import com.bing.funread.request.ActivityAudioRequest;
-import com.bing.funread.request.ActivityPoetryRequest;
 import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.UserActivityInfoVo;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,12 +62,14 @@ public interface UserActivityService {
 
     /**
      * 单文件上传
-     * @param userId
      * @param file
-     * @param request
+     * @param userId
+     * @param activityId
+     * @param poetryId
+     * @param poetryInfoId
      * @return
      */
-    String upload(Long userId, MultipartFile file, ActivityPoetryRequest request);
+    String upload(MultipartFile file, Long userId, Long activityId, Long poetryId, Long poetryInfoId);
 
     /**
      * 保存跟读文件信息

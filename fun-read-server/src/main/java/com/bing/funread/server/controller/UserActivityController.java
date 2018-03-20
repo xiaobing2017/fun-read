@@ -1,7 +1,6 @@
 package com.bing.funread.server.controller;
 
 import com.bing.funread.request.ActivityAudioRequest;
-import com.bing.funread.request.ActivityPoetryRequest;
 import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
@@ -88,14 +87,18 @@ public class UserActivityController extends BaseController {
 //        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS);
 //    }
 
-    @RequestMapping(value = "/upload/audio", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/upload/audio/{activityId}/{poetryId}/{poetryInfoId}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "上传跟读文件", httpMethod = "POST", notes = "上传用户活动诗词跟读音频文件并保存")
     public Result<String> upload(@ApiParam(required = true, name = "file", value = "跟读文件")
                                  @NotNull(message="文件不能为空") @RequestParam("file") MultipartFile file,
-                                 @ApiParam(required = true, name = "request", value = "活动跟读文件上传参数")
-                                 @Valid @RequestBody ActivityPoetryRequest request) {
+                                 @ApiParam(required = true, name = "activityId", value = "活动ID")
+                                 @NotBlank(message="活动ID不能为空") @PathVariable Long activityId,
+                                 @ApiParam(required = true, name = "poetryId", value = "诗词ID")
+                                 @NotBlank(message="诗词ID不能为空") @PathVariable Long poetryId,
+                                 @ApiParam(required = true, name = "poetryInfoId", value = "诗句ID")
+                                 @NotBlank(message="诗句ID不能为空") @PathVariable Long poetryInfoId) {
         Long userId = getUserId();
-        String audioUrl = userActivityService.upload(userId, file, request);
+        String audioUrl = userActivityService.upload(file, userId, activityId, poetryId, poetryInfoId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, audioUrl);
     }
 

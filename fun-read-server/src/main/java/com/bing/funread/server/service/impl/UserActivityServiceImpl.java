@@ -19,7 +19,6 @@ import com.bing.funread.common.mapper.UserActivityMapper;
 import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.common.utils.DateUtil;
 import com.bing.funread.request.ActivityAudioRequest;
-import com.bing.funread.request.ActivityPoetryRequest;
 import com.bing.funread.request.PoetryAudioRequest;
 import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.PoetryVo;
@@ -211,22 +210,22 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public String upload(Long userId, MultipartFile file, ActivityPoetryRequest request) {
+    public String upload(MultipartFile file, Long userId, Long activityId, Long poetryId, Long poetryInfoId) {
         // 检查活动ID、诗词ID、诗句ID是否有效
-        UserActivity userActivity = userActivityMapper.selectUserActivityInfo(userId, request.getActivityId());
+        UserActivity userActivity = userActivityMapper.selectUserActivityInfo(userId, activityId);
         if (userActivity == null) {
             throw new ServiceException(ResultCode.USER_ACTIVITY_ERROR, ResultMessage.USER_ACTIVITY_ERROR);
         }
-        ActivityPoetry activityPoetry = activityPoetryMapper.selectByActivityAndPoetry(request.getActivityId(), request.getPoetryId());
+        ActivityPoetry activityPoetry = activityPoetryMapper.selectByActivityAndPoetry(activityId, poetryId);
         if (activityPoetry == null) {
             throw new ServiceException(ResultCode.ACTIVITY_POETRY_ERROR, ResultMessage.ACTIVITY_POETRY_ERROR);
         }
-        PoetryInfo poetryInfo = poetryInfoMapper.selectByPrimaryKey(request.getPoetryInfoId());
+        PoetryInfo poetryInfo = poetryInfoMapper.selectByPrimaryKey(poetryInfoId);
         if (poetryInfo == null) {
             throw new ServiceException(ResultCode.POETRY_INFO_NOT_EXISTS, ResultMessage.POETRY_INFO_NOT_EXISTS);
         }
         // 保存文件
-        String saveDir = createFileDir(request, userId, CommonConstant.FILE_DIR_ACTIVITY);
+        String saveDir = createFileDir(userId, activityId, poetryId, CommonConstant.FILE_DIR_ACTIVITY);
         return fileService.upload(file, saveDir, poetryInfo.getId().toString());
     }
 
@@ -271,10 +270,10 @@ public class UserActivityServiceImpl implements UserActivityService {
         userActivityMapper.updateActivityFinishedNum(userActivity.getId());
     }
 
-    private String createFileDir(ActivityPoetryRequest request, Long userId, String baseDir) {
+    private String createFileDir(Long userId, Long activityId, Long poetryId, String baseDir) {
         return baseDir + File.separator +
                 userId + File.separator +
-                request.getActivityId() + File.separator +
-                request.getPoetryId() + File.separator;
+                activityId + File.separator +
+                poetryId + File.separator;
     }
 }
