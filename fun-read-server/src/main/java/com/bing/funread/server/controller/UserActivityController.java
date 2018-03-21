@@ -1,6 +1,6 @@
 package com.bing.funread.server.controller;
 
-import com.bing.funread.request.ActivityAudioRequest;
+import com.bing.funread.common.domain.UserActivityAudio;
 import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
@@ -15,14 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -75,18 +73,6 @@ public class UserActivityController extends BaseController {
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 
-//    @RequestMapping(value = "/upload/audio", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ApiOperation(value = "上传跟读文件", httpMethod = "POST", notes = "上传用户活动诗词跟读音频文件并保存")
-//    public Result<String> upload(@ApiParam(required = true, name = "files", value = "文件列表")
-//                                 @NotNull(message="文件不能为空") @RequestParam("files") MultipartFile[] files,
-//                                 @ApiParam(required = true, name = "request", value = "活动跟读文件上传参数")
-//                                 @Valid @RequestBody ActivityPoetryRequest request) {
-//        Long userId = getUserId();
-//        List<UserActivityAudio> audioList = userActivityService.upload(userId, files, request);
-//        userActivityService.saveUploadInfo(audioList);
-//        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS);
-//    }
-
     @RequestMapping(value = "/upload/audio/{activityId}/{poetryId}/{poetryInfoId}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "上传跟读文件", httpMethod = "POST", notes = "上传用户活动诗词跟读音频文件并保存")
     public Result<String> upload(@ApiParam(required = true, name = "file", value = "跟读文件")
@@ -98,16 +84,8 @@ public class UserActivityController extends BaseController {
                                  @ApiParam(required = true, name = "poetryInfoId", value = "诗句ID")
                                  @NotBlank(message="诗句ID不能为空") @PathVariable Long poetryInfoId) {
         Long userId = getUserId();
-        String audioUrl = userActivityService.upload(file, userId, activityId, poetryId, poetryInfoId);
-        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, audioUrl);
-    }
-
-    @RequestMapping(value = "/saveAudio", method = RequestMethod.POST)
-    @ApiOperation(value = "保存跟读文件信息", httpMethod = "POST", notes = "保存跟读文件信息")
-    public Result<String> saveAudio(@ApiParam(required = true, name = "audios", value = "活动跟读信息保存参数")
-                                        @Valid @RequestBody ActivityAudioRequest audio) {
-        Long userId = getUserId();
-        userActivityService.saveAudio(userId, audio);
+        UserActivityAudio audio = userActivityService.upload(userId, activityId, poetryId, poetryInfoId, file);
+        userActivityService.saveAudio(audio);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS);
     }
 }

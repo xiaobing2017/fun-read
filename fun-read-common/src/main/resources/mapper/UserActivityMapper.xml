@@ -114,10 +114,16 @@
   <update id="updateActivityFinishedNum" parameterType="java.lang.Long" >
     update user_activity t1,
     (
-    select count(distinct poetry_id) num
-    from user_activity ua
-    inner join user_activity_audio uaa on ua.id = uaa.user_activity_id
-    where ua.id = #{id,jdbcType=BIGINT}
+      select count(1) num
+      from
+      (
+        select poetry_id,count(1)
+        from user_activity ua
+        inner join user_activity_audio uaa on ua.id = uaa.user_activity_id
+        where ua.id = #{id,jdbcType=BIGINT}
+        group by poetry_id
+        having count(1) = (select count(1) from poetry_info pif where pif.poetry_id = uaa.poetry_id)
+      ) t
     ) t2
     set t1.finished_num = t2.num
     where t1.id = #{id,jdbcType=BIGINT}
