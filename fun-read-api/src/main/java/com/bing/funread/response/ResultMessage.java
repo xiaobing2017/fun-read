@@ -36,16 +36,6 @@ public class ResultMessage {
     public static final String USER_ID_ERROR = "账号有误";
 
     /**
-     * 上传文件为空
-     */
-    public static final String UPLOAD_FILE_EMPTY = "上传文件为空";
-
-    /**
-     * 上传文件数量与诗句数量不一致
-     */
-    public static final String UPLOAD_FILE_POETRY_NUM_DIFF = "上传文件数量与诗句数量不一致";
-
-    /**
      * 用户课程不存在
      */
     public static final String USER_COURSE_ERROR = "用户课程不存在";
@@ -54,16 +44,6 @@ public class ResultMessage {
      * 课程诗词不存在
      */
     public static final String COURSE_POETRY_ERROR = "课程诗词不存在";
-
-    /**
-     * 诗词内容为空
-     */
-    public static final String POETRY_INFO_EMPTY = "诗词内容为空";
-
-    /**
-     * 上传文件不完整
-     */
-    public static final String NOT_ALL_POETRY_FILE = "上传文件不完整";
 
     /**
      * 诗句不存在
@@ -99,11 +79,6 @@ public class ResultMessage {
      * 文件上传失败
      */
     public static final String FILE_UPLOAD_FAILURE = "文件上传失败";
-
-    /**
-     * 保存跟读信息不完整
-     */
-    public static final String NOT_ALL_POETRY_AUDIO = "保存跟读信息不完整";
 
     private ResultMessage() {
     	

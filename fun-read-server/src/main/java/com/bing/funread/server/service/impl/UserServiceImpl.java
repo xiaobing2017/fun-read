@@ -90,10 +90,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserInfo(Long userId, UserInfoRequest userInfo) {
-        if (!userInfo.equals(userId)) {
-            throw new ServiceException(ResultCode.USER_ID_ERROR, ResultMessage.USER_ID_ERROR);
-        }
         User user = BeanUtil.copyBean(userInfo, User.class);
+        user.setId(userId);
         userMapper.updateByPrimaryKeySelective(user);
     }
 

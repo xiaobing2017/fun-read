@@ -3,7 +3,6 @@ package com.bing.funread.request;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -14,10 +13,6 @@ import java.io.Serializable;
 @ApiModel(value = "用户信息")
 public class UserInfoRequest implements Serializable {
 
-    @ApiModelProperty(value = "用户ID")
-    @NotNull(message = "用户ID不能为空")
-    private Long id;
-
     @ApiModelProperty(value = "昵称")
     private String nickName;
 
@@ -26,14 +21,6 @@ public class UserInfoRequest implements Serializable {
 
     @ApiModelProperty(value = "生日 yyyyMM")
     private String birthday;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNickName() {
         return nickName;
@@ -62,7 +49,6 @@ public class UserInfoRequest implements Serializable {
     @Override
     public String toString() {
         return "UserInfoVo{" +
-                "id='" + id + '\'' +
                 "nickName='" + nickName + '\'' +
                 ", gender='" + gender + '\'' +
                 ", birthday='" + birthday + '\'' +
