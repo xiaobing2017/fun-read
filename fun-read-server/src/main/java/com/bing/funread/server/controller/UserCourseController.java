@@ -1,7 +1,6 @@
 package com.bing.funread.server.controller;
 
 import com.bing.funread.common.domain.UserCourseAudio;
-import com.bing.funread.request.CoursePoetryRequest;
 import com.bing.funread.response.CourseDetailVo;
 import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.Result;
@@ -18,14 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -79,15 +76,19 @@ public class UserCourseController extends BaseController {
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 
-    @RequestMapping(value = "/upload/audio", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/upload/audio/{courseId}/{poetryId}/{poetryInfoId}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "上传跟读文件", httpMethod = "POST", notes = "上传用户课程诗词跟读音频文件并保存")
-    public Result<String> upload(@ApiParam(required = true, name = "files", value = "文件列表")
-                                 @NotNull(message="文件不能为空") @RequestParam("files") MultipartFile[] files,
-                                 @ApiParam(required = true, name = "request", value = "课程跟读文件上传参数")
-                                 @Valid @RequestBody CoursePoetryRequest request) {
+    public Result<String> upload(@ApiParam(required = true, name = "file", value = "跟读文件")
+                                 @NotNull(message="文件不能为空") @RequestParam("file") MultipartFile file,
+                                 @ApiParam(required = true, name = "courseId", value = "课程ID")
+                                 @NotBlank(message="课程ID不能为空") @PathVariable Long courseId,
+                                 @ApiParam(required = true, name = "poetryId", value = "诗词ID")
+                                 @NotBlank(message="诗词ID不能为空") @PathVariable Long poetryId,
+                                 @ApiParam(required = true, name = "poetryInfoId", value = "诗句ID")
+                                 @NotBlank(message="诗句ID不能为空") @PathVariable Long poetryInfoId) {
         Long userId = getUserId();
-        List<UserCourseAudio> audioList = userCourseService.upload(userId, files, request);
-        userCourseService.saveUploadInfo(audioList);
+        UserCourseAudio audio = userCourseService.upload(userId, courseId, poetryId, poetryInfoId, file);
+        userCourseService.saveAudio(audio);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS);
     }
 }

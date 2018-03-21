@@ -1,7 +1,6 @@
 package com.bing.funread.server.service;
 
 import com.bing.funread.common.domain.UserCourseAudio;
-import com.bing.funread.request.CoursePoetryRequest;
 import com.bing.funread.response.CourseDetailVo;
 import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.UserCourseInfoVo;
@@ -49,17 +48,19 @@ public interface UserCourseService {
     ReadInfoVo getReadInfo(Long userId, Long courseId, Long poetryId);
 
     /**
-     * 保存跟读文件
+     * 单文件上传
      * @param userId
-     * @param files
-     * @param request
+     * @param courseId
+     * @param poetryId
+     * @param poetryInfoId
+     * @param file
      * @return
      */
-    List<UserCourseAudio> upload(Long userId, MultipartFile[] files, CoursePoetryRequest request);
+    UserCourseAudio upload(Long userId, Long courseId, Long poetryId, Long poetryInfoId, MultipartFile file);
 
     /**
-     * 保存跟读信息
-     * @param userCourseAudioList
+     * 保存跟读文件信息
+     * @param audio
      */
-    void saveUploadInfo(List<UserCourseAudio> userCourseAudioList);
+    void saveAudio(UserCourseAudio audio);
 }

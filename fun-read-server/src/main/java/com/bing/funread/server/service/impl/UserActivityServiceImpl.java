@@ -27,6 +27,7 @@ import com.bing.funread.server.service.FileService;
 import com.bing.funread.server.service.UserActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -155,7 +156,7 @@ public class UserActivityServiceImpl implements UserActivityService {
         }
         // 保存文件
         String saveDir = createFileDir(userId, activityId, poetryId, CommonConstant.FILE_DIR_ACTIVITY);
-        String audioUrl = fileService.upload(file, saveDir, poetryInfo.getId().toString());
+        String audioUrl = fileService.upload(file, saveDir, poetryInfoId.toString());
 
         UserActivityAudio userActivityAudio = new UserActivityAudio();
         userActivityAudio.setUserActivityId(userActivity.getId());
@@ -165,6 +166,7 @@ public class UserActivityServiceImpl implements UserActivityService {
         return userActivityAudio;
     }
 
+    @Transactional
     @Override
     public void saveAudio(UserActivityAudio audio) {
         // 更新数据库

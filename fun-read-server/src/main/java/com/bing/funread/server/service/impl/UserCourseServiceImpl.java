@@ -21,7 +21,6 @@ import com.bing.funread.common.mapper.UserCourseMapper;
 import com.bing.funread.common.mapper.UserMapper;
 import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.common.utils.DateUtil;
-import com.bing.funread.request.CoursePoetryRequest;
 import com.bing.funread.response.CourseDetailVo;
 import com.bing.funread.response.PoetryVo;
 import com.bing.funread.response.ReadInfoVo;
@@ -148,76 +147,45 @@ public class UserCourseServiceImpl implements UserCourseService {
     }
 
     @Override
-    public List<UserCourseAudio> upload(Long userId, MultipartFile[] files, CoursePoetryRequest request) {
-        if (files == null || files.length == 0) {
-            throw new ServiceException(ResultCode.UPLOAD_FILE_EMPTY, ResultMessage.UPLOAD_FILE_EMPTY);
-        }
-        // 检查文件数量与诗句数量是否一样
-        if (files.length != request.getPoetryInfoIdList().size()) {
-            throw new ServiceException(ResultCode.UPLOAD_FILE_POETRY_NUM_DIFF, ResultMessage.UPLOAD_FILE_POETRY_NUM_DIFF);
-        }
+    public UserCourseAudio upload(Long userId, Long courseId, Long poetryId, Long poetryInfoId, MultipartFile file) {
         // 检查课程ID、诗词ID、诗句ID是否有效
-        UserCourse userCourse = userCourseMapper.selectByUserAndCourse(userId, request.getCourseId());
+        UserCourse userCourse = userCourseMapper.selectByUserAndCourse(userId, courseId);
         if (userCourse == null) {
             throw new ServiceException(ResultCode.USER_COURSE_ERROR, ResultMessage.USER_COURSE_ERROR);
         }
-        CoursePoetry coursePoetry = coursePoetryMapper.selectByCourseAndPoetry(request.getCourseId(), request.getPoetryId());
+        CoursePoetry coursePoetry = coursePoetryMapper.selectByCourseAndPoetry(courseId, poetryId);
         if (coursePoetry == null) {
             throw new ServiceException(ResultCode.COURSE_POETRY_ERROR, ResultMessage.COURSE_POETRY_ERROR);
         }
-        List<PoetryInfo> poetryInfoList = poetryInfoMapper.selectByPoetryId(request.getPoetryId());
-        if (CollectionUtils.isEmpty(poetryInfoList)) {
-            throw new ServiceException(ResultCode.POETRY_INFO_EMPTY, ResultMessage.POETRY_INFO_EMPTY);
+        PoetryInfo poetryInfo = poetryInfoMapper.selectByPrimaryKey(poetryInfoId);
+        if (poetryInfo == null) {
+            throw new ServiceException(ResultCode.POETRY_INFO_NOT_EXISTS, ResultMessage.POETRY_INFO_NOT_EXISTS);
         }
-        if (poetryInfoList.size() != request.getPoetryInfoIdList().size()) {
-            throw new ServiceException(ResultCode.NOT_ALL_POETRY_FILE, ResultMessage.NOT_ALL_POETRY_FILE);
-        }
-        List<Long> poetryInfoIdList = Lists.newArrayList();
-        for (PoetryInfo poetryInfo : poetryInfoList) {
-            poetryInfoIdList.add(poetryInfo.getId());
-        }
-        for (Long poetryInfoId : request.getPoetryInfoIdList()) {
-            if (!poetryInfoIdList.contains(poetryInfoId)) {
-                throw new ServiceException(ResultCode.POETRY_INFO_NOT_EXISTS, ResultMessage.POETRY_INFO_NOT_EXISTS);
-            }
-        }
-        // 创建用户课程音频文件保存对象
-        List<UserCourseAudio> userCourseAudioList = Lists.newArrayList();
         // 保存文件
-        int i = 0;
-        for (MultipartFile file : files) {
-            String saveDir = createFileDir(request, userId, CommonConstant.FILE_DIR_COURSE);
-            Long poetryInfoId = request.getPoetryInfoIdList().get(i++);
-            String audioUrl = fileService.upload(file, saveDir, poetryInfoId.toString());
-            UserCourseAudio userCourseAudio = new UserCourseAudio();
-            userCourseAudio.setUserCourseId(userCourse.getId());
-            userCourseAudio.setPoetryId(request.getPoetryId());
-            userCourseAudio.setPoetryInfoId(poetryInfoId);
-            userCourseAudio.setAudioUrl(audioUrl);
-            userCourseAudioList.add(userCourseAudio);
-        }
+        String saveDir = createFileDir(userId, courseId, poetryId, CommonConstant.FILE_DIR_COURSE);
+        String audioUrl = fileService.upload(file, saveDir, poetryInfoId.toString());
 
-        return userCourseAudioList;
+        UserCourseAudio userCourseAudio = new UserCourseAudio();
+        userCourseAudio.setUserCourseId(userCourse.getId());
+        userCourseAudio.setPoetryId(poetryId);
+        userCourseAudio.setPoetryInfoId(poetryInfoId);
+        userCourseAudio.setAudioUrl(audioUrl);
+        return userCourseAudio;
     }
 
     @Transactional
     @Override
-    public void saveUploadInfo(List<UserCourseAudio> userCourseAudioList) {
-        if (CollectionUtils.isEmpty(userCourseAudioList)) {
-            return;
-        }
+    public void saveAudio(UserCourseAudio audio) {
         // 更新数据库
-        for (UserCourseAudio userCourseAudio : userCourseAudioList) {
-            userCourseAudioMapper.insertOrUpdateSelective(userCourseAudio);
-        }
-        // 更新用户课程诗词已完成数量
-        userCourseMapper.updateCourseFinishedNum(userCourseAudioList.get(0).getUserCourseId());
+        userCourseAudioMapper.insertOrUpdateSelective(audio);
+        // 更新用户活动诗词已完成数量
+        userCourseMapper.updateCourseFinishedNum(audio.getUserCourseId());
     }
 
-    private String createFileDir(CoursePoetryRequest request, Long userId, String baseDir) {
+    private String createFileDir(Long userId, Long courseId, Long poetryId, String baseDir) {
         return baseDir + File.separator +
                 userId + File.separator +
-                request.getCourseId() + File.separator +
-                request.getPoetryId() + File.separator;
+                courseId + File.separator +
+                poetryId + File.separator;
     }
 }

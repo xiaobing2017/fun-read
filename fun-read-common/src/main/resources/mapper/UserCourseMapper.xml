@@ -140,10 +140,16 @@
   <update id="updateCourseFinishedNum" parameterType="java.lang.Long" >
     update user_course t1,
     (
-    select count(distinct poetry_id) num
-	from user_course uc
-	inner join user_course_audio uca on uc.id = uca.user_course_id
-	where uc.id = #{id,jdbcType=BIGINT}
+      select count(1) num
+      from
+      (
+        select poetry_id,count(1)
+        from user_course uc
+        inner join user_course_audio uca on uc.id = uca.user_course_id
+        where uc.id = #{id,jdbcType=BIGINT}
+        group by poetry_id
+        having count(1) = (select count(1) from poetry_info pif where pif.poetry_id = uca.poetry_id)
+      ) t
     ) t2
     set t1.finished_num = t2.num
     where t1.id = #{id,jdbcType=BIGINT}
