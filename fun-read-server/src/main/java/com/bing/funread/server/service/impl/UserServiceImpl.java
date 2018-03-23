@@ -85,7 +85,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoVo getUserInfo(Long userId) {
         User user = userMapper.selectByPrimaryKey(userId);
-        return BeanUtil.copyBean(user, UserInfoVo.class);
+        UserInfoVo userInfo = BeanUtil.copyBean(user, UserInfoVo.class);
+        if (StringUtils.isNotBlank(user.getName())) {
+            userInfo.setNickName(user.getName());
+        }
+        return userInfo;
     }
 
     @Override

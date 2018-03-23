@@ -13,8 +13,8 @@ import java.io.Serializable;
 @ApiModel(value = "用户信息")
 public class UserInfoRequest implements Serializable {
 
-    @ApiModelProperty(value = "昵称")
-    private String nickName;
+    @ApiModelProperty(value = "用户昵称")
+    private String name;
 
     @ApiModelProperty(value = "性别 0:未知 1:男 2:女")
     private Integer gender;
@@ -22,12 +22,12 @@ public class UserInfoRequest implements Serializable {
     @ApiModelProperty(value = "生日 yyyyMM")
     private String birthday;
 
-    public String getNickName() {
-        return nickName;
+    public String getName() {
+        return name;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getGender() {
@@ -49,7 +49,7 @@ public class UserInfoRequest implements Serializable {
     @Override
     public String toString() {
         return "UserInfoVo{" +
-                "nickName='" + nickName + '\'' +
+                "name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", birthday='" + birthday + '\'' +
                 '}';

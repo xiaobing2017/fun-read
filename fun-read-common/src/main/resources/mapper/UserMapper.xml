@@ -207,7 +207,6 @@
       #{birthday,jdbcType=CHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
       #{country,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
       on duplicate key update union_id = #{unionId,jdbcType=VARCHAR}, nick_name = #{nickName,jdbcType=VARCHAR},
-        gender = #{gender,jdbcType=INTEGER}, birthday = #{birthday,jdbcType=CHAR},
         province = #{province,jdbcType=VARCHAR}, city = #{city,jdbcType=VARCHAR},
         country = #{country,jdbcType=VARCHAR}, avatar_url = #{avatarUrl,jdbcType=VARCHAR}
   </insert>
