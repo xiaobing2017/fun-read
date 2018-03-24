@@ -1,17 +1,17 @@
 package com.bing.funread.response;
 
+import com.bing.funread.annotation.Encryption;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.io.Serializable;
 
 /**
  * Description:课程信息
  * Author: zhangfusheng
  * Date: 2018/3/7 下午5:22
  */
+@Encryption(value = {"picUrl"})
 @ApiModel(value = "课程信息")
-public class UserCourseInfoVo implements Serializable {
+public class UserCourseInfoVo extends BaseVo {
 
     @ApiModelProperty(value = "课程ID")
     private Long courseId;

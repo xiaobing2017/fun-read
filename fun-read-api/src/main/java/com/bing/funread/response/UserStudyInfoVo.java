@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Date: 2018/3/7 下午8:51
  */
 @ApiModel(value = "用户学习情况")
-public class UserStudyInfoVo {
+public class UserStudyInfoVo extends BaseVo {
 
     @ApiModelProperty(value = "学习天数")
     private Integer studyDays;

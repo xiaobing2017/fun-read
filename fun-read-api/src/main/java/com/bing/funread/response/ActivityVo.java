@@ -1,9 +1,9 @@
 package com.bing.funread.response;
 
+import com.bing.funread.annotation.Encryption;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,8 +11,9 @@ import java.util.Date;
  * Author: zhangfusheng
  * Date: 2018/3/8 下午2:50
  */
+@Encryption(value = {"bannerUrl"})
 @ApiModel(value = "活动简介")
-public class ActivityVo implements Serializable {
+public class ActivityVo extends BaseVo {
 
     @ApiModelProperty(value = "活动ID")
     private Long id;

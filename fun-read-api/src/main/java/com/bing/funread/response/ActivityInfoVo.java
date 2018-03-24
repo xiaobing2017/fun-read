@@ -1,5 +1,6 @@
 package com.bing.funread.response;
 
+import com.bing.funread.annotation.Encryption;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -8,8 +9,9 @@ import io.swagger.annotations.ApiModelProperty;
  * Author: zhangfusheng
  * Date: 2018/3/8 下午3:45
  */
+@Encryption(value = {"bannerUrl"})
 @ApiModel(value = "活动信息")
-public class ActivityInfoVo {
+public class ActivityInfoVo extends BaseVo {
 
     @ApiModelProperty(value = "活动ID")
     private Integer id;

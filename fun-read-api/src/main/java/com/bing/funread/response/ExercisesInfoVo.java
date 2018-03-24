@@ -1,9 +1,9 @@
 package com.bing.funread.response;
 
+import com.bing.funread.annotation.Encryption;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,8 +11,9 @@ import java.util.List;
  * Author: zhangfusheng
  * Date: 2018/3/14 上午11:58
  */
+@Encryption(value = {"audioUrl"})
 @ApiModel("练习题信息")
-public class ExercisesInfoVo implements Serializable {
+public class ExercisesInfoVo extends BaseVo {
 
     @ApiModelProperty(value = "练习题ID")
     private Long id;

@@ -11,7 +11,7 @@ import java.util.List;
  * Date: 2018/3/8 下午3:45
  */
 @ApiModel(value = "用户活动信息")
-public class UserActivityInfoVo {
+public class UserActivityInfoVo extends BaseVo {
 
     @ApiModelProperty(value = "活动ID")
     private Long activityId;

@@ -1,17 +1,17 @@
 package com.bing.funread.response;
 
+import com.bing.funread.annotation.Encryption;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.io.Serializable;
 
 /**
  * Description:首页banner图信息
  * Author: zhangfusheng
  * Date: 2018/3/7 下午4:55
  */
+@Encryption(value = {"bannerUrl"})
 @ApiModel(value = "首页banner图信息")
-public class HomeBannerVo implements Serializable {
+public class HomeBannerVo extends BaseVo {
 
     @ApiModelProperty(value = "banner图地址")
     private String bannerUrl;

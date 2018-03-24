@@ -1,17 +1,17 @@
 package com.bing.funread.response;
 
+import com.bing.funread.annotation.Encryption;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.io.Serializable;
 
 /**
  * Description:用户诗词跟读信息
  * Author: zhangfusheng
  * Date: 2018/3/8 下午1:41
  */
+@Encryption(value = {"picUrl", "audioUrl"})
 @ApiModel(value = "用户诗词跟读信息")
-public class ReadInfoVo implements Serializable {
+public class ReadInfoVo extends BaseVo {
 
     @ApiModelProperty(value = "诗句ID")
     private Long poetryInfoId;

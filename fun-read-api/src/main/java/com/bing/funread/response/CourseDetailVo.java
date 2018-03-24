@@ -3,7 +3,6 @@ package com.bing.funread.response;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +11,7 @@ import java.util.List;
  * Date: 2018/3/7 下午6:00
  */
 @ApiModel(value = "课程详情")
-public class CourseDetailVo implements Serializable {
+public class CourseDetailVo extends BaseVo {
 
     @ApiModelProperty(value = "课程ID")
     private Long courseId;

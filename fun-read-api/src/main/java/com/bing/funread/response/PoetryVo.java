@@ -3,15 +3,13 @@ package com.bing.funread.response;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.Serializable;
-
 /**
  * Description:诗词简介
  * Author: zhangfusheng
  * Date: 2018/3/7 下午6:01
  */
 @ApiModel(value = "诗词信息")
-public class PoetryVo implements Serializable {
+public class PoetryVo extends BaseVo {
 
     @ApiModelProperty(value = "诗词ID")
     private Long id;

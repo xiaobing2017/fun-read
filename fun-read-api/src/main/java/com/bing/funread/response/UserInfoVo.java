@@ -3,15 +3,13 @@ package com.bing.funread.response;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.Serializable;
-
 /**
  * Description:用户信息
  * Author: zhangfusheng
  * Date: 2018/3/8 下午6:17
  */
 @ApiModel(value = "用户信息")
-public class UserInfoVo implements Serializable {
+public class UserInfoVo extends BaseVo {
 
     @ApiModelProperty(value = "用户ID")
     private Long id;
