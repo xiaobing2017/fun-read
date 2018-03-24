@@ -159,7 +159,7 @@
     <result column="user_num" jdbcType="INTEGER" property="userNum" />
   </resultMap>
   <select id="selectUserNumByCourseIdList" resultMap="CourseUserNumDto" >
-    select c.id,count(1) user_num
+    select c.id as courseId,count(1) user_num
     from course c
     inner join user_course uc on c.id = uc.course_id
     where c.id in
