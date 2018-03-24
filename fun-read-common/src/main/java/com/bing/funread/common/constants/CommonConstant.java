@@ -33,6 +33,26 @@ public class CommonConstant {
     public static final String FILE_DIR_ACTIVITY = "activity";
 
     /**
+     * 诗词文件保存路径
+     */
+    public static final String FILE_DIR_POETRY = "poetry";
+
+    /**
+     * banner图保存路径
+     */
+    public static final String FILE_DIR_BANNER = "banner";
+
+    /**
+     * 练习题文件保存路径
+     */
+    public static final String FILE_DIR_EXERCISES = "exercises";
+
+    /**
+     * 练习题选项文件保存路径
+     */
+    public static final String FILE_DIR_OPTIONS = "options";
+
+    /**
      * 状态 1：是
      */
     public static final String YES = "1";
