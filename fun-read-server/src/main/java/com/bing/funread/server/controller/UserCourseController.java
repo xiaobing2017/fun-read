@@ -67,12 +67,12 @@ public class UserCourseController extends BaseController {
 
     @RequestMapping(value = "/getReadInfo/{courseId}/{poetryId}", method = RequestMethod.GET)
     @ApiOperation(value = "查询用户课程诗词跟读信息", httpMethod = "GET", notes = "查询用户课程诗词跟读信息")
-    public Result<ReadInfoVo> getReadInfo(@ApiParam(required = true, name = "courseId", value = "课程ID")
+    public Result<List<ReadInfoVo>> getReadInfo(@ApiParam(required = true, name = "courseId", value = "课程ID")
                                                @NotBlank(message="课程ID不能为空") @PathVariable Long courseId,
                                                @ApiParam(required = true, name = "poetryId", value = "诗词ID")
                                                @NotBlank(message="诗词ID不能为空") @PathVariable Long poetryId) {
         Long userId = getUserId();
-        ReadInfoVo result = userCourseService.getReadInfo(userId, courseId, poetryId);
+        List<ReadInfoVo> result = userCourseService.getReadInfo(userId, courseId, poetryId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 

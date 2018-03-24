@@ -45,7 +45,7 @@ public interface UserCourseService {
      * @param poetryId
      * @return
      */
-    ReadInfoVo getReadInfo(Long userId, Long courseId, Long poetryId);
+    List<ReadInfoVo> getReadInfo(Long userId, Long courseId, Long poetryId);
 
     /**
      * 单文件上传

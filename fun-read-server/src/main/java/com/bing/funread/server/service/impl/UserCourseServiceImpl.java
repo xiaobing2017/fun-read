@@ -141,9 +141,9 @@ public class UserCourseServiceImpl implements UserCourseService {
     }
 
     @Override
-    public ReadInfoVo getReadInfo(Long userId, Long courseId, Long poetryId) {
-        ReadInfoDto readInfo = userCourseMapper.selectReadInfo(userId, courseId, poetryId);
-        return BeanUtil.copyBean(readInfo, ReadInfoVo.class);
+    public List<ReadInfoVo> getReadInfo(Long userId, Long courseId, Long poetryId) {
+        List<ReadInfoDto> readInfoList = userCourseMapper.selectReadInfo(userId, courseId, poetryId);
+        return BeanUtil.copyList(readInfoList, ReadInfoVo.class);
     }
 
     @Override
