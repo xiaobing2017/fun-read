@@ -14,6 +14,8 @@ import java.io.UnsupportedEncodingException;
  */
 public class EncryptionUtil {
 
+    private static final String STATIC = "static/";
+
     private static final String  PREFIX = "xb";
 
     private EncryptionUtil() {}
@@ -92,7 +94,7 @@ public class EncryptionUtil {
         }
 
         try {
-            return PREFIX + byteToHexString(encrypt(content.getBytes(ENCODING))) + DATE;
+            return STATIC + PREFIX + byteToHexString(encrypt(content.getBytes(ENCODING))) + DATE;
         } catch (Exception var3) {
             log.error(var3.getMessage(), var3);
             return null;
@@ -112,7 +114,7 @@ public class EncryptionUtil {
     }
 
     public static String decrypt(String content) {
-        if (StringUtils.isBlank(content) || !content.startsWith(content)) {
+        if (StringUtils.isBlank(content) || !content.startsWith(PREFIX)) {
             return content;
         }
 
@@ -120,7 +122,7 @@ public class EncryptionUtil {
             content = content.substring(2);
             content = content.substring(0, content.length() - DATE.length());
             byte[] data = decrypt(hexStringToByte(content));
-            if (data == null) {
+            if (data == null || data.length == 0) {
                 return null;
             }
 

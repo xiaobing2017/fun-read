@@ -4,6 +4,7 @@ import com.bing.funread.common.utils.EncryptionUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * Date: 2018/3/24 下午2:35
  */
 @Controller
-@Api(value = "/", description = "练习题接口")
-@RequestMapping("/")
+@Api(value = "/static", description = "练习题接口")
+@RequestMapping("/static")
 public class StaticResourceController {
 
     private static final String FORWARD = "forward:/";
@@ -29,6 +30,9 @@ public class StaticResourceController {
                                @NotBlank(message="文件路径不能为空") @PathVariable String filepath,
                                RedirectAttributes attr) {
         String realPath = EncryptionUtil.decrypt(filepath);
+        if (StringUtils.isEmpty(realPath)) {
+            return null;
+        }
         return FORWARD + realPath;
     }
 }
