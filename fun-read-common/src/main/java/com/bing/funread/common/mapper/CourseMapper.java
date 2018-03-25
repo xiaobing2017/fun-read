@@ -25,4 +25,11 @@ public interface CourseMapper {
      * @return
      */
     List<UserCourseInfoDto> selectUserCourseInfo(@Param("userId")Long userId);
+
+    /**
+     * 查询用户已完成课程
+     * @param userId
+     * @return
+     */
+    List<Course> selectFinishedCourse(@Param("userId")Long userId);
 }

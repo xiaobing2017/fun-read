@@ -48,6 +48,14 @@ public class UserCourseController extends BaseController {
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 
+    @RequestMapping(value = "/getFinishedCourseName", method = RequestMethod.GET)
+    @ApiOperation(value = "查询已完成课程名称列表", httpMethod = "GET", notes = "查询已完成课程名称列表")
+    public Result<List<String>> getFinishedCourseName() {
+        Long userId = getUserId();
+        List<String> result = userCourseService.getFinishedCourseName(userId);
+        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
+    }
+
     @RequestMapping(value = "/getUserCourse/{courseId}", method = RequestMethod.GET)
     @ApiOperation(value = "查询用户课程情况", httpMethod = "GET", notes = "查询用户课程情况")
     public Result<CourseDetailVo> getUserCourseDetail(@ApiParam(required = true, name = "courseId", value = "课程ID")

@@ -24,6 +24,13 @@ public interface UserCourseService {
     List<UserCourseInfoVo> getUserCourseInfo(Long userId);
 
     /**
+     * 查询已完成课程名称
+     * @param userId
+     * @return
+     */
+    List<String> getFinishedCourseName(Long userId);
+
+    /**
      * 用户课程详情
      * @param userId
      * @param courseId

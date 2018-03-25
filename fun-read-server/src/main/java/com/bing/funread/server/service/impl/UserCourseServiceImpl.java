@@ -106,6 +106,17 @@ public class UserCourseServiceImpl implements UserCourseService {
     }
 
     @Override
+    public List<String> getFinishedCourseName(Long userId) {
+        List<Course> courseList = courseMapper.selectFinishedCourse(userId);
+        if (CollectionUtils.isEmpty(courseList)) {
+            return null;
+        }
+        List<String> courseNameList = Lists.newArrayList();
+        courseList.forEach(course -> courseNameList.add(course.getName()));
+        return courseNameList;
+    }
+
+    @Override
     public CourseDetailVo getUserCourseDetail(Long userId, Long courseId) {
         Course course = courseMapper.selectByPrimaryKey(courseId);
         UserCourse userCourse = userCourseMapper.selectByUserAndCourse(userId, courseId);
