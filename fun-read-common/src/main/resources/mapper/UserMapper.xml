@@ -197,7 +197,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <insert id="insertOrUpdateSelective" parameterType="com.bing.funread.common.domain.User" keyProperty="id" useGeneratedKeys="true">
+  <insert id="insertOrUpdateSelective" parameterType="com.bing.funread.common.domain.User">
     insert into user (union_id, open_id,
       nick_name, `name`, gender,
       birthday, province, city,
