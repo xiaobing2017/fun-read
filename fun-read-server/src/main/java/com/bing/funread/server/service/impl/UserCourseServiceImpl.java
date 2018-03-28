@@ -95,7 +95,7 @@ public class UserCourseServiceImpl implements UserCourseService {
         for (UserCourseInfoVo vo : voList) {
             for (Iterator<CourseUserNumDto> it = userNumList.iterator(); it.hasNext(); ) {
                 CourseUserNumDto userNum = it.next();
-                if (vo.getCourseId().equals(userNum.getCourserId())) {
+                if (vo.getCourseId().equals(userNum.getCourseId())) {
                     vo.setUserNum(userNum.getUserNum());
                     it.remove();
                     break;
