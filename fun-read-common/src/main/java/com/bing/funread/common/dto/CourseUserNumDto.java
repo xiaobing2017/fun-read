@@ -9,16 +9,16 @@ import java.io.Serializable;
  */
 public class CourseUserNumDto implements Serializable {
 
-    private Long courserId;
+    private Long courseId;
 
     private Integer userNum;
 
-    public Long getCourserId() {
-        return courserId;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setCourserId(Long courserId) {
-        this.courserId = courserId;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     public Integer getUserNum() {
