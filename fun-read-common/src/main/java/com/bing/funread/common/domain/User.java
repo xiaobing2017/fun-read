@@ -31,6 +31,8 @@ public class User {
 
     private Date updateTime;
 
+    private int count;
+
     public Long getId() {
         return id;
     }
@@ -141,5 +143,13 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }
