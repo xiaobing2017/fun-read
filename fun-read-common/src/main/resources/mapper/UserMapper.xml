@@ -198,17 +198,24 @@
   </update>
 
   <insert id="insertOrUpdateSelective" parameterType="com.bing.funread.common.domain.User">
-    insert into user (union_id, open_id,
-      nick_name, `name`, gender,
-      birthday, province, city,
-      country, avatar_url)
-    values (#{unionId,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
-      #{nickName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
-      #{birthday,jdbcType=CHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
-      #{country,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
-      on duplicate key update union_id = #{unionId,jdbcType=VARCHAR}, nick_name = #{nickName,jdbcType=VARCHAR},
+    <selectKey keyProperty="count" resultType="int" order="BEFORE">
+      select count(1) from user where open_id = #{openId,jdbcType=VARCHAR}
+    </selectKey>
+    <if test="count > 0">
+      update user
+      set union_id = #{unionId,jdbcType=VARCHAR}, nick_name = #{nickName,jdbcType=VARCHAR},
         province = #{province,jdbcType=VARCHAR}, city = #{city,jdbcType=VARCHAR},
         country = #{country,jdbcType=VARCHAR}, avatar_url = #{avatarUrl,jdbcType=VARCHAR}
+      where open_id = #{openId,jdbcType=VARCHAR}
+    </if>
+    <if test="count == 0">
+      insert into user (union_id, open_id, nick_name, `name`, gender,
+        birthday, province, city, country, avatar_url)
+      values (#{unionId,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
+        #{nickName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
+        #{birthday,jdbcType=CHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
+        #{country,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
+    </if>
   </insert>
   <update id="bindPhone" parameterType="com.bing.funread.common.domain.User">
     update user
