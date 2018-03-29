@@ -123,13 +123,17 @@
     on duplicate key update audio_url = #{audioUrl,jdbcType=VARCHAR}
   </insert>
   <select id="selectLastedFinishedTime" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
-    <include refid="Base_Column_List" />
+    select uaa.*
     from user_activity_audio uaa
-    where exists(select 1 from user_activity ua
-      where ua.id = uaa.user_activity_id
-        and ua.user_id = #{userId,jdbcType=BIGINT}
-        and ua.activity_id = #{activityId,jdbcType=BIGINT})
+    inner join
+    (
+      select poetry_id,count(1)
+      from user_activity ua
+      inner join user_activity_audio uaa on ua.id = uaa.user_activity_id
+      where ua.user_id = #{userId,jdbcType=BIGINT} and ua.activity_id = #{activityId,jdbcType=BIGINT}
+      group by poetry_id
+      having count(1) = (select count(1) from poetry_info pif where pif.poetry_id = uaa.poetry_id)
+    ) t on uaa.poetry_id = t.poetry_id
     order by id desc
     limit 1
   </select>
