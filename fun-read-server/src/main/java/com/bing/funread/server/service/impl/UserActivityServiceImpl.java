@@ -93,6 +93,7 @@ public class UserActivityServiceImpl implements UserActivityService {
         return userActivity != null;
     }
 
+    @Transactional
     @Override
     public void join(Long userId, Long activityId) {
         Activity activity = activityMapper.selectByPrimaryKey(activityId);
@@ -105,10 +106,14 @@ public class UserActivityServiceImpl implements UserActivityService {
         if (activity.getEndDate() != null && DateUtil.getCurrentTime().after(activity.getEndDate())) {
             throw new ServiceException(ResultCode.ACTIVITY_HAS_END, ResultMessage.ACTIVITY_HAS_END);
         }
-        UserActivity userActivity = new UserActivity();
-        userActivity.setUserId(userId);
-        userActivity.setActivityId(activityId);
-        userActivityMapper.insertIgnoreSelective(userActivity);
+
+        UserActivity record = userActivityMapper.selectUserActivityInfo(userId, activityId);
+        if (record == null) {
+            UserActivity userActivity = new UserActivity();
+            userActivity.setUserId(userId);
+            userActivity.setActivityId(activityId);
+            userActivityMapper.insertSelective(userActivity);
+        }
     }
 
     @Override
