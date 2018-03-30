@@ -53,6 +53,11 @@ public class CommonConstant {
     public static final String FILE_DIR_OPTIONS = "options";
 
     /**
+     * 上传的原始文件存放地址
+     */
+    public static final String FILE_DIR_SOURCE = "source";
+
+    /**
      * 状态 1：是
      */
     public static final String YES = "1";
