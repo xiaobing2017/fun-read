@@ -1,0 +1,9 @@
+banner.banner_url:banner/bannerId.jpg
+poetry_info.pic_url:poetry/poetryId/poetryInfoId.jpg
+poetry_info.audio_url:poetry/poetryId/poetryInfoId.mp3
+course.pic_url:course/courseId.jpg
+activity.banner_url:activity/activityId.jpg
+exercises.audio_url:exercises/exercisesId.mp3
+exercises_options.pic_url:exercises/poetryId/exercisesId-exercisesOptionsId.png
+user_course_audio.audio_url:course/userId/courseId/poetryId/poetryInfoId.mp3
+user_activity_audio.audio_url:activity/userId/activityId/poetryId/poetryInfoId.mp3

@@ -169,10 +169,14 @@ public class UserActivityServiceImpl implements UserActivityService {
     @Transactional
     @Override
     public void saveAudio(UserActivityAudio audio) {
-        // 更新数据库
-        userActivityAudioMapper.insertOrUpdateSelective(audio);
-        // 更新用户活动诗词已完成数量
-        userActivityMapper.updateActivityFinishedNum(audio.getUserActivityId());
+        UserActivityAudio record = userActivityAudioMapper.selectByUniqueKey(audio.getUserActivityId(),
+                audio.getPoetryId(), audio.getPoetryInfoId());
+        if (record == null) {
+            // 插入数据库
+            userActivityAudioMapper.insertSelective(audio);
+            // 更新用户活动诗词已完成数量
+            userActivityMapper.updateActivityFinishedNum(audio.getUserActivityId());
+        }
     }
 
     private String createFileDir(Long userId, Long activityId, Long poetryId, String baseDir) {

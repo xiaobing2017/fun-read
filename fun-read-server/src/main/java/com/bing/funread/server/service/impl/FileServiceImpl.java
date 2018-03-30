@@ -33,7 +33,7 @@ public class FileServiceImpl implements FileService {
         try {
             String sourceName = file.getOriginalFilename();
             String fileSuffix = sourceName.substring(sourceName.lastIndexOf("."), sourceName.length());
-            String savePath = saveDir + filename + "-" + random() + fileSuffix;
+            String savePath = saveDir + filename + fileSuffix;
             File saveFile = new File(FILE_BASE_DIR + savePath);
             if (!saveFile.getParentFile().exists()) {
                 saveFile.getParentFile().mkdirs();

@@ -115,11 +115,12 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <insert id="insertOrUpdateSelective" parameterType="com.bing.funread.common.domain.UserCourseAudio">
-    insert into user_course_audio (user_course_id, poetry_id,
-    poetry_info_id, audio_url)
-    values (#{userCourseId,jdbcType=BIGINT}, #{poetryId,jdbcType=BIGINT},
-    #{poetryInfoId,jdbcType=BIGINT}, #{audioUrl,jdbcType=VARCHAR})
-    on duplicate key update audio_url = #{audioUrl,jdbcType=VARCHAR}
-  </insert>
+  <select id="selectByUniqueKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from user_course_audio
+    where user_course_id = #{userCourseId,jdbcType=BIGINT},
+      poetry_id = #{poetryId,jdbcType=BIGINT},
+      poetry_info_id = #{poetryInfoId,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -187,10 +187,14 @@ public class UserCourseServiceImpl implements UserCourseService {
     @Transactional
     @Override
     public void saveAudio(UserCourseAudio audio) {
-        // 更新数据库
-        userCourseAudioMapper.insertOrUpdateSelective(audio);
-        // 更新用户活动诗词已完成数量
-        userCourseMapper.updateCourseFinishedNum(audio.getUserCourseId());
+        UserCourseAudio record = userCourseAudioMapper.selectByUniqueKey(audio.getUserCourseId(),
+                audio.getPoetryId(), audio.getPoetryInfoId());
+        if (record == null) {
+            // 插入数据库
+            userCourseAudioMapper.insertSelective(audio);
+            // 更新用户课程诗词已完成数量
+            userCourseMapper.updateCourseFinishedNum(audio.getUserCourseId());
+        }
     }
 
     private String createFileDir(Long userId, Long courseId, Long poetryId, String baseDir) {
