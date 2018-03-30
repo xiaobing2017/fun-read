@@ -1,7 +1,5 @@
 package com.bing.funread.common.utils;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  * Description:图片工具类
@@ -67,8 +66,9 @@ public class ImageUtil {
             //创建文件输出流
             FileOutputStream out = new FileOutputStream(targetFile);
             //将图片按JPEG压缩，保存到out中
-            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-            encoder.encode(tag);
+//            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+//            encoder.encode(tag);
+            ImageIO.write(tag, "jpg", out);
             //关闭文件输出流
             out.close();
         } catch (Exception e) {
@@ -123,7 +123,29 @@ public class ImageUtil {
 //        File distfile = new File("/Users/finup/Desktop/aa.jpg");
 //
 //        System.out.println("压缩前图片大小：" + srcfile.length());
-//        reduceImage(srcfile, "/Users/finup/Desktop/aa/aa.jpg", WIDTH);
+//        reduceImage(srcfile, "/Users/finup/Desktop/aa.jpg", WIDTH);
 //        System.out.println("压缩后图片大小：" + distfile.length());
+//
+//        File file = new File("/Users/xiaobing/upload");
+//        reduceFiles(file);
+//
 //    }
+
+    private static java.util.List<String> imageSuffix = Arrays.asList(".bmp",".jpg",".jpeg",".png",".gif");
+
+    private static void reduceFiles(File file) {
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File f : files) {
+                reduceFiles(f);
+            }
+        } else {
+            String suffix = file.getPath().substring(file.getPath().lastIndexOf("."));
+            if (!imageSuffix.contains(suffix.toLowerCase())) {
+                return;
+            }
+            reduceImage(file, file.getPath());
+            System.out.println(file.getPath());
+        }
+    }
 }
