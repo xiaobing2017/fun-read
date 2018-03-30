@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class ActivityInfoVo extends BaseVo {
 
     @ApiModelProperty(value = "活动ID")
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty(value = "活动名称")
     private String name;
@@ -34,11 +34,11 @@ public class ActivityInfoVo extends BaseVo {
     @ApiModelProperty(value = "已完成课时数量")
     private Integer finishedNum;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

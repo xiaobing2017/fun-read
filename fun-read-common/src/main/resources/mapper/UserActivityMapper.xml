@@ -138,7 +138,7 @@
   </resultMap>
   <select id="selectActivityInfo" resultMap="ActivityInfoDto" parameterType="java.lang.Long" >
     select
-    a.id,a.name,a.banner_url,a.poetry_num,finished_num,if(ua.id != null,true,false) isJoin
+    a.id,a.name,a.banner_url,a.poetry_num,finished_num,if(ua.id is not null,true,false) isJoin
     from activity a
     left join user_activity ua on a.id = ua.activity_id
       and user_id = #{userId,jdbcType=BIGINT} and is_valid = '1'
