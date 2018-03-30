@@ -125,7 +125,8 @@
   <select id="selectLastedFinishedTime" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select uaa.*
     from user_activity_audio uaa
-    inner join user_activity ua on uaa.user_activity_id = ua.id and ua.user_id = #{userId,jdbcType=BIGINT}
+    inner join user_activity ua on uaa.user_activity_id = ua.id
+      and ua.user_id = #{userId,jdbcType=BIGINT} and ua.activity_id = #{activityId,jdbcType=BIGINT}
     inner join
     (
       select poetry_id,count(1)
