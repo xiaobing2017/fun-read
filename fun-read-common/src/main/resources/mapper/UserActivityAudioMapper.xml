@@ -120,7 +120,7 @@
     <include refid="Base_Column_List" />
     from user_activity_audio
     where user_activity_id = #{userActivityId,jdbcType=BIGINT}
-      and poetry_id = #{poetryId,jdbcType=BIGINT},
+      and poetry_id = #{poetryId,jdbcType=BIGINT}
       and poetry_info_id = #{poetryInfoId,jdbcType=BIGINT}
   </select>
   <select id="selectLastedFinishedTime" resultMap="BaseResultMap" parameterType="java.lang.Long" >
