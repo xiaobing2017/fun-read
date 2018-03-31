@@ -1,6 +1,7 @@
 package com.bing.funread.server.service;
 
 import com.bing.funread.common.domain.UserCourseAudio;
+import com.bing.funread.request.PageRequest;
 import com.bing.funread.response.CourseDetailVo;
 import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.UserCourseInfoVo;
@@ -34,9 +35,10 @@ public interface UserCourseService {
      * 用户课程详情
      * @param userId
      * @param courseId
+     * @param pageRequest
      * @return
      */
-    CourseDetailVo getUserCourseDetail(Long userId, Long courseId);
+    CourseDetailVo getUserCourseDetail(Long userId, Long courseId, PageRequest pageRequest);
 
     /**
      * 查询用户学习情况

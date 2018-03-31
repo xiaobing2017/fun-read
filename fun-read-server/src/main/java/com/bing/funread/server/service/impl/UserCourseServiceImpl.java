@@ -21,6 +21,7 @@ import com.bing.funread.common.mapper.UserCourseMapper;
 import com.bing.funread.common.mapper.UserMapper;
 import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.common.utils.DateUtil;
+import com.bing.funread.request.PageRequest;
 import com.bing.funread.response.CourseDetailVo;
 import com.bing.funread.response.PoetryVo;
 import com.bing.funread.response.ReadInfoVo;
@@ -30,6 +31,7 @@ import com.bing.funread.response.UserCourseInfoVo;
 import com.bing.funread.response.UserStudyInfoVo;
 import com.bing.funread.server.service.FileService;
 import com.bing.funread.server.service.UserCourseService;
+import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,9 +119,11 @@ public class UserCourseServiceImpl implements UserCourseService {
     }
 
     @Override
-    public CourseDetailVo getUserCourseDetail(Long userId, Long courseId) {
+    public CourseDetailVo getUserCourseDetail(Long userId, Long courseId, PageRequest pageRequest) {
         Course course = courseMapper.selectByPrimaryKey(courseId);
         UserCourse userCourse = userCourseMapper.selectByUserAndCourse(userId, courseId);
+        // 分页查询
+        PageHelper.startPage(pageRequest.getPageIndex(), pageRequest.getPageSize(), false);
         List<Poetry> poetryList = poetryMapper.selectCoursePoetryInfo(courseId);
 
         CourseDetailVo detailVo = new CourseDetailVo();
@@ -129,12 +133,14 @@ public class UserCourseServiceImpl implements UserCourseService {
         detailVo.setPoetryNum(course.getPoetryNum());
         detailVo.setFinishedNum(userCourse.getFinishedNum());
         List<PoetryVo> poetryVoList = BeanUtil.copyList(poetryList, PoetryVo.class);
-        for (int i = 0; i < poetryVoList.size(); i++) {
-            if (i == userCourse.getFinishedNum()) {
-                poetryVoList.get(i).setCurrent(true);
-                break;
+        int order = (pageRequest.getPageIndex() - 1) * pageRequest.getPageSize();
+        for (PoetryVo poetryVo : poetryVoList) {
+            poetryVo.setOrder(++order);
+            if (order <= userCourse.getFinishedNum()) {
+                poetryVo.setFinish(true);
+            } else if (order == userCourse.getFinishedNum() + 1) {
+                poetryVo.setCurrent(true);
             }
-            poetryVoList.get(i).setFinish(true);
         }
         detailVo.setPoetryList(poetryVoList);
         return detailVo;

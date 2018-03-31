@@ -1,6 +1,7 @@
 package com.bing.funread.server.controller;
 
 import com.bing.funread.common.domain.UserActivityAudio;
+import com.bing.funread.request.PageRequest;
 import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
@@ -15,12 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -64,12 +67,14 @@ public class UserActivityController extends BaseController {
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS);
     }
 
-    @RequestMapping(value = "/getUserActivity/{activityId}", method = RequestMethod.GET)
-    @ApiOperation(value = "查询用户活动信息", httpMethod = "GET", notes = "查询用户活动信息")
+    @RequestMapping(value = "/getUserActivity/{activityId}", method = RequestMethod.POST)
+    @ApiOperation(value = "查询用户活动信息", httpMethod = "POST", notes = "查询用户活动信息")
     public Result<UserActivityInfoVo> getUserActivity(@ApiParam(required = true, name = "activityId", value = "活动ID")
-                                                      @NotBlank(message="活动ID不能为空") @PathVariable Long activityId) {
+                                                      @NotBlank(message="活动ID不能为空") @PathVariable Long activityId,
+                                                      @ApiParam(value = "分页信息", name = "pageRequest")
+                                                      @Valid @RequestBody PageRequest pageRequest) {
         Long userId = getUserId();
-        UserActivityInfoVo result = userActivityService.getUserActivityInfo(userId, activityId);
+        UserActivityInfoVo result = userActivityService.getUserActivityInfo(userId, activityId, pageRequest);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 

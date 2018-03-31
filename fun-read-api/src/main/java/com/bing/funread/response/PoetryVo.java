@@ -26,6 +26,9 @@ public class PoetryVo extends BaseVo {
     @ApiModelProperty(value = "是否当前正在学习的诗词 true:是 false:否")
     private boolean isCurrent;
 
+    @ApiModelProperty(value = "顺序")
+    private Integer order;
+
     public Long getId() {
         return id;
     }
@@ -64,5 +67,13 @@ public class PoetryVo extends BaseVo {
 
     public void setCurrent(boolean current) {
         isCurrent = current;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 }

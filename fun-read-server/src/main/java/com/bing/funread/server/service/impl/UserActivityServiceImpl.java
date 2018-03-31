@@ -18,6 +18,7 @@ import com.bing.funread.common.mapper.UserActivityAudioMapper;
 import com.bing.funread.common.mapper.UserActivityMapper;
 import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.common.utils.DateUtil;
+import com.bing.funread.request.PageRequest;
 import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.PoetryVo;
 import com.bing.funread.response.ResultCode;
@@ -25,6 +26,7 @@ import com.bing.funread.response.ResultMessage;
 import com.bing.funread.response.UserActivityInfoVo;
 import com.bing.funread.server.service.FileService;
 import com.bing.funread.server.service.UserActivityService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -117,9 +119,11 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public UserActivityInfoVo getUserActivityInfo(Long userId, Long activityId) {
+    public UserActivityInfoVo getUserActivityInfo(Long userId, Long activityId, PageRequest pageRequest) {
         Activity activity = activityMapper.selectByPrimaryKey(activityId);
         UserActivity userActivity = userActivityMapper.selectUserActivityInfo(userId, activityId);
+        // 分页查询
+        PageHelper.startPage(pageRequest.getPageIndex(), pageRequest.getPageSize(), false);
         List<Poetry> poetryList = poetryMapper.selectActivityPoetryInfo(activityId);
 
         UserActivityInfoVo detailVo = new UserActivityInfoVo();
@@ -129,16 +133,18 @@ public class UserActivityServiceImpl implements UserActivityService {
         detailVo.setPoetryNum(activity.getPoetryNum());
         detailVo.setFinishedNum(userActivity.getFinishedNum());
         List<PoetryVo> poetryVoList = BeanUtil.copyList(poetryList, PoetryVo.class);
-        for (int i = 0; i < poetryVoList.size(); i++) {
-            if (i == userActivity.getFinishedNum()) {
+        int order = (pageRequest.getPageIndex() - 1) * pageRequest.getPageSize();
+        for (PoetryVo poetryVo : poetryVoList) {
+            poetryVo.setOrder(++order);
+            if (order <= userActivity.getFinishedNum()) {
+                poetryVo.setFinish(true);
+            } else if (order == userActivity.getFinishedNum() + 1) {
                 UserActivityAudio audio = userActivityAudioMapper.selectLastedFinishedTime(userId, activityId);
                 if (audio == null || DateUtil.getDiffDays(audio.getCreateTime(), DateUtil.getCurrentTime()) >= 1) {
                     // 第二天解锁下一个任务
-                    poetryVoList.get(i).setCurrent(true);
+                    poetryVo.setCurrent(true);
                 }
-                break;
             }
-            poetryVoList.get(i).setFinish(true);
         }
         detailVo.setPoetryList(poetryVoList);
         return detailVo;

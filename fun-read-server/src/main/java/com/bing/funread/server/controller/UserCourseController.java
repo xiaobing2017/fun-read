@@ -1,6 +1,7 @@
 package com.bing.funread.server.controller;
 
 import com.bing.funread.common.domain.UserCourseAudio;
+import com.bing.funread.request.PageRequest;
 import com.bing.funread.response.CourseDetailVo;
 import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.Result;
@@ -17,12 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -56,12 +59,14 @@ public class UserCourseController extends BaseController {
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 
-    @RequestMapping(value = "/getUserCourse/{courseId}", method = RequestMethod.GET)
-    @ApiOperation(value = "查询用户课程情况", httpMethod = "GET", notes = "查询用户课程情况")
+    @RequestMapping(value = "/getUserCourse/{courseId}", method = RequestMethod.POST)
+    @ApiOperation(value = "查询用户课程情况", httpMethod = "POST", notes = "查询用户课程情况")
     public Result<CourseDetailVo> getUserCourseDetail(@ApiParam(required = true, name = "courseId", value = "课程ID")
-                                                      @NotBlank(message="课程ID不能为空") @PathVariable Long courseId) {
+                                                      @NotBlank(message="课程ID不能为空") @PathVariable Long courseId,
+                                                      @ApiParam(value = "分页信息", name = "pageRequest")
+                                                      @Valid @RequestBody PageRequest pageRequest) {
         Long userId = getUserId();
-        CourseDetailVo result = userCourseService.getUserCourseDetail(userId, courseId);
+        CourseDetailVo result = userCourseService.getUserCourseDetail(userId, courseId, pageRequest);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 
