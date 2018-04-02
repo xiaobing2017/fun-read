@@ -5,10 +5,12 @@ import com.bing.funread.common.domain.Activity;
 import com.bing.funread.common.domain.ActivityPoetry;
 import com.bing.funread.common.domain.Poetry;
 import com.bing.funread.common.domain.PoetryInfo;
+import com.bing.funread.common.domain.User;
 import com.bing.funread.common.domain.UserActivity;
 import com.bing.funread.common.domain.UserActivityAudio;
 import com.bing.funread.common.dto.ActivityInfoDto;
 import com.bing.funread.common.dto.ActivityUserNumDto;
+import com.bing.funread.common.dto.ReadInfoDto;
 import com.bing.funread.common.exception.ServiceException;
 import com.bing.funread.common.mapper.ActivityMapper;
 import com.bing.funread.common.mapper.ActivityPoetryMapper;
@@ -16,14 +18,17 @@ import com.bing.funread.common.mapper.PoetryInfoMapper;
 import com.bing.funread.common.mapper.PoetryMapper;
 import com.bing.funread.common.mapper.UserActivityAudioMapper;
 import com.bing.funread.common.mapper.UserActivityMapper;
+import com.bing.funread.common.mapper.UserMapper;
 import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.common.utils.DateUtil;
 import com.bing.funread.request.PageRequest;
 import com.bing.funread.response.ActivityInfoVo;
 import com.bing.funread.response.PoetryVo;
+import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
 import com.bing.funread.response.UserActivityInfoVo;
+import com.bing.funread.response.UserStudyInfoVo;
 import com.bing.funread.server.service.FileService;
 import com.bing.funread.server.service.UserActivityService;
 import com.github.pagehelper.PageHelper;
@@ -62,6 +67,9 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     @Autowired
     private PoetryMapper poetryMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
     private FileService fileService;
@@ -116,6 +124,23 @@ public class UserActivityServiceImpl implements UserActivityService {
             userActivity.setActivityId(activityId);
             userActivityMapper.insertSelective(userActivity);
         }
+    }
+
+    @Override
+    public UserStudyInfoVo getUserStudyDetail(Long userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        int studyPoetrys = userActivityMapper.selectHasStudyPoetrys(userId);
+
+        UserStudyInfoVo studyInfoVo = new UserStudyInfoVo();
+        studyInfoVo.setStudyDays(DateUtil.getDiffDays(user.getCreateTime(), DateUtil.getCurrentTime()));
+        studyInfoVo.setStudyPoetrys(studyPoetrys);
+        return studyInfoVo;
+    }
+
+    @Override
+    public List<ReadInfoVo> getReadInfo(Long userId, Long courseId, Long poetryId) {
+        List<ReadInfoDto> readInfoList = userActivityMapper.selectReadInfo(userId, courseId, poetryId);
+        return BeanUtil.copyList(readInfoList, ReadInfoVo.class);
     }
 
     @Override

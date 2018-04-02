@@ -3,7 +3,9 @@ package com.bing.funread.server.service;
 import com.bing.funread.common.domain.UserActivityAudio;
 import com.bing.funread.request.PageRequest;
 import com.bing.funread.response.ActivityInfoVo;
+import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.UserActivityInfoVo;
+import com.bing.funread.response.UserStudyInfoVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -45,6 +47,22 @@ public interface UserActivityService {
      * @return
      */
     UserActivityInfoVo getUserActivityInfo(Long userId, Long activityId, PageRequest pageRequest);
+
+    /**
+     * 查询用户学习情况
+     * @param userId
+     * @return
+     */
+    UserStudyInfoVo getUserStudyDetail(Long userId);
+
+    /**
+     * 查询用户课程诗词跟读信息
+     * @param userId
+     * @param courseId
+     * @param poetryId
+     * @return
+     */
+    List<ReadInfoVo> getReadInfo(Long userId, Long courseId, Long poetryId);
 
     /**
      * 单文件上传

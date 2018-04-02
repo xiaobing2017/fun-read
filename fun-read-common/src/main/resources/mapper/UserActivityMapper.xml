@@ -111,6 +111,21 @@
     where user_id = #{userId,jdbcType=BIGINT}
       and activity_id = #{activityId,jdbcType=BIGINT}
   </select>
+  <select id="selectHasStudyPoetrys" resultType="java.lang.Integer" parameterType="java.lang.Long" >
+    select ifnull(sum(finished_num), 0)
+    from user_activity
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <select id="selectReadInfo" resultType="com.bing.funread.common.dto.ReadInfoDto" parameterType="java.lang.Long" >
+    select poetry_info_id poetryInfoId,`order`,uca.audio_url audioUrl,p.pic_url picUrl
+    from user_activity ua
+    inner join user_activity_audio uaa on ua.id = uaa.user_course_id
+    inner join poetry_info p on uca.poetry_id = p.poetry_id and uaa.poetry_info_id = p.id
+    where ua.user_id = #{userId,jdbcType=BIGINT}
+    and ua.activity_id = #{activityId,jdbcType=BIGINT}
+    and uaa.poetry_id = #{poetryId,jdbcType=BIGINT}
+    order by p.`order`,p.id
+  </select>
   <update id="updateActivityFinishedNum" parameterType="java.lang.Long" >
     update user_activity t1,
     (

@@ -3,10 +3,12 @@ package com.bing.funread.server.controller;
 import com.bing.funread.common.domain.UserActivityAudio;
 import com.bing.funread.request.PageRequest;
 import com.bing.funread.response.ActivityInfoVo;
+import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
 import com.bing.funread.response.UserActivityInfoVo;
+import com.bing.funread.response.UserStudyInfoVo;
 import com.bing.funread.server.service.UserActivityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -75,6 +77,25 @@ public class UserActivityController extends BaseController {
                                                       @Valid @RequestBody PageRequest pageRequest) {
         Long userId = getUserId();
         UserActivityInfoVo result = userActivityService.getUserActivityInfo(userId, activityId, pageRequest);
+        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
+    }
+
+    @RequestMapping(value = "/getUserStudyInfo", method = RequestMethod.GET)
+    @ApiOperation(value = "查询用户学习情况", httpMethod = "GET", notes = "查询学习课程情况")
+    public Result<UserStudyInfoVo> getUserStudyInfo() {
+        Long userId = getUserId();
+        UserStudyInfoVo result = userActivityService.getUserStudyDetail(userId);
+        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
+    }
+
+    @RequestMapping(value = "/getReadInfo/{activityId}/{poetryId}", method = RequestMethod.GET)
+    @ApiOperation(value = "查询用户活动诗词跟读信息", httpMethod = "GET", notes = "查询用户活动诗词跟读信息")
+    public Result<List<ReadInfoVo>> getReadInfo(@ApiParam(required = true, name = "activityId", value = "活动ID")
+                                                @NotBlank(message="活动ID不能为空") @PathVariable Long activityId,
+                                                @ApiParam(required = true, name = "poetryId", value = "诗词ID")
+                                                @NotBlank(message="诗词ID不能为空") @PathVariable Long poetryId) {
+        Long userId = getUserId();
+        List<ReadInfoVo> result = userActivityService.getReadInfo(userId, activityId, poetryId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 
