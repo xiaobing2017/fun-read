@@ -5,7 +5,6 @@ import com.bing.funread.request.PageRequest;
 import com.bing.funread.response.CourseDetailVo;
 import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.UserCourseInfoVo;
-import com.bing.funread.response.UserStudyInfoVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -39,13 +38,6 @@ public interface UserCourseService {
      * @return
      */
     CourseDetailVo getUserCourseDetail(Long userId, Long courseId, PageRequest pageRequest);
-
-    /**
-     * 查询用户学习情况
-     * @param userId
-     * @return
-     */
-    UserStudyInfoVo getUserStudyDetail(Long userId);
 
     /**
      * 查询用户课程诗词跟读信息

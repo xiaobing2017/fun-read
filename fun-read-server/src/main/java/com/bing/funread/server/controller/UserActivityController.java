@@ -8,7 +8,6 @@ import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
 import com.bing.funread.response.UserActivityInfoVo;
-import com.bing.funread.response.UserStudyInfoVo;
 import com.bing.funread.server.service.UserActivityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -77,14 +76,6 @@ public class UserActivityController extends BaseController {
                                                       @Valid @RequestBody PageRequest pageRequest) {
         Long userId = getUserId();
         UserActivityInfoVo result = userActivityService.getUserActivityInfo(userId, activityId, pageRequest);
-        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
-    }
-
-    @RequestMapping(value = "/getUserStudyInfo", method = RequestMethod.GET)
-    @ApiOperation(value = "查询用户学习情况", httpMethod = "GET", notes = "查询学习课程情况")
-    public Result<UserStudyInfoVo> getUserStudyInfo() {
-        Long userId = getUserId();
-        UserStudyInfoVo result = userActivityService.getUserStudyDetail(userId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 

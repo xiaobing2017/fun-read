@@ -6,16 +6,19 @@ import com.bing.funread.common.domain.UserCourse;
 import com.bing.funread.common.dto.WeChatLoginCheckDto;
 import com.bing.funread.common.dto.WeChatUserInfoDto;
 import com.bing.funread.common.exception.ServiceException;
+import com.bing.funread.common.mapper.UserActivityMapper;
 import com.bing.funread.common.mapper.UserCourseMapper;
 import com.bing.funread.common.mapper.UserMapper;
 import com.bing.funread.common.utils.AESUtil;
 import com.bing.funread.common.utils.BeanUtil;
+import com.bing.funread.common.utils.DateUtil;
 import com.bing.funread.common.utils.HttpUtil;
 import com.bing.funread.request.UserInfoRequest;
 import com.bing.funread.request.WeChatLoginRequest;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
 import com.bing.funread.response.UserInfoVo;
+import com.bing.funread.response.UserStudyInfoVo;
 import com.bing.funread.server.service.UserService;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
@@ -53,6 +56,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserCourseMapper userCourseMapper;
+
+    @Autowired
+    private UserActivityMapper userActivityMapper;
 
     @Override
     public User login(WeChatLoginRequest login) {
@@ -117,5 +123,17 @@ public class UserServiceImpl implements UserService {
         userCourseMapper.updateUserIdByPhone(userCourse);
         logger.info("手机号绑定成功，userId:{},phone:{}", userId, phone);
         return true;
+    }
+
+    @Override
+    public UserStudyInfoVo getUserStudyDetail(Long userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        int studyActivityPoetry = userActivityMapper.selectHasStudyPoetrys(userId);
+        int studyCoursePoetry = userCourseMapper.selectHasStudyPoetrys(userId);
+
+        UserStudyInfoVo studyInfoVo = new UserStudyInfoVo();
+        studyInfoVo.setStudyDays(DateUtil.getDiffDays(user.getCreateTime(), DateUtil.getCurrentTime()));
+        studyInfoVo.setStudyPoetrys(studyActivityPoetry + studyCoursePoetry);
+        return studyInfoVo;
     }
 }

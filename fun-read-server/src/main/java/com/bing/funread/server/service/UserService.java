@@ -4,6 +4,7 @@ import com.bing.funread.common.domain.User;
 import com.bing.funread.request.UserInfoRequest;
 import com.bing.funread.request.WeChatLoginRequest;
 import com.bing.funread.response.UserInfoVo;
+import com.bing.funread.response.UserStudyInfoVo;
 
 /**
  * Description:用户接口
@@ -39,4 +40,11 @@ public interface UserService {
      * @param phone
      */
     boolean bindPhone(Long userId, String phone);
+
+    /**
+     * 查询用户学习情况
+     * @param userId
+     * @return
+     */
+    UserStudyInfoVo getUserStudyDetail(Long userId);
 }
