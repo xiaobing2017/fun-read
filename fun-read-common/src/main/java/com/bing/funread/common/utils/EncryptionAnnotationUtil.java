@@ -15,6 +15,9 @@ import java.util.List;
  * 加密和解密注解功能
  */
 public class EncryptionAnnotationUtil {
+
+    private static final String STATIC = "static/";
+
     private EncryptionAnnotationUtil() { }
 
     /**
@@ -108,7 +111,7 @@ public class EncryptionAnnotationUtil {
                 Method set = c.getMethod("set" + s, new Class[] { get.getReturnType() });
                 String value = (String) get.invoke(parameter, null);
                 if (value != null)
-                    set.invoke(parameter, new Object[] { EncryptionUtil.encrypt(value) });
+                    set.invoke(parameter, new Object[] { encryptUrl(value) });
             }
         } else {
             Field[] fields = c.getDeclaredFields();
@@ -152,6 +155,10 @@ public class EncryptionAnnotationUtil {
             }
         }
         return parameter;
+    }
+
+    private static String encryptUrl(String content) {
+        return STATIC + EncryptionUtil.encrypt(content);
     }
 }
 
