@@ -54,7 +54,7 @@ public class OpenController {
     }
 
     @RequestMapping(value = "/activity/getReadInfo/{activityId}/{poetryId}/{shareCode}", method = RequestMethod.GET)
-    @ApiOperation(value = "查询用户课程诗词跟读信息", httpMethod = "GET", notes = "根据分享码查询用户课程诗词跟读信息")
+    @ApiOperation(value = "查询用户活动诗词跟读信息", httpMethod = "GET", notes = "根据分享码查询用户活动诗词跟读信息")
     public Result<List<ReadInfoVo>> getActivityReadInfoByShareCode(@ApiParam(required = true, name = "activityId", value = "活动ID")
                                                            @NotBlank(message="活动ID不能为空") @PathVariable Long activityId,
                                                            @ApiParam(required = true, name = "poetryId", value = "诗词ID")
