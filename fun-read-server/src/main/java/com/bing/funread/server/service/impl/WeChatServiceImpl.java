@@ -55,18 +55,18 @@ public class WeChatServiceImpl implements WeChatService {
     public String getAccessToken() {
         // redis缓存 TODO
         synchronized (WeChatServiceImpl.class) {
-            if (cacheTime <= DateUtil.getCurrentTime().getTime() || accessTokenDto == null || accessTokenDto.getAccessToken() == null) {
+            if (cacheTime <= DateUtil.getCurrentTime().getTime() || accessTokenDto == null || accessTokenDto.getAccess_token() == null) {
                 accessTokenDto = requestAccessToken();
-                cacheTime = DateUtil.getCurrentTime().getTime() + accessTokenDto.getExpiresIn() - 60;
+                cacheTime = DateUtil.getCurrentTime().getTime() + accessTokenDto.getExpires_in() - 60;
             }
-            return accessTokenDto.getAccessToken();
+            return accessTokenDto.getAccess_token();
         }
     }
 
     private WeChatAccessTokenDto requestAccessToken() {
         String url = String.format(tokenUrl, appId, appSecret);
         WeChatAccessTokenDto accessTokenDto = HttpUtil.httpsRequest(url, RequestMethod.GET.name(), null, WeChatAccessTokenDto.class);
-        if (accessTokenDto == null || StringUtils.isBlank(accessTokenDto.getAccessToken())) {
+        if (accessTokenDto == null || StringUtils.isBlank(accessTokenDto.getAccess_token())) {
             throw new ServiceException(ResultCode.FAILED, ResultMessage.FAILED);
         }
         return accessTokenDto;
