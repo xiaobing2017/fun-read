@@ -161,4 +161,14 @@
     inner join user_activity ua on a.id = ua.activity_id
     group by a.id
   </select>
+  <select id="selectFinishedActivity" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from activity a
+    where exists(select 1 from user_activity ua
+      where a.id = ua.activity_id
+        and a.poetry_num = ua.finished_num
+        and ua.user_id = #{userId,jdbcType=BIGINT})
+    order by a.id
+  </select>
 </mapper>

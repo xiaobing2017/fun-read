@@ -1,11 +1,16 @@
 package com.bing.funread.server.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bing.funread.common.domain.Activity;
+import com.bing.funread.common.domain.Course;
 import com.bing.funread.common.domain.User;
 import com.bing.funread.common.domain.UserCourse;
 import com.bing.funread.common.dto.WeChatLoginCheckDto;
 import com.bing.funread.common.dto.WeChatUserInfoDto;
+import com.bing.funread.common.enumerate.CertificateType;
 import com.bing.funread.common.exception.ServiceException;
+import com.bing.funread.common.mapper.ActivityMapper;
+import com.bing.funread.common.mapper.CourseMapper;
 import com.bing.funread.common.mapper.UserActivityMapper;
 import com.bing.funread.common.mapper.UserCourseMapper;
 import com.bing.funread.common.mapper.UserMapper;
@@ -13,13 +18,17 @@ import com.bing.funread.common.utils.AESUtil;
 import com.bing.funread.common.utils.BeanUtil;
 import com.bing.funread.common.utils.DateUtil;
 import com.bing.funread.common.utils.HttpUtil;
+import com.bing.funread.request.PageRequest;
 import com.bing.funread.request.UserInfoRequest;
 import com.bing.funread.request.WeChatLoginRequest;
+import com.bing.funread.response.CertificateInfoVo;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
+import com.bing.funread.response.UserCertificateVo;
 import com.bing.funread.response.UserInfoVo;
 import com.bing.funread.response.UserStudyInfoVo;
 import com.bing.funread.server.service.UserService;
+import com.google.common.collect.Lists;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -28,9 +37,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * Description:用户接口服务类
@@ -59,6 +70,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserActivityMapper userActivityMapper;
+
+    @Autowired
+    private CourseMapper courseMapper;
+
+    @Autowired
+    private ActivityMapper activityMapper;
 
     @Override
     public User login(WeChatLoginRequest login) {
@@ -135,5 +152,44 @@ public class UserServiceImpl implements UserService {
         studyInfoVo.setStudyDays(DateUtil.getDiffDays(user.getCreateTime(), DateUtil.getCurrentTime()));
         studyInfoVo.setStudyPoetrys(studyActivityPoetry + studyCoursePoetry);
         return studyInfoVo;
+    }
+
+    @Override
+    public CertificateInfoVo getCertificate(Long userId, PageRequest pageRequest) {
+        List<Course> courseList = courseMapper.selectFinishedCourse(userId);
+        List<Activity> activityList = activityMapper.selectFinishedActivity(userId);
+        if (CollectionUtils.isEmpty(courseList) && CollectionUtils.isEmpty(activityList)) {
+            return null;
+        }
+        int order = 1;
+        List<UserCertificateVo> certificateList = Lists.newArrayList();
+        for (Course course : courseList) {
+            UserCertificateVo vo = new UserCertificateVo();
+            vo.setCertificate(course.getName());
+            vo.setType(CertificateType.COURSE.getType());
+            vo.setOrder(order++);
+            certificateList.add(vo);
+        }
+        for (Activity activity : activityList) {
+            UserCertificateVo vo = new UserCertificateVo();
+            vo.setCertificate(activity.getName());
+            vo.setType(CertificateType.ACTIVITY.getType());
+            vo.setOrder(order++);
+            certificateList.add(vo);
+        }
+
+        CertificateInfoVo result = new CertificateInfoVo();
+        result.setTotal(activityList.size() + activityList.size());
+
+        int start = (pageRequest.getPageIndex() - 1) * pageRequest.getPageSize();
+        int end = pageRequest.getPageIndex() * pageRequest.getPageSize();
+        if (start > certificateList.size()) {
+            start = certificateList.size();
+        }
+        if (end > certificateList.size()) {
+            end = certificateList.size();
+        }
+        result.setUserCertificateVoList(certificateList.subList(start, end));
+        return result;
     }
 }

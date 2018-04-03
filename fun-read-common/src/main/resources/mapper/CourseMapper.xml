@@ -163,5 +163,6 @@
       where c.id = uc.course_id
         and c.poetry_num = uc.finished_num
         and uc.user_id = #{userId,jdbcType=BIGINT})
+    order by c.id
   </select>
 </mapper>

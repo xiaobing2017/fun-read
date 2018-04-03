@@ -1,8 +1,10 @@
 package com.bing.funread.server.service;
 
 import com.bing.funread.common.domain.User;
+import com.bing.funread.request.PageRequest;
 import com.bing.funread.request.UserInfoRequest;
 import com.bing.funread.request.WeChatLoginRequest;
+import com.bing.funread.response.CertificateInfoVo;
 import com.bing.funread.response.UserInfoVo;
 import com.bing.funread.response.UserStudyInfoVo;
 
@@ -47,4 +49,12 @@ public interface UserService {
      * @return
      */
     UserStudyInfoVo getUserStudyDetail(Long userId);
+
+    /**
+     * 查询奖状信息
+     * @param userId
+     * @param pageRequest
+     * @return
+     */
+    CertificateInfoVo getCertificate(Long userId, PageRequest pageRequest);
 }
