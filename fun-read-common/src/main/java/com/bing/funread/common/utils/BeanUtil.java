@@ -20,6 +20,9 @@ public class BeanUtil {
      * @return
      */
     public static <T> T copyBean(Object sourceObject, Class<T> targetClass) {
+        if (sourceObject == null) {
+            return null;
+        }
         T targetObject = BeanUtils.instantiate(targetClass);
         BeanUtils.copyProperties(sourceObject, targetObject);
         return targetObject;

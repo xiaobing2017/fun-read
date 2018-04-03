@@ -2,7 +2,7 @@ package com.bing.funread.server.controller;
 
 import com.bing.funread.request.PageRequest;
 import com.bing.funread.request.UserInfoRequest;
-import com.bing.funread.response.CertificateInfoVo;
+import com.bing.funread.response.AwardInfoVo;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
@@ -73,10 +73,10 @@ public class UserInfoController extends BaseController {
 
     @RequestMapping(value = "/getCertificate", method = RequestMethod.POST)
     @ApiOperation(value = "查询奖状列表", httpMethod = "POST", notes = "查询奖状列表")
-    public Result<CertificateInfoVo> getCertificate(@ApiParam(value = "分页信息", name = "pageRequest")
-                                                          @Valid @RequestBody PageRequest pageRequest) {
+    public Result<AwardInfoVo> getCertificate(@ApiParam(value = "分页信息", name = "pageRequest")
+                                              @Valid @RequestBody PageRequest pageRequest) {
         Long userId = getUserId();
-        CertificateInfoVo result = userService.getCertificate(userId, pageRequest);
+        AwardInfoVo result = userService.getAward(userId, pageRequest);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 }

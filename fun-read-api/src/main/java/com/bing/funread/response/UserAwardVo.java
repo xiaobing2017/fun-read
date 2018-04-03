@@ -11,10 +11,10 @@ import java.io.Serializable;
  * Date: 2018/4/3 上午10:57
  */
 @ApiModel("奖状信息")
-public class UserCertificateVo implements Serializable {
+public class UserAwardVo implements Serializable {
 
     @ApiModelProperty(value = "奖状内容")
-    private String certificate;
+    private String award;
 
     @ApiModelProperty(value = "奖状类型 1:课程 2:活动")
     private String type;
@@ -22,12 +22,12 @@ public class UserCertificateVo implements Serializable {
     @ApiModelProperty(value = "顺序")
     private Integer order;
 
-    public String getCertificate() {
-        return certificate;
+    public String getAward() {
+        return award;
     }
 
-    public void setCertificate(String certificate) {
-        this.certificate = certificate;
+    public void setAward(String award) {
+        this.award = award;
     }
 
     public String getType() {
@@ -48,8 +48,8 @@ public class UserCertificateVo implements Serializable {
 
     @Override
     public String toString() {
-        return "UserCertificateVo{" +
-                "certificate='" + certificate + '\'' +
+        return "UserAwardVo{" +
+                "award='" + award + '\'' +
                 ", type='" + type + '\'' +
                 ", order='" + order + '\'' +
                 '}';

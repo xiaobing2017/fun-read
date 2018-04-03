@@ -7,6 +7,8 @@ import com.bing.funread.response.ReadInfoVo;
 import com.bing.funread.response.Result;
 import com.bing.funread.response.ResultCode;
 import com.bing.funread.response.ResultMessage;
+import com.bing.funread.response.ShareVo;
+import com.bing.funread.server.service.ShareService;
 import com.bing.funread.server.service.UserActivityService;
 import com.bing.funread.server.service.UserCourseService;
 import io.swagger.annotations.Api;
@@ -39,6 +41,9 @@ public class OpenController {
     @Autowired
     private UserActivityService userActivityService;
 
+    @Autowired
+    private ShareService shareService;
+
     @RequestMapping(value = "/course/getReadInfo/{courseId}/{poetryId}/{shareCode}", method = RequestMethod.GET)
     @ApiOperation(value = "查询用户课程诗词跟读信息", httpMethod = "GET", notes = "根据分享码查询用户课程诗词跟读信息")
     public Result<List<ReadInfoVo>> getCourseReadInfoByShareCode(@ApiParam(required = true, name = "courseId", value = "课程ID")
@@ -64,6 +69,14 @@ public class OpenController {
         TempAutoDto dto = JSONObject.parseObject(EncryptionUtil.decrypt(shareCode), TempAutoDto.class);
         Long userId = dto.getUserId();
         List<ReadInfoVo> result = userActivityService.getReadInfo(userId, activityId, poetryId);
+        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
+    }
+
+    @RequestMapping(value = "/share/{uniqueId}", method = RequestMethod.GET)
+    @ApiOperation(value = "查询分享参数", httpMethod = "GET", notes = "查询分享参数")
+    public Result<ShareVo> getUniqueId(@ApiParam(required = true, name = "uniqueId", value = "分享页面唯一ID")
+                                      @NotBlank(message="分享页面唯一ID不能为空") @PathVariable String uniqueId) {
+        ShareVo result = shareService.getShareInfo(uniqueId);
         return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, result);
     }
 }

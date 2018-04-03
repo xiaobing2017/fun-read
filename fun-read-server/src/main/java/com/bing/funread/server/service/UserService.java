@@ -4,7 +4,7 @@ import com.bing.funread.common.domain.User;
 import com.bing.funread.request.PageRequest;
 import com.bing.funread.request.UserInfoRequest;
 import com.bing.funread.request.WeChatLoginRequest;
-import com.bing.funread.response.CertificateInfoVo;
+import com.bing.funread.response.AwardInfoVo;
 import com.bing.funread.response.UserInfoVo;
 import com.bing.funread.response.UserStudyInfoVo;
 
@@ -56,5 +56,5 @@ public interface UserService {
      * @param pageRequest
      * @return
      */
-    CertificateInfoVo getCertificate(Long userId, PageRequest pageRequest);
+    AwardInfoVo getAward(Long userId, PageRequest pageRequest);
 }

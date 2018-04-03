@@ -11,13 +11,13 @@ import java.util.List;
  * Date: 2018/4/3 下午2:10
  */
 @ApiModel("奖状汇总信息")
-public class CertificateInfoVo {
+public class AwardInfoVo {
 
     @ApiModelProperty(value = "奖状总数")
     private Integer total;
 
     @ApiModelProperty(value = "奖状信息列表")
-    private List<UserCertificateVo> userCertificateVoList;
+    private List<UserAwardVo> userAwardVoList;
 
     public Integer getTotal() {
         return total;
@@ -27,19 +27,19 @@ public class CertificateInfoVo {
         this.total = total;
     }
 
-    public List<UserCertificateVo> getUserCertificateVoList() {
-        return userCertificateVoList;
+    public List<UserAwardVo> getUserAwardVoList() {
+        return userAwardVoList;
     }
 
-    public void setUserCertificateVoList(List<UserCertificateVo> userCertificateVoList) {
-        this.userCertificateVoList = userCertificateVoList;
+    public void setUserAwardVoList(List<UserAwardVo> userAwardVoList) {
+        this.userAwardVoList = userAwardVoList;
     }
 
     @Override
     public String toString() {
-        return "CertificateInfoVo{" +
+        return "AwardInfoVo{" +
                 "total=" + total +
-                ", userCertificateVoList=" + userCertificateVoList +
+                ", userAwardVoList=" + userAwardVoList +
                 '}';
     }
 }
