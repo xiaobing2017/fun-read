@@ -1,5 +1,7 @@
 package com.bing.funread.common.dto;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * Description:获取公众号的全局唯一接口调用凭据返回结果
  * Author: zhangfusheng
@@ -11,34 +13,36 @@ public class WeChatAccessTokenDto {
     /**
      * 获取到的凭证
      */
-    private String access_token;
+    @JSONField(name = "access_token")
+    private String accessToken;
 
     /**
      * 凭证有效时间，单位：秒
      */
-    private long expires_in;
+    @JSONField(name = "expires_in")
+    private long expiresIn;
 
-    public String getAccess_token() {
-        return access_token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setAccess_token(String access_token) {
-        this.access_token = access_token;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public long getExpires_in() {
-        return expires_in;
+    public long getExpiresIn() {
+        return expiresIn;
     }
 
-    public void setExpires_in(long expires_in) {
-        this.expires_in = expires_in;
+    public void setExpiresIn(long expiresIn) {
+        this.expiresIn = expiresIn;
     }
 
     @Override
     public String toString() {
         return "WeChatAccessTokenDto{" +
-                "access_token='" + access_token + '\'' +
-                ", expires_in='" + expires_in + '\'' +
+                "accessToken='" + accessToken + '\'' +
+                ", expiresIn=" + expiresIn +
                 '}';
     }
 }
