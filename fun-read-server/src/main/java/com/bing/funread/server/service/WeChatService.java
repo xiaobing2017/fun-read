@@ -1,6 +1,7 @@
 package com.bing.funread.server.service;
 
 import com.bing.funread.common.dto.WeChatLoginCheckDto;
+import com.bing.funread.request.ShareCodeRequest;
 
 /**
  * Description:微信接口
@@ -21,4 +22,11 @@ public interface WeChatService {
      * @return
      */
     String getAccessToken();
+
+    /**
+     * 获取小程序码
+     * @param request
+     * @return
+     */
+    String getShareCode(ShareCodeRequest request);
 }

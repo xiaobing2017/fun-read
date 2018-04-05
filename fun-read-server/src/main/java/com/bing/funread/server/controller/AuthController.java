@@ -25,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class AuthController extends BaseController {
 
-    @RequestMapping(value = "/getShareCode", method = RequestMethod.GET)
-    @ApiOperation(value = "获取分享码", httpMethod = "GET", notes = "获取分享码")
-    public Result<String> getShareCode() {
+    @RequestMapping(value = "/getUserCode", method = RequestMethod.GET)
+    @ApiOperation(value = "获取用户权限码", httpMethod = "GET", notes = "获取分享码")
+    public Result<String> getUserCode() {
         Long userId = getUserId();
         TempAutoDto dto = new TempAutoDto(userId, DateUtil.getCurrentTime());
-        String shareCode = EncryptionUtil.encrypt(JSONObject.toJSONString(dto));
-        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, shareCode);
+        String userCode = EncryptionUtil.encrypt(JSONObject.toJSONString(dto));
+        return new Result<>(ResultCode.SUCCESS, ResultMessage.SUCCESS, userCode);
     }
 }

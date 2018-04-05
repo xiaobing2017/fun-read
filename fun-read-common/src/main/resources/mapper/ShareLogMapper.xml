@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.bing.funread.common.domain.ShareLog" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="unique_id" property="uniqueId" jdbcType="VARCHAR" />
-    <result column="share_code" property="shareCode" jdbcType="VARCHAR" />
+    <result column="user_code" property="userCode" jdbcType="VARCHAR" />
     <result column="study_days" property="studyDays" jdbcType="INTEGER" />
     <result column="study_poetrys" property="studyPoetrys" jdbcType="INTEGER" />
     <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
@@ -18,7 +18,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, unique_id, share_code, study_days, study_poetrys, avatar_url, nick_name, poetry_id, 
+    id, unique_id, user_code, study_days, study_poetrys, avatar_url, nick_name, poetry_id, 
     ca_id, is_skip, from_where, poetry_name, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -32,12 +32,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.bing.funread.common.domain.ShareLog" >
-    insert into share_log (id, unique_id, share_code, 
+    insert into share_log (id, unique_id, user_code, 
       study_days, study_poetrys, avatar_url, 
       nick_name, poetry_id, ca_id, 
       is_skip, from_where, poetry_name, 
       create_time, update_time)
-    values (#{id,jdbcType=BIGINT}, #{uniqueId,jdbcType=VARCHAR}, #{shareCode,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{uniqueId,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, 
       #{studyDays,jdbcType=INTEGER}, #{studyPoetrys,jdbcType=INTEGER}, #{avatarUrl,jdbcType=VARCHAR}, 
       #{nickName,jdbcType=VARCHAR}, #{poetryId,jdbcType=BIGINT}, #{caId,jdbcType=BIGINT}, 
       #{isSkip,jdbcType=CHAR}, #{fromWhere,jdbcType=CHAR}, #{poetryName,jdbcType=VARCHAR}, 
@@ -52,8 +52,8 @@
       <if test="uniqueId != null" >
         unique_id,
       </if>
-      <if test="shareCode != null" >
-        share_code,
+      <if test="userCode != null" >
+        user_code,
       </if>
       <if test="studyDays != null" >
         study_days,
@@ -96,8 +96,8 @@
       <if test="uniqueId != null" >
         #{uniqueId,jdbcType=VARCHAR},
       </if>
-      <if test="shareCode != null" >
-        #{shareCode,jdbcType=VARCHAR},
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
       </if>
       <if test="studyDays != null" >
         #{studyDays,jdbcType=INTEGER},
@@ -140,8 +140,8 @@
       <if test="uniqueId != null" >
         unique_id = #{uniqueId,jdbcType=VARCHAR},
       </if>
-      <if test="shareCode != null" >
-        share_code = #{shareCode,jdbcType=VARCHAR},
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
       </if>
       <if test="studyDays != null" >
         study_days = #{studyDays,jdbcType=INTEGER},
@@ -182,7 +182,7 @@
   <update id="updateByPrimaryKey" parameterType="com.bing.funread.common.domain.ShareLog" >
     update share_log
     set unique_id = #{uniqueId,jdbcType=VARCHAR},
-      share_code = #{shareCode,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
       study_days = #{studyDays,jdbcType=INTEGER},
       study_poetrys = #{studyPoetrys,jdbcType=INTEGER},
       avatar_url = #{avatarUrl,jdbcType=VARCHAR},

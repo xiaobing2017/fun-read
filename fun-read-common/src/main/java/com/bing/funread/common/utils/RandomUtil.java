@@ -1,6 +1,7 @@
 package com.bing.funread.common.utils;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.RandomStringUtils;
 
 import java.util.List;
 import java.util.Random;
@@ -55,5 +56,10 @@ public class RandomUtil {
             }
         }
         return ret.toString();
+    }
+
+    public static String  randomByDate() {
+        return DateUtil.format(DateUtil.getCurrentTime(), "yyMMddHHmmssSSS") +
+                RandomStringUtils.randomNumeric(5);
     }
 }

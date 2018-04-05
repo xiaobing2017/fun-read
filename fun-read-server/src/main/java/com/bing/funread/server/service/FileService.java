@@ -17,4 +17,11 @@ public interface FileService {
      * @return
      */
     String upload(MultipartFile file, String saveDir, String filename);
+
+    /**
+     * 二进制流保存为文件
+     * @param bytes
+     * @param path
+     */
+    void saveFile(byte[] bytes, String path);
 }

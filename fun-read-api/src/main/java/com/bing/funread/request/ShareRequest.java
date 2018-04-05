@@ -13,8 +13,8 @@ import java.io.Serializable;
 @ApiModel("分享页参数")
 public class ShareRequest implements Serializable {
 
-    @ApiModelProperty(value = "分享码")
-    private String shareCode;
+    @ApiModelProperty(value = "用户权限码")
+    private String userCode;
 
     @ApiModelProperty(value = "学习天数")
     private Integer studyDays;
@@ -43,12 +43,12 @@ public class ShareRequest implements Serializable {
     @ApiModelProperty(value = "诗名")
     private String poetryName;
 
-    public String getShareCode() {
-        return shareCode;
+    public String getUserCode() {
+        return userCode;
     }
 
-    public void setShareCode(String shareCode) {
-        this.shareCode = shareCode;
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 
     public Integer getStudyDays() {
@@ -126,7 +126,7 @@ public class ShareRequest implements Serializable {
     @Override
     public String toString() {
         return "ShareRequest{" +
-                "shareCode='" + shareCode + '\'' +
+                "userCode='" + userCode + '\'' +
                 ", studyDays=" + studyDays +
                 ", studyPoetrys=" + studyPoetrys +
                 ", avatarUrl='" + avatarUrl + '\'' +

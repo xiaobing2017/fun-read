@@ -7,7 +7,7 @@ public class ShareLog {
 
     private String uniqueId;
 
-    private String shareCode;
+    private String userCode;
 
     private Integer studyDays;
 
@@ -47,12 +47,12 @@ public class ShareLog {
         this.uniqueId = uniqueId == null ? null : uniqueId.trim();
     }
 
-    public String getShareCode() {
-        return shareCode;
+    public String getUserCode() {
+        return userCode;
     }
 
-    public void setShareCode(String shareCode) {
-        this.shareCode = shareCode == null ? null : shareCode.trim();
+    public void setUserCode(String userCode) {
+        this.userCode = userCode == null ? null : userCode.trim();
     }
 
     public Integer getStudyDays() {

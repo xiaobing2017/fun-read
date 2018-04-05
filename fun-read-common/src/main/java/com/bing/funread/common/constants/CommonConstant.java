@@ -58,6 +58,11 @@ public class CommonConstant {
     public static final String FILE_DIR_SOURCE = "source";
 
     /**
+     * 分享二维码图片地址
+     */
+    public static final String FILE_DIR_SHARE = "share";
+
+    /**
      * 状态 1：是
      */
     public static final String YES = "1";
